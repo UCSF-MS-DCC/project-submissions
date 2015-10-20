@@ -1,26 +1,33 @@
-<%= form_for @project do |f| %>
+<div class="row">
+  <div class="small-12 columns text-center">
+    <h2> Upload a new project </h2>    
+  </div>  
+</div>
+
+<%= form_for(@project, remote: true) do |f| %>
   <div class="row">
-      <div class="large-6 columns">
-        <div class="row collapse prefix-radius">
-          <div class="small-3 columns">
-            <span class="prefix">Author</span>
-          </div>
-          <div class="small-9 columns">
-              <%= f.text_field :author, placeholder: 'e.g. Jorge Oksenberg', required: true %>
-          </div>
+    <div class="large-6 columns">
+      <small>Required</small>
+      <div class="row collapse prefix-radius">
+        <div class="small-3 columns">
+          <span class="prefix">Author</span>
+        </div>
+        <div class="small-9 columns">
+            <%= f.text_field :author, placeholder: 'e.g. Jorge Oksenberg', required: true %>
         </div>
       </div>
     </div>
+  </div>
 
   <div class="row">
-      <div class="large-6 columns">
-        <div class="row collapse prefix-radius">
-          <div class="small-3 columns">
-            <span class="prefix">Title</span>
-          </div>
-          <div class="small-9 columns">
-              <%= f.text_field :title, placeholder: 'e.g. A Study of MS in Children', required: true %>
-          </div>
+    <div class="large-6 columns">
+    <small>Required</small>
+      <div class="row collapse prefix-radius">
+        <div class="small-3 columns">
+          <span class="prefix">Title</span>
+        </div>
+        <div class="small-9 columns">
+            <%= f.text_field :title, placeholder: 'e.g. A Study of MS in Children', required: true %>
         </div>
       </div>
     </div>
@@ -36,7 +43,7 @@
 
   <div class="row">
     <div class="large-12 columns">
-      <label>Data Description
+      <label>Data Description <small>required</small>
         <%= f.text_area :data_description, placeholder: 'What type of data will you need to complete this project?', required: true %>
       </label>
     </div>
@@ -44,15 +51,15 @@
 
   <div class="row">
     <div class="large-12 columns">
-      <label>Data Description
+      <label>Data Frequency <small>required</small>
         <%= f.text_area :data_frequency, placeholder: 'How often will you require data? Monthly, weekly, only once?', required: true %>
       </label>
     </div>
   </div>
 
   <div class="row">
-    <div class="large-6 columns">
-      <small> Prove you're human </small>
+    <div class="large-12 columns">
+      <small> Prove you're human </small> 
       <%= f.label :humanizer_answer, @project.humanizer_question %>
       <%= f.text_field :humanizer_answer, required: true %>
       <%= f.hidden_field :humanizer_question_id %>

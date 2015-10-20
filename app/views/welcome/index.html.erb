@@ -8,20 +8,34 @@
  
 <div class="row">
   <div class="large-12 columns">
-     
-    <div class="row">
-      <div class="large-2 columns small-3"><img src="http://placehold.it/80x80&text=[img]"/></div>
-      <div class="large-10 columns">
-        <p><strong>Some Person said:</strong> Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong.</p>
-        <ul class="inline-list">
-          <li><a href="">Reply</a></li>
-          <li><a href="">Share</a></li>
-        </ul>
-      </div>
-    </div>
+  	<div id="newProject" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  		<%= render 'layouts/new_project' %>
+		</div>
 
-  </div>
-
+    <table class="large-12 columns">
+		  <thead>
+		    <tr>
+		      <th width="200">Author</th>
+		      <th width="150">Project Title</th>
+		      <th width>Project Description</th>
+		      <th width="150">Data Description</th>
+		      <th width="150">Data Frequency</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+			  <% @projects.all.each do |project| %>
+		    	<tr>
+			      <td><%= project.author %></td>
+			      <td><%= project.title %></td>
+			      <td><%= project.project_description %></td>
+			      <td><%= project.data_description %></td>
+			      <td><%= project.data_frequency %></td>
+		    	</tr>
+			  <% end %>
+		  </tbody>
+		</table>
+  	<%= link_to "Add New Project", "#", class: 'button right', data: {:"reveal-id" => "newProject"} %>
+	</div>		
 </div>
 
 <footer class="row">
@@ -30,16 +44,6 @@
     <div class="row">
       <div class="large-5 columns">
         <p>Made with love by the MS Genetics Lab</p>
-      </div>
-      <div class="large-7 columns">
-        <ul class="inline-list right">
-<!--           <li><a href="#">Section 1</a></li>
-          <li><a href="#">Section 2</a></li>
-          <li><a href="#">Section 3</a></li>
-          <li><a href="#">Section 4</a></li>
-          <li><a href="#">Section 5</a></li>
-          <li><a href="#">Section 6</a></li> -->
-        </ul>
       </div>
     </div>
   </div>
