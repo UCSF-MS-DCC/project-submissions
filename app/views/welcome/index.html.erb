@@ -1,7 +1,7 @@
 <div class="row">
   <div class="large-12 columns">
-    <div class="panel">
-      <h1>UCSF Project Uploader</h1>
+    <div class="panel radius">
+      <span>MS EPIC Projects Catalog</span>
     </div>
   </div>
 </div>
@@ -11,12 +11,15 @@
   	<div id="newProject" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
   		<%= render 'layouts/new_project' %>
 		</div>
+			<div class= "large-12 columns text-center">
+		    <%= image_tag('db.png', width: "30%") %>
+			</div>
 
-    <table class="large-12 columns">
+    <table class="tablesorter radius" id="projects">
 		  <thead>
 		    <tr>
-		      <th width="200">Author</th>
-		      <th width="150">Project Title</th>
+		      <th width="150">Author</th>
+		      <th width="200">Project Title</th>
 		      <th width>Project Description</th>
 		      <th width="150">Data Description</th>
 		      <th width="150">Data Frequency</th>
@@ -27,14 +30,20 @@
 		    	<tr>
 			      <td><%= project.author %></td>
 			      <td><%= project.title %></td>
-			      <td><%= project.project_description %></td>
+			      <td><%= truncate(project.project_description, length: 305) { link_to "Continue", "#", class: "read-more-#{project.id}" } %></td>
+			      <!-- I understand it's generally not advisable to have an inline script, though this solves the truncating issues nicely without a vendor library -->
+			      <script type="text/javascript">
+			      	$('.read-more-<%= project.id %>').on('click', function(e) {
+				        $(this).parent().html('<%= escape_javascript project.project_description %>')
+				      })
+			      </script>
 			      <td><%= project.data_description %></td>
 			      <td><%= project.data_frequency %></td>
 		    	</tr>
 			  <% end %>
 		  </tbody>
 		</table>
-  	<%= link_to "Add New Project", "#", class: 'button right', data: {:"reveal-id" => "newProject"} %>
+  	<%= link_to "Add New Project", "#", class: 'button right radius', data: {:"reveal-id" => "newProject"} %>
 	</div>		
 </div>
 
@@ -45,6 +54,10 @@
       <div class="large-5 columns">
         <p>Made with love by the MS Genetics Lab</p>
       </div>
+        <ul class='inline-list right'>
+        	<li><a href="#">Epic Data Dictionary</a></li>
+        	<li><a href="mailto:thomas.carpenito@ucsf.edu">Contact us</a></li>
+        </ul>
     </div>
   </div>
 </footer>

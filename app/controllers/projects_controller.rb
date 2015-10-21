@@ -11,7 +11,6 @@ class ProjectsController < ApplicationController
 			if @project.save
 				format.html { redirect_to root_url, notice: "Project was succesfully added."}
 				format.js 
-				format.json { render json: @project, status: :created, location: @project}
 			else
 				format.html {render action: "new"}
 				format.json { render json: @project.errors, status: unprocessable_entity}

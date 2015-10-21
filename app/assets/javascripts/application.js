@@ -13,7 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
+//= require jquery-tablesorter
 //= require turbolinks
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+$(function(){$("#projects").tablesorter();});

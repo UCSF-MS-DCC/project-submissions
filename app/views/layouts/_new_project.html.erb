@@ -10,7 +10,7 @@
       <small>Required</small>
       <div class="row collapse prefix-radius">
         <div class="small-3 columns">
-          <span class="prefix">Author</span>
+          <span class="prefix">Principle Investigator</span>
         </div>
         <div class="small-9 columns">
             <%= f.text_field :author, placeholder: 'e.g. Jorge Oksenberg', required: true %>
@@ -24,10 +24,10 @@
     <small>Required</small>
       <div class="row collapse prefix-radius">
         <div class="small-3 columns">
-          <span class="prefix">Title</span>
+          <span class="prefix">Project Title</span>
         </div>
         <div class="small-9 columns">
-            <%= f.text_field :title, placeholder: 'e.g. A Study of MS in Children', required: true %>
+            <%= f.text_field :title, placeholder: 'e.g. Study of MS Genetics Susceptibility', required: true %>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
   <div class="row">
     <div class="large-12 columns">
       <label>Project Description <small>required</small>
-        <%= f.text_area :project_description, placeholder: 'A description of what the project is.', required: true %>
+        <%= f.text_area :project_description, placeholder: 'A description of what the project is', required: true %>
       </label>
     </div>
   </div>
@@ -44,7 +44,7 @@
   <div class="row">
     <div class="large-12 columns">
       <label>Data Description <small>required</small>
-        <%= f.text_area :data_description, placeholder: 'What type of data will you need to complete this project?', required: true %>
+        <%= f.text_area :data_description, placeholder: 'Briefly describe which datasets that you intend to use', required: true %>
       </label>
     </div>
   </div>
@@ -52,14 +52,14 @@
   <div class="row">
     <div class="large-12 columns">
       <label>Data Frequency <small>required</small>
-        <%= f.text_area :data_frequency, placeholder: 'How often will you require data? Monthly, weekly, only once?', required: true %>
+        <%= f.text_area :data_frequency, placeholder: 'If you will need more than one data extraction, please describe here', required: true %>
       </label>
     </div>
   </div>
 
   <div class="row">
     <div class="large-12 columns">
-      <small> Prove you're human </small> 
+      <small> This is a simple captcha to prevent spambots from filling the site.</small> 
       <%= f.label :humanizer_answer, @project.humanizer_question %>
       <%= f.text_field :humanizer_answer, required: true %>
       <%= f.hidden_field :humanizer_question_id %>
@@ -70,8 +70,10 @@
 
   <div class="row">
     <div class="large-12 columns">
-      <%= f.submit 'Submit', :class => 'button' %>
+      <%= f.submit 'Submit', :class => 'button radius' %>
     </div>
   </div>
+
+  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 
 <% end %>
