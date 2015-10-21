@@ -4,7 +4,7 @@
   </div>  
 </div>
 
-<%= form_for(@project, remote: true) do |f| %>
+<%= form_for(@project, remote: true, data: {abide: ''}) do |f| %>
   <div class="row">
     <div class="large-6 columns">
       <small>Required</small>
@@ -14,6 +14,7 @@
         </div>
         <div class="small-9 columns">
             <%= f.text_field :author, placeholder: 'e.g. Jorge Oksenberg', required: true %>
+            <small class="error">This field is required.</small>
         </div>
       </div>
     </div>
@@ -28,6 +29,7 @@
         </div>
         <div class="small-9 columns">
             <%= f.text_field :title, placeholder: 'e.g. Study of MS Genetics Susceptibility', required: true %>
+            <small class="error">This field is required.</small>
         </div>
       </div>
     </div>
@@ -37,6 +39,7 @@
     <div class="large-12 columns">
       <label>Project Description <small>required</small>
         <%= f.text_area :project_description, placeholder: 'A description of what the project is', required: true %>
+        <small class="error">This field is required.</small>
       </label>
     </div>
   </div>
@@ -45,6 +48,7 @@
     <div class="large-12 columns">
       <label>Data Description <small>required</small>
         <%= f.text_area :data_description, placeholder: 'Briefly describe which datasets that you intend to use', required: true %>
+        <small class="error">This field is required.</small>
       </label>
     </div>
   </div>
@@ -53,6 +57,7 @@
     <div class="large-12 columns">
       <label>Data Frequency <small>required</small>
         <%= f.text_area :data_frequency, placeholder: 'If you will need more than one data extraction, please describe here', required: true %>
+        <small class="error">This field is required.</small>
       </label>
     </div>
   </div>
@@ -63,6 +68,7 @@
       <%= f.label :humanizer_answer, @project.humanizer_question %>
       <%= f.text_field :humanizer_answer, required: true %>
       <%= f.hidden_field :humanizer_question_id %>
+      <small class="error">This field is required.</small>
     </div>
   </div>
 
