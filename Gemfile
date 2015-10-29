@@ -41,3 +41,4 @@ gem 'spring',        group: :development
 gem 'foundation-rails', '5.4.5'
 gem 'humanizer'
 gem 'jquery-tablesorter'
+gem "gritter", "1.2.0"

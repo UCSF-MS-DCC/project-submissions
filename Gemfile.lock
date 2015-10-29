@@ -41,6 +41,7 @@ GEM
     foundation-rails (5.4.5.0)
       railties (>= 3.1.0)
       sass (>= 3.2.0)
+    gritter (1.2.0)
     hike (1.2.3)
     humanizer (2.6.2)
     i18n (0.7.0)
@@ -120,6 +121,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
   foundation-rails (= 5.4.5)
+  gritter (= 1.2.0)
   humanizer
   jbuilder (~> 2.0)
   jquery-rails

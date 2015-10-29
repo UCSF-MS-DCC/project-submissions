@@ -9,10 +9,9 @@ class ProjectsController < ApplicationController
 
 		respond_to do |format|
 			if @project.save
-				format.html { redirect_to root_url, notice: "Project was succesfully added."}
 				format.js 
 			else
-				format.html { redirect_to root_url, notice: "Something went wrong, please try again."}
+				format.js { render 'notifications.js.erb'}
 			end
 		end
 

@@ -17,6 +17,7 @@
  *= require foundation_and_overrides
  *= require owl.carousel
  *= require owl.theme
+ *= require gritter
 
  */
 
@@ -36,7 +37,6 @@ th {
 
 table {
 	width: 100%;
-	border-color: rgba(255, 141, 0, 0.57);
 	border-radius: 5px;
 }
 
