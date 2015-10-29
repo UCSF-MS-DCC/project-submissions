@@ -15,5 +15,36 @@
  *= require_self
  *= require jquery-tablesorter/theme.blue
  *= require foundation_and_overrides
+ *= require owl.carousel
+ *= require owl.theme
 
  */
+
+ .button{
+ 	background-color: rgba(0, 114, 255, 0.72);
+ 	border-color: rgba(0, 114, 255, 0.72);
+ }
+.button:hover, .button:focus{
+	background-color: rgba(0, 114, 255, 0.92);
+	border-color: rgba(0, 114, 255, 0.92);
+	text-decoration: none;
+}
+
+th {
+	background-color: rgba(255, 141, 0, 0.57);
+}
+
+table {
+	width: 100%;
+	border-color: rgba(255, 141, 0, 0.57);
+	border-radius: 5px;
+}
+
+a:hover, a:focus{
+	color: black;
+	text-decoration: underline;
+}
+
+.close-reveal-modal:hover{
+	text-decoration: none;
+}

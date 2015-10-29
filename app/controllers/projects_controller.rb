@@ -12,17 +12,15 @@ class ProjectsController < ApplicationController
 				format.html { redirect_to root_url, notice: "Project was succesfully added."}
 				format.js 
 			else
-				format.html {render action: "new"}
-				format.json { render json: @project.errors, status: unprocessable_entity}
+				format.html { redirect_to root_url, notice: "Something went wrong, please try again."}
 			end
 		end
 
-		# redirect_to root_url
 	end
 
 	private 
 
 	def project_params
-		params.require(:project).permit(:title, :author, :title, :project_description, :data_description, :data_frequency, :humanizer_answer, :humanizer_question_id )
+		params.require(:project).permit(:title, :author, :title, :project_description, :data_description, :biological_description, :data_frequency, :humanizer_answer, :humanizer_question_id )
 	end
 end

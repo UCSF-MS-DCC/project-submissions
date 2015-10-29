@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020003309) do
+ActiveRecord::Schema.define(version: 20151028233017) do
 
   create_table "projects", force: true do |t|
     t.string   "title"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20151020003309) do
     t.text     "data_frequency"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "biological_description"
   end
 
 end
