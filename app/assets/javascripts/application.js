@@ -15,7 +15,6 @@
 //= require foundation
 //= require jquery-tablesorter
 //= require turbolinks
-//= require owl.carousel.min
 //= require gritter
 //= require_tree .
 
