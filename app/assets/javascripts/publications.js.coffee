@@ -1,4 +1,3 @@
 $(document).ready ->
-  $(document).foundation()
-  $('#projects').tablesorter()
+  $('#publications').tablesorter()
   return
