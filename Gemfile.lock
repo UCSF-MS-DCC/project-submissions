@@ -166,7 +166,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise
-  foundation-rails (= 5.4.5)
+  foundation-rails
   gritter (= 1.2.0)
   humanizer
   jbuilder (~> 2.0)

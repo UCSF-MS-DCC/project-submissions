@@ -25,3 +25,8 @@
 *{
 	font-family: 'Lato', sans-serif;
 }
+
+a, a:hover { 
+	text-decoration: none !important;
+	color: inherit;
+}

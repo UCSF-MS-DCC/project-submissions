@@ -38,7 +38,7 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'foundation-rails', '5.4.5'
+gem 'foundation-rails'
 gem 'humanizer'
 gem 'jquery-tablesorter'
 gem 'jquery-ui-rails'

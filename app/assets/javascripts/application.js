@@ -21,5 +21,7 @@
 //= require projects
 //= require publications
 
-$(function(){ $(document).foundation(); });
-$(function(){$("#projects").tablesorter();});
+$(document).ready(function(){
+	$(document).foundation();
+	$("#projects").tablesorter();
+})
