@@ -45,3 +45,4 @@ gem 'jquery-ui-rails'
 gem "gritter", "1.2.0"
 gem 'rails_admin'
 gem 'devise'
+gem 'dotenv-rails'

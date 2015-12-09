@@ -1,5 +1,8 @@
+
 $('#newProject').foundation('reveal', 'close');
 
 $('#projects').append('<%= j render(@project)%></tr>');
+
+<%= add_gritter( "Your project has been submitted for approval.", :title => "Success", :time => 5000) %> 
 
 $('form').find("input[type=text], textarea").val("");
