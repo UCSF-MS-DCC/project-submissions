@@ -1,0 +1,23 @@
+<div class="contain-to-grid sticky">
+  <nav class="top-bar" data-topbar role="navigation">
+    <ul class="title-area">
+      <li class='name'>
+        <h1></h1>
+      </li>
+       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+
+      <ul class="text-centered">
+        <li><%= link_to("Home", root_path, class: 'styled-link')%></li>
+        <li><%= link_to("Publications", publications_path, class: 'styled-link active')%></li>
+        <li><%= link_to("Funding", fundings_path, class: 'styled-link')%></li>
+        <li><%= link_to("Projects Catalog", projects_path, class: 'styled-link')%></li>
+        <li><%= link_to("Data Dictionary", projects_path, class: 'styled-link')%></li>
+      </ul>
+
+    </section>
+  </nav> 
+</div> 

@@ -12,11 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require foundation
+//= require jquery-ui
 //= require jquery-tablesorter
-//= require turbolinks
 //= require gritter
+//= require foundation
+//= require_self
 //= require_tree .
 
-$(function(){ $(document).foundation(); });
-$(function(){$("#projects").tablesorter();});
+$(document).ready(function(){
+	$(document).foundation();
+})
