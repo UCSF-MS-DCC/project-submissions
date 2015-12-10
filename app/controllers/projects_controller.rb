@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
 		respond_to do |format|
 			if @project.save
 				format.js 
-				ProjectApprover.send_approval_email(@project).deliver
+				# ProjectApprover.send_approval_email(@project).deliver
 			else
 				format.js { render 'notifications.js.erb'}
 			end
