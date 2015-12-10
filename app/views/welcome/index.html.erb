@@ -1,4 +1,4 @@
-<section class="window parent-center">
+<section>
 	<div>
 		<div class='row child-center'>
 			<div class='medium-12 large-3 columns text-center'>
@@ -16,8 +16,10 @@
 		</div>				
 	</div>
 </section>
-
-<!-- <section class="window"></section>
-<section class="window"></section>
-<section class="window"></section>
-<section class="window"></section> -->
+<script>
+$(function() {
+	var BV = new $.BigVideo();
+	BV.init();
+	BV.show({ type: "video/mp4",  src: "<%= image_url('EPICloop.mp4') %>"});
+});
+</script>

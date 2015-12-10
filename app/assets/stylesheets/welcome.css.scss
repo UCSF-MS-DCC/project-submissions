@@ -4,13 +4,11 @@
 
 
 h2 {
-	color: white;
+	color: #4d4d4d;
 }
 
-.window{
-  width:100%;
-  height:100%;
-  position:absolute;
+.video-js{
+	opacity: .40;
 }
 
 $teal:#1babb7;
@@ -22,10 +20,6 @@ $colors: $teal;
         background:nth($colors, $i);
         top:($i - 1) * 100%;
     }
-}
-
-.parent-center {
-	position: relative;
 }
 
 .child-center{
@@ -42,7 +36,7 @@ $colors: $teal;
   -moz-transition:.25s;
   -webkit-transition:.25s;
 	text-decoration: none;
-	color: white;
+	color: #4d4d4d
 }
 
 .styled-link:hover {
@@ -53,4 +47,3 @@ $colors: $teal;
 .styled-link:visited {
 	text-decoration: none;
 }
-
