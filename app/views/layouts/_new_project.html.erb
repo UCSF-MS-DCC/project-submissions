@@ -46,8 +46,8 @@
 
   <div class="row">
     <div class="large-12 columns">
-      <label>Data Description <small>required</small>
-        <%= f.text_area :data_description, placeholder: 'Briefly describe which datasets you intend to use', required: true %>
+      <label>Data Description (100 words or less) <small>required</small>
+        <%= f.text_area :data_description, placeholder: 'Briefly describe which datasets you intend to use', required: true, maxlength: 1000 %>
         <small class="error">This field is required.</small>
       </label>
     </div>
@@ -64,10 +64,10 @@
 
   <div class="row">
     <div class="large-12 columns">
-      <label>Data Frequency <small>required</small>
-        <%= f.text_area :data_frequency, placeholder: 'If you will need more than one data extraction, please describe here', required: true %>
+      <label>Data Frequency <small>required</small></label>
+        <%= f.radio_button(:data_frequency, "Single Time") %> <label>Single Time</label>
+        <%= f.radio_button(:data_frequency, "Multiple Times") %> <label> Multiple Times </label> 
         <small class="error">This field is required.</small>
-      </label>
     </div>
   </div>
 
