@@ -1,0 +1,32 @@
+<%= render 'layouts/navbar' %>
+
+<div class="row">
+  <div class="large-12 columns">
+    <div class="panel radius text-center">
+      <span>Data Dictionary</span>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+	<table class="tablesorter radius" id="dictionary">
+	  <thead>
+	    <tr>
+	    	<% @epic_d_d.row(0).each do |row| %>
+	    		<th class='small'><%= row %></th>
+	      <% end %>
+	    </tr>
+	  </thead>
+	  <tbody>
+	  	<% @epic_d_d.each 1 do |row| %>
+    		<tr>
+    			<% row.each do |item| %>
+	      		<td><%= item %></td>
+	      	<% end %>
+    		</tr>  
+    	<% end %>    	   	    	    	   	
+	  </tbody>
+	</table>
+</div>		
+
+<%= render 'layouts/footer' %>

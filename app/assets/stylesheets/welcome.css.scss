@@ -2,15 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
 h2 {
-	color: white;
+	color: #4d4d4d;
 }
 
-.window{
-  width:100%;
-  height:100%;
-  position:absolute;
+.video-js{
+	opacity: .40;
 }
 
 $teal:#1babb7;
@@ -24,15 +21,23 @@ $colors: $teal;
     }
 }
 
-.parent-center {
-	position: relative;
-}
-
 .child-center{
 	position: absolute;
-	top:40%;
+	top:50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+}
+
+.top-right{
+	position: absolute;
+	top:5%;
+	transform: translate(0%, -50%);
+	max-width:none;
+}
+
+.right-absolute{
+	position:absolute;
+	right:40px;
 }
 
 .styled-link{
@@ -42,7 +47,7 @@ $colors: $teal;
   -moz-transition:.25s;
   -webkit-transition:.25s;
 	text-decoration: none;
-	color: white;
+	color: #4d4d4d
 }
 
 .styled-link:hover {
@@ -54,3 +59,6 @@ $colors: $teal;
 	text-decoration: none;
 }
 
+#big-video-wrap{
+	overflow:hidden;
+}

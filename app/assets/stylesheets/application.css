@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require foundation
+ *= require video-js
  *= require_tree .
  *= require_self
  *= require jquery-tablesorter/theme.blue
@@ -28,5 +29,4 @@
 
 a, a:hover { 
 	text-decoration: none !important;
-	color: inherit;
 }

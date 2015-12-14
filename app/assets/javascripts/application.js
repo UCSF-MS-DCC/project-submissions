@@ -16,6 +16,8 @@
 //= require jquery-tablesorter
 //= require gritter
 //= require foundation
+//= require video
+//= require bigvideo
 //= require_self
 //= require_tree .
 
