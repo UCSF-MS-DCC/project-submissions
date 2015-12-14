@@ -2,7 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
 h2 {
 	color: #4d4d4d;
 }
@@ -24,9 +23,21 @@ $colors: $teal;
 
 .child-center{
 	position: absolute;
-	top:40%;
+	top:50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+}
+
+.top-right{
+	position: absolute;
+	top:5%;
+	transform: translate(0%, -50%);
+	max-width:none;
+}
+
+.right-absolute{
+	position:absolute;
+	right:40px;
 }
 
 .styled-link{
@@ -46,4 +57,8 @@ $colors: $teal;
 
 .styled-link:visited {
 	text-decoration: none;
+}
+
+#big-video-wrap{
+	overflow:hidden;
 }

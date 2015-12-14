@@ -48,7 +48,7 @@
 			isSeeking = false,
 			isPlaying = false,
 			isQueued = false,
-			isAmbient = true,
+			isAmbient = false,
 			playlist = [],
 			currMediaIndex,
 			currMediaType;
@@ -59,6 +59,8 @@
 			var containerW = settings.container.outerWidth() < $(window).width() ? settings.container.outerWidth() : $(window).width(),
 				containerH = settings.container.outerHeight() < $(window).height() ? settings.container.outerHeight() : $(window).height(),
 				containerAspect = containerW/containerH;
+				console.log(containerAspect)
+				console.log(mediaAspect)
 
 			if (settings.container.is($('body'))) {
 				$('html,body').css('height',$(window).height() > $('body').css('height','auto').height() ? '100%' : 'auto');
@@ -74,7 +76,7 @@
 						$(vidEl)
 							.css('top',0)
 							.css('left',-(containerH*mediaAspect-containerW)/2)
-							.css('height',containerH);
+							.css('height','containerH');
 					} else {
 						$(vidEl)
 							.css('top',-(containerW/mediaAspect-containerH)/2)
@@ -82,10 +84,10 @@
 							.css('height',containerW/mediaAspect);
 					}
 					$(vidEl+'_html5_api')
-						.css('width',containerH*mediaAspect)
+						.css('max-width','100%')
 						.css('height',containerH);
 					$(vidEl+'_flash_api')
-						.css('width',containerH*mediaAspect)
+						.css('max-width','100%')
 						.css('height',containerH);
 				} else {
 					// is image

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :projects
   resources :publications
   resources :fundings
+  resources :dictionary
 
   root 'welcome#index'
 
