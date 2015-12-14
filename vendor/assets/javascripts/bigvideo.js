@@ -59,8 +59,6 @@
 			var containerW = settings.container.outerWidth() < $(window).width() ? settings.container.outerWidth() : $(window).width(),
 				containerH = settings.container.outerHeight() < $(window).height() ? settings.container.outerHeight() : $(window).height(),
 				containerAspect = containerW/containerH;
-				console.log(containerAspect)
-				console.log(mediaAspect)
 
 			if (settings.container.is($('body'))) {
 				$('html,body').css('height',$(window).height() > $('body').css('height','auto').height() ? '100%' : 'auto');
