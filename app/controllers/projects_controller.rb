@@ -26,7 +26,7 @@ class ProjectsController < ApplicationController
 	private 
 
 	def project_params
-		params.require(:project).permit(:title, :author, :title, :project_description, :data_description, :biological_description, :data_frequency, :humanizer_answer, :humanizer_question_id )
+		params.require(:project).permit(:title, :author, :title, :project_description, :data_description, :biological_description, :data_frequency)
 	end
 
 end
