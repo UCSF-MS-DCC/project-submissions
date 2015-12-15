@@ -1,3 +1,3 @@
 $(document).ready ->
-  $('#dictionary').tablesorter()
+  $('#dictionary').tablesorter({widgets: ['stickyHeaders']})
   return
