@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
 	include Humanizer
-	require_human_on :create
+	# require_human_on :create
 
 	validates :title, presence: true
 	validates :author, presence: true
