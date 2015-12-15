@@ -23,12 +23,9 @@
   <table class="tablesorter radius" id="projects">
 	  <thead>
 	    <tr>
-	      <th width="100">Author</th>
-	      <th width="100">Project Title</th>
+	      <th width="200">Author</th>
+	      <th width="200">Project Title</th>
 	      <th width>Project Description</th>
-	      <th width="150">Data Description</th>
-	      <th width="100">Repository Data</th>
-	      <th width="100">Data Frequency</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -44,16 +41,10 @@
 				        $(this).parent().html('<%= escape_javascript project.project_description %>')
 				      })
 			      </script>
-			      <td><%= project.data_description %></td>
-			      <td><%= project.biological_description %></td>
-			      <td><%= project.data_frequency %></td>
 		    	</tr>
 		    	<% else %>
 		    	<tr class='awaiting-approval'>
 			      <td><%= project.author %></td>
-			      <td>(awaiting approval)</td>
-			      <td>(awaiting approval)</td>
-			      <td>(awaiting approval)</td>
 			      <td>(awaiting approval)</td>
 			      <td>(awaiting approval)</td>
 		    	</tr>		    	

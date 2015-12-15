@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<div class="row">
+<div class="row full-width">
 	<table class="tablesorter radius" id="dictionary">
 	  <thead>
 	    <tr>
@@ -21,7 +21,11 @@
 	  	<% @epic_d_d.each 1 do |row| %>
     		<tr>
     			<% row.each do |item| %>
-	      		<td><%= item %></td>
+    				<% if item.to_f == item %>
+	      			<td><%= item.to_i %></td>
+	      		<% else %>
+	      			<td><%= item %></td>
+	      		<% end %>
 	      	<% end %>
     		</tr>  
     	<% end %>    	   	    	    	   	
