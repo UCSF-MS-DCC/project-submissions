@@ -13,9 +13,6 @@
   	<div id="newProject" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
   		<%= render 'layouts/new_project' %>
 		</div>
-		<div class= "large-12 columns text-center">
-	    <div>	<%= image_tag('SNCdusk.jpg', class: 'picture_round') %> </div>
-		</div>
 	</div>
 </div>
 <br>
@@ -23,12 +20,12 @@
   <table class="tablesorter radius" id="projects">
 	  <thead>
 	    <tr>
-	      <th width="300">Author</th>
+	      <th width="300">Leading Investigator</th>
 	      <th >Project Title</th>
 	    </tr>
 	  </thead>
 	  <tbody>
-		  <% @projects.all.each do |project| %>
+		  <% @projects.all.order(:author).each do |project| %>
 		  	<% if project.approved? %>
 		    	<tr>
 			      <td><%= project.author %></td>
@@ -41,6 +38,8 @@
 		    	</tr>		    	
 		    <% end %>
 		  <% end %>
+		  <td>The Bioscreen</td>
+			<td class='left-align'>Hauser, Gourraud & Lizee</td>
 	  </tbody>
 	</table>
 	<%= link_to "Add New Project", "#", class: 'button right radius', data: {:"reveal-id" => "newProject"} %>
