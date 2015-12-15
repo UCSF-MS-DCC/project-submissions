@@ -24,8 +24,7 @@
 	  <thead>
 	    <tr>
 	      <th width="200">Author</th>
-	      <th width="200">Project Title</th>
-	      <th width>Project Description</th>
+	      <th >Project Title</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -34,18 +33,10 @@
 		    	<tr>
 			      <td><%= project.author %></td>
 			      <td><%= project.title %></td>
-			      <td><%= truncate(project.project_description, length: 305) { link_to "Continue", "#", class: "read-more-#{project.id}" } %></td>
-			      <!-- I understand it's generally not advisable to have an inline script, though this solves the truncating issues nicely without a vendor library -->
-			      <script type="text/javascript">
-			      	$('.read-more-<%= project.id %>').on('click', function(e) {
-				        $(this).parent().html('<%= escape_javascript project.project_description %>')
-				      })
-			      </script>
 		    	</tr>
 		    	<% else %>
 		    	<tr class='awaiting-approval'>
 			      <td><%= project.author %></td>
-			      <td>(awaiting approval)</td>
 			      <td>(awaiting approval)</td>
 		    	</tr>		    	
 		    <% end %>
