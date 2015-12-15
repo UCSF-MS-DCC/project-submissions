@@ -28,11 +28,11 @@
 		<%= add_gritter( "This website is optimized for chrome and FireFox browsers. Please considering switching browsers or updating Safari to version 9.", :title => "Notice", :time => 8000) %>
 	<% end %>
 <% else %>
+<% end %>		
 		$(function() {
 			var BV = new $.BigVideo({useFlashForFirefox:false});
 			BV.init();
 			BV.show({ type: "video/mp4",  src: "<%= video_url('EPICloop.mp4') %>"});
 		});
-<% end %>		
 
 </script>
