@@ -33,11 +33,11 @@ $colors: $teal;
 	position: absolute;
 	top:5%;
 	max-width:none;
-	-ms-transform: translate(0%, -50%);
-	-webkit-transform: translate(0%, -50%);
-	-moz-transform: translate(0%, -50%);
-	-o-transform: translate(0%, -50%);
-	transform: translate(0%, -50%);
+	-ms-transform:translate(0%,-50%);
+	-webkit-transform:translate(0%,-50%);
+	-moz-transform:translate(0%,-50%);
+	-o-transform:translate(0%,-50%);
+	transform:translate(0%, -50%);
 }
 
 .right-absolute{
