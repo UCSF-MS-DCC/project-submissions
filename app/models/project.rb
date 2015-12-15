@@ -5,6 +5,6 @@ class Project < ActiveRecord::Base
 	validates :title, presence: true
 	validates :author, presence: true
 	validates :project_description, presence: true
-	validates :data_description, presence: true
-	validates :data_frequency, presence: true
+	# validates :data_description, presence: true
+	# validates :data_frequency, presence: true
 end
