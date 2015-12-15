@@ -32,12 +32,12 @@
 		  	<% if project.approved? %>
 		    	<tr>
 			      <td><%= project.author %></td>
-			      <td><%= project.title %></td>
+			      <td class='left-align'><%= project.title %></td>
 		    	</tr>
 		    	<% else %>
 		    	<tr class='awaiting-approval'>
 			      <td><%= project.author %></td>
-			      <td>(awaiting approval)</td>
+			      <td class='left-align'>(awaiting approval)</td>
 		    	</tr>		    	
 		    <% end %>
 		  <% end %>
