@@ -34,3 +34,7 @@ a, a:hover {
 .left-align{
 	text-align: left;
 }
+
+.margin-top{
+	margin-top: 2em;
+}
