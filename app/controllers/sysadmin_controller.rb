@@ -7,12 +7,8 @@ class SysadminController < ApplicationController
 
 	def update
 		@sysadmin = Sysadmin.find(params[:id])
-		puts "The params are*************"
-		puts params
-		puts "The params are*************"
 		@sysadmin.update_attributes(content: params[:sysadmin][:content])
 		redirect_to sysadmin_index_path
-
 	end
 
 	private
