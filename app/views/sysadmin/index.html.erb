@@ -9,14 +9,9 @@
 </div>
 
 <div class='row'>
-<%= form_for @sysadmin do |f| %>
-	<%= f.text_area :content, :class => "wysiwyg" %>
-	<%= f.submit 'Submit', :class => 'button radius right' %>
+	<% @sysadmins.each do |sysadmin| %>
+		<%= link_to sysadmin.title, sysadmin %>
+		<br>
 	<% end %>
+	<%= link_to "Create new project", new_sysadmin_path, :class => "button right" %>
 </div>		
-
-<script>
-	$(function() {
-		$('.wysiwyg').froalaEditor();
-	});
-</script>
