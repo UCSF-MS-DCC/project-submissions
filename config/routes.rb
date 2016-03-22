@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :publications, only: [:index]
   resources :fundings, only: [:index]
   resources :dictionary, only: [:index]
-  resources :sysadmin, only: [:index, :update]
+  resources :sysadmin
 
   root 'welcome#index'
 
