@@ -51,3 +51,4 @@ gem 'browser'
 gem 'cancancan'
 gem 'rolify'
 gem 'better_errors'
+gem "wysiwyg-rails"

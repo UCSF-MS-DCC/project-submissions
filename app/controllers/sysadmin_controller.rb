@@ -2,15 +2,27 @@ class SysadminController < ApplicationController
 	before_action :authorize_user
 
 	def index
+		@sysadmin = Sysadmin.first
 	end
 
-	def show
+	def update
+		@sysadmin = Sysadmin.find(params[:id])
+		puts "The params are*************"
+		puts params
+		puts "The params are*************"
+		@sysadmin.update_attributes(content: params[:sysadmin][:content])
+		redirect_to sysadmin_index_path
+
 	end
 
 	private
 
 	def authorize_user
-		authorize! :index, @index
+		if current_user
+			authorize! :index, @index
+		else
+			redirect_to root_path
+		end
 	end
 
 end
