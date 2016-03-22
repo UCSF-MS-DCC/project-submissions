@@ -2,10 +2,11 @@ Rails.application.routes.draw do
 
   devise_for :users
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  resources :projects
-  resources :publications
-  resources :fundings
-  resources :dictionary
+  resources :projects, only: [:index, :new, :create]
+  resources :publications, only: [:index]
+  resources :fundings, only: [:index]
+  resources :dictionary, only: [:index]
+  resources :sysadmin, only: [:index, :update]
 
   root 'welcome#index'
 
