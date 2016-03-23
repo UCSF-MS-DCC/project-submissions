@@ -14,13 +14,17 @@
 <br>
 
 <div class='row'>
-	<h1 class="text-center" style="background-color: white"><%= @sysadmin.title %></h1>
-	<br>
-	<div class='small-12 columns' style='background-color: white'>
-		<%= @sysadmin.content.html_safe %>
-	</div>
+	<%= form_for @sysadmin do |f| %>
+		<%= f.text_field :title%>
+		<%= f.text_area :content, :class => "wysiwyg" %>
+		<br>
+		<%= f.submit 'Save', :class => 'button radius right' %>
+	<% end %>
 </div>
-<br>
-<div class='row'>
-	<%= link_to "Edit", edit_sysadmin_path, class: "button right radius" %>
-</div>
+
+
+	<script>
+	$(function() {
+		$('.wysiwyg').froalaEditor();
+	});
+</script>
