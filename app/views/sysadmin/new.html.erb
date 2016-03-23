@@ -9,9 +9,15 @@
 </div>
 
 <div class='row'>
+	<%= link_to "Index of Pages", sysadmin_index_path, class: "left" %>
+</div>
+<br>
+
+<div class='row'>
 	<%= form_for @sysadmin, url: {action: "create"} do |f| %>
-		<%= f.text_area :title %>
+		<%= f.text_area :title, placeholder: "title" %>
 		<%= f.text_area :content, :class => "wysiwyg" %>
+		<br>
 		<%= f.submit 'Submit', :class => 'button radius right' %>
 	<% end %>
 </div>
