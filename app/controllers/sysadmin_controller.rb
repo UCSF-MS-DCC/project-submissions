@@ -26,7 +26,7 @@ class SysadminController < ApplicationController
 
 	def update
 		@sysadmin = Sysadmin.find(params[:id])
-		@sysadmin.update_attributes(content: params[:sysadmin][:content])
+		@sysadmin.update_attributes(content: params[:sysadmin][:content], title: params[:sysadmin][:title])
 		redirect_to sysadmin_path
 	end
 
