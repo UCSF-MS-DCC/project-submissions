@@ -10,6 +10,10 @@ class SysadminController < ApplicationController
 		puts @sysadmin
 	end
 
+	def edit
+		@sysadmin = Sysadmin.find(params[:id])
+	end
+
 	def create
 		Sysadmin.create(strong_params)
 		redirect_to sysadmin_index_path
@@ -23,7 +27,7 @@ class SysadminController < ApplicationController
 	def update
 		@sysadmin = Sysadmin.find(params[:id])
 		@sysadmin.update_attributes(content: params[:sysadmin][:content])
-		redirect_to sysadmin_index_path
+		redirect_to sysadmin_path
 	end
 
 	private
