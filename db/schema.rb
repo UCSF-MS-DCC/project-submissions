@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323163945) do
+ActiveRecord::Schema.define(version: 20160323222944) do
 
   create_table "projects", force: true do |t|
     t.string   "title"
@@ -69,15 +69,27 @@ ActiveRecord::Schema.define(version: 20160323163945) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
 
+  create_table "version_associations", force: true do |t|
+    t.integer "version_id"
+    t.string  "foreign_key_name", null: false
+    t.integer "foreign_key_id"
+  end
+
+  add_index "version_associations", ["foreign_key_name", "foreign_key_id"], name: "index_version_associations_on_foreign_key"
+  add_index "version_associations", ["version_id"], name: "index_version_associations_on_version_id"
+
   create_table "versions", force: true do |t|
-    t.string   "item_type",                     null: false
-    t.integer  "item_id",                       null: false
-    t.string   "event",                         null: false
+    t.string   "item_type",                         null: false
+    t.integer  "item_id",                           null: false
+    t.string   "event",                             null: false
     t.string   "whodunnit"
-    t.text     "object",     limit: 1073741823
+    t.text     "object",         limit: 1073741823
     t.datetime "created_at"
+    t.text     "object_changes", limit: 1073741823
+    t.integer  "transaction_id"
   end
 
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
+  add_index "versions", ["transaction_id"], name: "index_versions_on_transaction_id"
 
 end
