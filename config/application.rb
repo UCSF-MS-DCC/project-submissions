@@ -1,5 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
+require 'csv'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -21,4 +22,11 @@ module ProjectUploader
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
   end
+  
+    ActionController::Renderers.add :csv do |obj, options|
+      filename = options[:filename] || 'data'
+      str = obj.respond_to?(:to_csv) ? obj.to_csv : obj.to_s
+      send_data str, :type => Mime::CSV,
+        :disposition => "attachment; filename=#{filename}.csv"
+    end
 end

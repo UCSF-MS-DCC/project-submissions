@@ -1,4 +1,5 @@
 RailsAdmin.config do |config|
+  config.authorize_with :cancan
   config.authenticate_with do
     warden.authenticate! scope: :user
   end

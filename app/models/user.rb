@@ -7,6 +7,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
 	def assign_default_role
-		add_role(:user)
+		add_role(:edss)
 	end
 end

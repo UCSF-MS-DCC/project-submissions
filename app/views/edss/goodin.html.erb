@@ -1,0 +1,26 @@
+<%= render 'layouts/navbar' %>
+
+<div class'row margin-top'>
+	<div class='panel small-12 columns text-center'>
+		<h1>
+			Goodin Remote EDSS Data
+		</h1>
+	</div>
+</div>
+
+<div class='row'>
+	<div class='small-12 columns panel callout '>
+		<strong>By filling in a valid API key and clicking "Download Data" you authorize that you have the proper access to the indicated RedCap Project. You will be downloading PHI; please be careful with this information.</strong>
+	</div>
+</div>
+
+<div class='row'>
+	<div class='small-12 columns'>
+		<%= form_tag '/edss/goodin/calculate.csv' do %>
+		    <%=text_field_tag 'goodinAPI', nil, placeholder: 'Enter project API key'%>
+		    <div><%= submit_tag 'Download Data', class: "button right radius", id: "goodinEDSS" %></div>
+		<% end %>
+	</div>
+</div>
+
+<%= render 'layouts/footer' %>
