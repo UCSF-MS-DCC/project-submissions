@@ -8,7 +8,12 @@ Rails.application.routes.draw do
   resources :dictionary, only: [:index]
   resources :sysadmin
 
+  get 'edss/bove', to: 'edss#bove'
+  post 'edss/bove/calculate', to: 'edss#bove_calculate'
+  get 'edss/goodin', to: 'edss#goodin'
+  post 'edss/goodin/calculate', to: 'edss#goodin_calculate'
   root 'welcome#index'
+
 
   get "*path", to: 'application#raise_not_found'
   

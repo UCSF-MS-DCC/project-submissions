@@ -1,5 +1,5 @@
 class SysadminController < ApplicationController
-	before_action :authorize_user
+	before_action :check_user
 
 	def index
 		@sysadmins = Sysadmin.all
@@ -7,7 +7,6 @@ class SysadminController < ApplicationController
 
 	def new
 		@sysadmin = Sysadmin.new
-		puts @sysadmin
 	end
 
 	def edit
@@ -32,9 +31,9 @@ class SysadminController < ApplicationController
 
 	private
 
-	def authorize_user
+	def check_user
 		if current_user
-			authorize! :index, @index
+			authorize_resource :class => false
 		else
 			redirect_to root_path
 		end

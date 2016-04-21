@@ -1,0 +1,2 @@
+module EdssHelper
+end
