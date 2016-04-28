@@ -69,10 +69,4 @@ class EdssController < ApplicationController
 		request.body
 	end
 
-	def check_user
-		if current_user
-		else
-			redirect_to root_path
-		end
-	end
 end

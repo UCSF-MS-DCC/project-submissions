@@ -1,0 +1,29 @@
+<div class="row margin-top">
+  <div class="large-12 columns">
+    <div class="callout panel radius text-center">
+      <h1>Redcap Data</h1>
+      <%= link_to "download redcap data", '/myo/download_redcap_data.csv', :method=> :post %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+		<table class="tablesorter radius" id="dictionary">
+		  <thead>
+		    <tr>
+		    	<% @data[0].each do |row| %>
+		    		<th class='small'><%= row%></th>
+		      <% end %>
+		    </tr>
+		  </thead>
+<tbody>
+		  	<% @data.drop(1).each  do |row| %>
+	    		<tr>
+	    			<% row.each do |item| %>
+		      			<td><%= item %></td>
+		      	<% end %>
+	    		</tr>  
+	    	<% end %>    	   	    	    	   	
+		  </tbody>
+		</table>
+	</div>		

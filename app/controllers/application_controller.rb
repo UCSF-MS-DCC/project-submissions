@@ -14,4 +14,11 @@ class ApplicationController < ActionController::Base
     true
   end
 
+  def check_user
+    if current_user
+    else
+      redirect_to root_path
+    end
+  end  
+
 end

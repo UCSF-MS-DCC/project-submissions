@@ -8,7 +8,14 @@ class Ability
       cannot :manage, :sysadmin
       cannot :access, :rails_admin
       cannot :manage, :admin
+      cannot :manage, :myo
     	can :manage, :edss
+    elsif user.has_role? :myo
+      cannot :manage, :sysadmin
+      cannot :access, :rails_admin
+      cannot :manage, :admin
+      cannot :manage, :edss      
+      can :manage, :myo
     else
       cannot :manage, :sysadmin
       cannot :access, :rails_admin    	
