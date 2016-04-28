@@ -1,3 +1,4 @@
+<div id="myo">
 <div class="row margin-top">
   <div class="large-12 columns">
     <div class="callout panel radius text-center">
@@ -8,7 +9,7 @@
 </div>
 
 <div class="row">
-		<table class="tablesorter radius" id="dictionary">
+		<table class="tablesorter radius" id="redcap_data">
 		  <thead>
 		    <tr>
 		    	<% @data[0].each do |row| %>
@@ -16,7 +17,7 @@
 		      <% end %>
 		    </tr>
 		  </thead>
-<tbody>
+			<tbody>
 		  	<% @data.drop(1).each  do |row| %>
 	    		<tr>
 	    			<% row.each do |item| %>
@@ -27,3 +28,4 @@
 		  </tbody>
 		</table>
 	</div>		
+</div>

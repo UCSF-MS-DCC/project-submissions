@@ -1,0 +1,64 @@
+<div id="myo">
+	<div class="row margin-top">
+	  <div class="large-12 columns">
+	    <div class="callout panel radius text-center">
+	      <h1>Participants</h1>
+	    </div>
+	  </div>
+	</div>
+
+
+	<div class='row'>
+		<div class='small-4 columns text-center panel'>
+			<%= link_to "Upload Files", myo_upload_path, target: "_blank" %>
+		</div>
+		<div class='small-4 columns text-center panel'>
+			<strong><%= link_to "Participants", myo_participants_path, target: "_blank" %></strong>
+		</div>
+		<div class='small-4 columns text-center panel'>
+			<%= link_to "Redcap Data", myo_redcap_path, target: "_blank" %>
+		</div>
+	</div>
+
+	<table>
+		<thead>
+			<tr>
+				<th width='75'>Id</th>
+	    	<th width='150'>Trac MS Myo ID</th>
+	    	<th width='150'>Name</th>
+	    	<th>Scheduled</th>
+	    	<th>Exam</th>
+	    	<th>Myo</th>
+	    	<th>Redcap Intake</th>
+	    	<th>Redcap MS Information</th>
+	    	<th>Redcap WHODAS</th>
+	    	<th>Redcap Health Intake</th>
+	    	<th></th>
+	    </tr>
+		</thead>
+		<tbody>
+			<% @participants.each do |participant| %>
+				<tr>
+					<%= form_for participant, url: {action: "update", params: {id: participant.id}} do |f| %>
+						<td><%= f.text_field :participant_id %></td>
+			    	<td><%= f.text_field :tracms_myo_id %></td>
+			    	<td><%= f.text_field :name %></td>
+			    	<td><%= f.date_field :scheduled_date %></td>
+			    	<td><%= f.date_field :exam_date %></td>
+			    	<td><%= f.check_box :myo_visit %></td>
+			    	<td><%= f.check_box :redcap_intake_q %></td>
+			    	<td><%= f.check_box :redcap_ms_info %></td>
+			    	<td><%= f.check_box :redcap_whodas %></td>
+			    	<td><%= f.check_box :redcap_health_intake %></td>
+			    	<td><%= f.submit "Update" , class: 'button radius' %></td>
+			    <% end %>
+		    </tr>
+			<% end %>
+		</tbody>
+	</table>
+
+</div>
+
+<div class='row'>
+	<%= link_to "Add Participant", new_myo_path, class: "small-12 columns right button radius" %>
+</div>

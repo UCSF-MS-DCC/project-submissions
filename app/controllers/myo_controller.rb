@@ -5,6 +5,25 @@ class MyoController < ApplicationController
 	def index
 	end
 
+	def new
+		@participant = MyoParticipant.new
+	end
+
+	def create
+		@participant = MyoParticipant.new(participant_params)
+		if @participant.save
+			redirect_to myo_participants_path
+		else
+
+		end
+	end
+
+	def update
+		@participant = MyoParticipant.find(params["id"])
+		@participant.update_attributes(participant_params)
+		redirect_to myo_participants_path
+	end
+
 	def redcap
 		@data = CSV.parse(redcap_data)
 		@data = @data.transpose
@@ -22,6 +41,14 @@ class MyoController < ApplicationController
 	  end				
 	end
 
+	def participants
+		@participants = MyoParticipant.all
+	end
+
+	def upload
+	end
+
+
 	private
 
 	def redcap_data
@@ -36,6 +63,10 @@ class MyoController < ApplicationController
 		}
 		request= Net::HTTP.post_form(url, post_args)
 		request.body
+	end
+
+	def participant_params
+		params.require(:myo_participant).permit(:participant_id, :tracms_myo_id, :name, :scheduled_date, :exam_date, :myo_visit, :redcap_intake_q, :redcap_ms_info, :redcap_whodas, :redcap_health_intake, :mrn)
 	end
 
 end

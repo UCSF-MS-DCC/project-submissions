@@ -11,7 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160323222944) do
+ActiveRecord::Schema.define(version: 20160428164557) do
+
+  create_table "myo_participants", force: true do |t|
+    t.integer  "participant_id"
+    t.integer  "tracms_myo_id"
+    t.string   "name"
+    t.date     "scheduled_date"
+    t.date     "exam_date"
+    t.boolean  "myo_visit"
+    t.boolean  "redcap_intake_q"
+    t.boolean  "redcap_ms_info"
+    t.boolean  "redcap_whodas"
+    t.boolean  "redcap_health_intake"
+    t.string   "mrn"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "projects", force: true do |t|
     t.string   "title"
