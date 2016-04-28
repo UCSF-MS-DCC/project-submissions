@@ -6,15 +6,16 @@ class MyoController < ApplicationController
 	end
 
 	def new
-		@participant = MyoParticipant.new
 	end
 
 	def create
 		@participant = MyoParticipant.new(participant_params)
-		if @participant.save
-			redirect_to myo_participants_path
-		else
-
+		respond_to do |format|
+			if @participant.save
+				format.js 
+			else
+				format.js { render 'notifications.js.erb'}
+			end
 		end
 	end
 
@@ -43,6 +44,7 @@ class MyoController < ApplicationController
 
 	def participants
 		@participants = MyoParticipant.all
+		@participant = MyoParticipant.new
 	end
 
 	def upload
