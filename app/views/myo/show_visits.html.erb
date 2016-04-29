@@ -1,0 +1,55 @@
+<div id="myo">
+	<div class="row margin-top">
+	  <div class="large-12 columns">
+	    <div class="callout panel radius text-center">
+	      <h1>Visits</h1>
+	    </div>
+	  </div>
+	</div>
+
+
+	<div class='row'>
+		<div class='small-4 columns text-center panel'>
+			<%= link_to "Upload Files", myo_upload_path, target: "_blank" %>
+		</div>
+		<div class='small-4 columns text-center panel'>
+			<strong><%= link_to "Participants", myo_participants_path, target: "_blank" %></strong>
+		</div>
+		<div class='small-4 columns text-center panel'>
+			<%= link_to "Redcap Data", myo_redcap_path, target: "_blank" %>
+		</div>
+	</div>
+
+<div class='row'>
+	<div class='small-12 columns'>
+		<table width='100%'>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Visit Date</th>
+					<% @visits.each do |visit| %>
+						<% visit.myo_files.each do |file| %>
+							<th>File</th>
+						<% end %>
+					<% end %>	
+		    </tr>
+			</thead>
+			<tbody>
+				<% @visits.each do |visit| %>
+					<tr>
+						<td>Visit<%= visit.id %></td>
+						<td><%= visit.visit_date%></td>
+						<% visit.myo_files.each do |file| %>
+							<td><%= file[:file]%></td>
+						<% end %>
+						<td> <%= link_to "Edit", controller: "myo", action: "show_visit", id: visit.id %> </td>
+			    </tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+	<div class='row'>
+		<%= link_to "Add New Visit", controller: "myo", action: "new_visit" , params: {id: @participant.id} %>
+	</div>

@@ -8,11 +8,13 @@
 	</div>
 
 <div class='row'>
-	<%= form_for @visit, url: {action: "update_visit", params: {id: @visit.id}} do |f| %>
-		<label> Visit Files
-			<%= f.file_field :myo_file, multiple: true, name: "trac_visit[myo_file][]" %>
-		</label>
-		<%= f.submit "Upload Files", class: "button radius small-12 columns" %>
+	<%= form_for @visit, :html => { :multipart => true }, url: {action: "update_visit", params: {id: @visit.id}} do |f| %>
+		<%= f.fields_for :myo_files do |p| %>
+			<label> Visit Files
+				<%= p.file_field :file, multiple: true, name: "myo_files[file][]" %>
+			</label>
+		<% end %>
+	<%= f.submit "Upload Files", class: "button radius small-12 columns" %>
 	<% end %>
 </div>
 

@@ -21,7 +21,6 @@ class MyoController < ApplicationController
 
 	def update
 		@participant = MyoParticipant.find(params["id"])
-		asd
 		@participant.update_attributes(participant_params)
 		redirect_to myo_participants_path
 	end
@@ -48,17 +47,45 @@ class MyoController < ApplicationController
 		@participant = MyoParticipant.new
 	end
 
+	def show_participant
+		@participant = MyoParticipant.find(params["id"])
+	end
+
 	def upload
 		@participants = MyoParticipant.all
 	end
 
 	def show_visit
 		@visit = TracVisit.find(params["id"])
+		@myo_files = @visit.myo_files
 	end
+
+	def new_visit
+		@participant = MyoParticipant.find(params["id"])
+		@visit = @participant.trac_visits.new
+		@myo_files = @visit.myo_files.build
+	end
+
+	def create_visit
+		@visit = TracVisit.new(visit_params)
+		if @visit.save
+			params[:myo_files]['file'].each do |a|
+				@myo_file = @visit.myo_files.create!(:file => a)
+			end				
+			render "show_visits"
+		end
+	end
+
+	def show_visits
+		@participant = MyoParticipant.find(params["id"])
+		@visits = @participant.trac_visits
+	end	
 
 	def update_visit	
 		@visit = TracVisit.find(params["id"])
-		@visit.update_attributes(visit_params)
+		params[:myo_files]['file'].each do |a|
+			@myo_file = @visit.myo_files.create!(:file => a)
+		end		
 		redirect_to myo_participants_path
 	end
 
@@ -84,7 +111,7 @@ class MyoController < ApplicationController
 	end
 
 	def visit_params
-		params.require(:trac_visit).permit!
+		params.require(:trac_visit).permit(:visit_date, :myo_participant_id, myo_files_attributes: [:id, :trac_visit_id, :file])
 	end
 
 end

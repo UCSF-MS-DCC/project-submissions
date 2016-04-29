@@ -45,7 +45,7 @@ gem "wysiwyg-rails"
 gem 'paper_trail'
 gem 'pry'
 gem 'binding_of_caller'
-gem 'carrierwave'
+gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 
 group :development do 
 	gem 'better_errors'

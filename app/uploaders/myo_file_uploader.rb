@@ -13,7 +13,9 @@ class MyoFileUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    visit_date = TracVisit.find(model.trac_visit.id).visit_date 
+    participant_id = TracVisit.find(model.trac_visit.id).myo_participant_id
+    "#{Rails.root}/myo/myo_data/#{visit_date}/#{participant_id}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

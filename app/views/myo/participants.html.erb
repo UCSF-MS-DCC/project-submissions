@@ -28,45 +28,47 @@
 		</div>
 	</div>
 
-<table id='participants'>
-	<thead>
-		<tr>
-			<th width='75'>Id</th>
-    	<th width='150'>Trac MS Myo ID</th>
-    	<th width='150'>Name</th>
-    	<th>Scheduled</th>
-    	<th>Exam</th>
-    	<th>Myo</th>
-    	<th>Intake</th>
-    	<th>MS Information</th>
-    	<th>WHODAS</th>
-    	<th>Health Intake</th>
-    	<th></th>
-    </tr>
-	</thead>
-	<tbody>
-		<% @participants.each do |participant| %>
-			<tr>
-				<%= form_for participant, url: {action: "update", params: {id: participant.id}} do |f| %>
-					<td><%= f.text_field :participant_id %></td>
-		    	<td><%= f.text_field :tracms_myo_id %></td>
-		    	<td><%= f.text_field :name %></td>
-		    	<td><%= f.date_field :scheduled_date %></td>
-		    	<td><%= f.date_field :exam_date %></td>
-		    	<td><%= f.check_box :myo_visit %></td>
-		    	<td><%= f.check_box :redcap_intake_q %></td>
-		    	<td><%= f.check_box :redcap_ms_info %></td>
-		    	<td><%= f.check_box :redcap_whodas %></td>
-		    	<td><%= f.check_box :redcap_health_intake %></td>
-		    	<td><%= f.submit "Update" , class: 'button radius' %></td>
-		    <% end %>
-	    </tr>
-		<% end %>
-	</tbody>
-</table>
-
-</div>
-
 <div class='row'>
-	<%= link_to "Add New Participant", "#", class: 'button right radius', data: {:"reveal-id" => "newParticipant"} %>
+	<table id='participants'>
+		<thead>
+			<tr>
+				<th>Id</th>
+	    	<th>Trac MS Myo ID</th>
+	    	<th>Name</th>
+	    	<th>Scheduled Date</th>
+	    	<th>Exam Date</th>
+	    	<th>Number of Visits</th>
+	    	<th>Myo Visit?</th>
+	    	<th>Redcap Intake</th>
+	    	<th>Redcap MS Information</th>
+	    	<th>Redcap WHODAS</th>
+	    	<th>Redcap Health Intake</th>
+	    	<th></th>
+	    </tr>
+		</thead>
+		<tbody>
+			<% @participants.each do |participant| %>
+				<tr>
+						<td><%= participant.participant_id %></td>
+			    	<td><%= participant.tracms_myo_id %></td>
+			    	<td><%= participant.name %></td>
+			    	<td><%= participant.scheduled_date %></td>
+			    	<td><%= participant.exam_date %></td>
+			    	<td><%= link_to participant.trac_visits.count, controller: "myo", action: 'show_visits', id: participant %></td>
+			    	<td><%=participant.myo_visit %></td>
+			    	<td><%=participant.redcap_intake_q %></td>
+			    	<td><%=participant.redcap_ms_info %></td>
+			    	<td><%=participant.redcap_whodas %></td>
+			    	<td><%=participant.redcap_health_intake %></td>
+			    	<td> <%= link_to "Edit", controller: "myo", action: "show_participant", class: 'button radius', id: participant %> </td>
+		    </tr>
+			<% end %>
+		</tbody>
+	</table>
+
+	</div>
+
+	<div class='row'>
+		<%= link_to "Add New Participant", "#", class: 'button right radius', data: {:"reveal-id" => "newParticipant"} %>
+	</div>
 </div>

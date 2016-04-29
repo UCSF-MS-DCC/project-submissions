@@ -1,5 +1,8 @@
 class TracVisit < ActiveRecord::Base
 	belongs_to :myo_participant
+	has_many :myo_files
+  accepts_nested_attributes_for :myo_files
 
-	mount_uploader :myo_file, MyoFileUploader
+  
+  validates :visit_date, presence: true
 end
