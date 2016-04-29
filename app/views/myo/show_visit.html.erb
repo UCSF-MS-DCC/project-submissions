@@ -1,0 +1,18 @@
+<div id="myo">
+	<div class="row margin-top">
+	  <div class="large-12 columns">
+	    <div class="callout panel radius text-center">
+	      <h1>Track Myo Upload Files</h1>
+	    </div>
+	  </div>
+	</div>
+
+<div class='row'>
+	<%= form_for @visit, url: {action: "update_visit", params: {id: @visit.id}} do |f| %>
+		<label> Visit Files
+			<%= f.file_field :myo_file, multiple: true, name: "trac_visit[myo_file][]" %>
+		</label>
+		<%= f.submit "Upload Files", class: "button radius small-12 columns" %>
+	<% end %>
+</div>
+

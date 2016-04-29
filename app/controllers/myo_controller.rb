@@ -21,6 +21,7 @@ class MyoController < ApplicationController
 
 	def update
 		@participant = MyoParticipant.find(params["id"])
+		asd
 		@participant.update_attributes(participant_params)
 		redirect_to myo_participants_path
 	end
@@ -48,6 +49,17 @@ class MyoController < ApplicationController
 	end
 
 	def upload
+		@participants = MyoParticipant.all
+	end
+
+	def show_visit
+		@visit = TracVisit.find(params["id"])
+	end
+
+	def update_visit	
+		@visit = TracVisit.find(params["id"])
+		@visit.update_attributes(visit_params)
+		redirect_to myo_participants_path
 	end
 
 
@@ -69,6 +81,10 @@ class MyoController < ApplicationController
 
 	def participant_params
 		params.require(:myo_participant).permit(:participant_id, :tracms_myo_id, :name, :scheduled_date, :exam_date, :myo_visit, :redcap_intake_q, :redcap_ms_info, :redcap_whodas, :redcap_health_intake, :mrn)
+	end
+
+	def visit_params
+		params.require(:trac_visit).permit!
 	end
 
 end

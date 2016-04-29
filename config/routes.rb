@@ -11,10 +11,12 @@ Rails.application.routes.draw do
   post 'myo/download_redcap_data', to: 'myo#download_redcap_data'
   get 'myo/redcap', to: 'myo#redcap'
   get 'myo/participants', to: 'myo#participants'
+  get 'myo/visit/:id', to: 'myo#show_visit'
   get 'myo/upload', to: 'myo#upload'
   resources :myo  do 
     patch :update, :on => :collection
     post :create, :on => :collection
+    patch :update_visit, :on => :collection
   end
 
 

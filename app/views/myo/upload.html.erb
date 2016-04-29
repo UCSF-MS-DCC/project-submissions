@@ -1,0 +1,47 @@
+<div id="myo">
+	<div class="row margin-top">
+	  <div class="large-12 columns">
+	    <div class="callout panel radius text-center">
+	      <h1>Upload Files</h1>
+	    </div>
+	  </div>
+	</div>
+
+
+	<div class='row'>
+		<div class='small-4 columns text-center panel'>
+			<%= link_to "Upload Files", myo_upload_path, target: "_blank" %>
+		</div>
+		<div class='small-4 columns text-center panel'>
+			<strong><%= link_to "Participants", myo_participants_path, target: "_blank" %></strong>
+		</div>
+		<div class='small-4 columns text-center panel'>
+			<%= link_to "Redcap Data", myo_redcap_path, target: "_blank" %>
+		</div>
+	</div>
+
+<div class='row'>
+	<table id='participants'>
+		<thead>
+			<tr>
+				<th>Id</th>
+	    	<th>Trac MS Myo ID</th>
+	    	<th>Name</th>
+	    	<th>Visit 1 Files</th>
+	    	<th>Visit 2 Files</th>
+	    </tr>
+		</thead>
+		<tbody>
+			<% @participants.each do |participant| %>
+				<tr>
+					<td><%= participant.participant_id %></td>
+		    	<td><%= participant.tracms_myo_id %></td>
+		    	<td><%= participant.name %></td>
+		    	<% participant.trac_visits.each do |visit| %>
+		    	<td> <%= link_to "upload files", controller: "myo", action: "show_visit", id: visit %> </td>
+		    		<% end %>
+		    </tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

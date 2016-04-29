@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160428215047) do
+ActiveRecord::Schema.define(version: 20160428220109) do
 
   create_table "myo_participants", force: true do |t|
     t.integer  "participant_id"
@@ -25,13 +25,6 @@ ActiveRecord::Schema.define(version: 20160428215047) do
     t.boolean  "redcap_whodas"
     t.boolean  "redcap_health_intake"
     t.string   "mrn"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "myo_visits", force: true do |t|
-    t.integer  "myo_participant_id"
-    t.date     "visit_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -64,6 +57,14 @@ ActiveRecord::Schema.define(version: 20160428215047) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+  end
+
+  create_table "trac_visits", force: true do |t|
+    t.integer  "myo_participant_id"
+    t.date     "visit_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "myo_file"
   end
 
   create_table "users", force: true do |t|
