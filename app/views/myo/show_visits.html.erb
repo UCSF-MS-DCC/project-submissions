@@ -25,7 +25,6 @@
 		<table width='100%'>
 			<thead>
 				<tr>
-					<th>Id</th>
 					<th>Visit Date</th>
 					<% @visits.each do |visit| %>
 						<% visit.myo_files.each do |file| %>
@@ -37,7 +36,6 @@
 			<tbody>
 				<% @visits.each do |visit| %>
 					<tr>
-						<td>Visit<%= visit.id %></td>
 						<td><%= visit.visit_date%></td>
 						<% visit.myo_files.each do |file| %>
 							<td><%= file[:file]%></td>

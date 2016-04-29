@@ -23,11 +23,11 @@
 
 <div class='row'>
 	<%= form_for @visit, :html => { :multipart => true }, url: {action: "create_visit", params: {id: @visit.id}} do |f| %>
-	<label>Visit Date
-	</label>
 		<%= f.fields_for :myo_files do |p| %>
-		<%= f.hidden_field :myo_participant_id %>
-		<%= f.date_field :visit_date %>
+			<%= f.hidden_field :myo_participant_id %>
+			<label>Visit Date
+				<%= f.date_field :visit_date %>
+			</label>
 			<label> Visit Files
 				<%= p.file_field :file, multiple: true, name: "myo_files[file][]" %>
 			</label>

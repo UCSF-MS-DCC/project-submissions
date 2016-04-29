@@ -55,9 +55,23 @@ class MyoController < ApplicationController
 		@participants = MyoParticipant.all
 	end
 
+	def show_visits
+		@participant = MyoParticipant.find(params["id"])
+		@visits = @participant.trac_visits
+	end	
+
 	def show_visit
 		@visit = TracVisit.find(params["id"])
-		@myo_files = @visit.myo_files
+		@myo_files = @visit.myo_files.build
+		@myo_files = @visit.myo_files.all
+	end
+
+	def update_visit	
+		@visit = TracVisit.find(params["id"])
+		params[:myo_files]['file'].each do |a|
+			@myo_file = @visit.myo_files.create!(:file => a)
+		end		
+		redirect_to myo_participants_path
 	end
 
 	def new_visit
@@ -72,23 +86,17 @@ class MyoController < ApplicationController
 			params[:myo_files]['file'].each do |a|
 				@myo_file = @visit.myo_files.create!(:file => a)
 			end				
-			render "show_visits"
+			render "show_participants"
 		end
 	end
 
-	def show_visits
-		@participant = MyoParticipant.find(params["id"])
-		@visits = @participant.trac_visits
-	end	
-
-	def update_visit	
-		@visit = TracVisit.find(params["id"])
-		params[:myo_files]['file'].each do |a|
-			@myo_file = @visit.myo_files.create!(:file => a)
-		end		
-		redirect_to myo_participants_path
+	def delete_file
+		@myo_file = MyoFile.find(params[:image_id])
+		respond_to do |format|
+			@myo_file.destroy
+			format.js 
+		end
 	end
-
 
 	private
 

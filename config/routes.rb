@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   post 'myo/participant/:id/visit', to: 'myo#create_visit'
   post 'myo/visit', to: 'myo#create_visit'
   get 'myo/upload', to: 'myo#upload'
+  get 'myo/delete_file/:id', to: 'myo#delete_file'
+
   resources :myo  do 
     patch :update, :on => :collection
     post :create, :on => :collection

@@ -7,8 +7,19 @@
 	  </div>
 	</div>
 
+<% @myo_files.each do |p| %>
+<div class='row' id= <%= p.id %>>
+	  <%= image_tag p[:file] %>
+	  <%= link_to "Delete File", controller: "myo", action: "delete_file" , remote: true, params: {image_id: p.id} %>
+	  <br>
+</div>
+	<% end %>	
+
 <div class='row'>
 	<%= form_for @visit, :html => { :multipart => true }, url: {action: "update_visit", params: {id: @visit.id}} do |f| %>
+			<label>Visit Date
+				<%= f.date_field :visit_date %>
+			</label>		
 		<%= f.fields_for :myo_files do |p| %>
 			<label> Visit Files
 				<%= p.file_field :file, multiple: true, name: "myo_files[file][]" %>
