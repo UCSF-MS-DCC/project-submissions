@@ -20,8 +20,8 @@ Rails.application.routes.draw do
   get 'myo/participant/:id/visit', to: 'myo#new_visit'
   post 'myo/participant/:id/visit', to: 'myo#create_visit'
   post 'myo/visit', to: 'myo#create_visit'
-  get 'myo/upload', to: 'myo#upload'
   get 'myo/delete_file/:id', to: 'myo#delete_file'
+  get 'myo/download_file/:id' => 'myo#download_file', as: :myo_download_file
 
   resources :myo  do 
     patch :update, :on => :collection

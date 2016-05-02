@@ -8,6 +8,18 @@
   </div>
 </div>
 
+	<div class='row'>
+		<div class='small-4 columns text-center panel'>
+			<%= link_to "Dashboard", controller: "myo", action: "index"%>
+		</div>
+		<div class='small-4 columns text-center panel'>
+			<%= link_to "Participants", myo_participants_path%>
+		</div>
+		<div class='small-4 columns text-center panel'>
+			<strong><%= link_to "Redcap Data", myo_redcap_path%></strong>
+		</div>
+	</div>
+
 <div class="row">
 		<table class="tablesorter radius" id="redcap_data">
 		  <thead>

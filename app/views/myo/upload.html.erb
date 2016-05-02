@@ -10,13 +10,13 @@
 
 	<div class='row'>
 		<div class='small-4 columns text-center panel'>
-			<%= link_to "Upload Files", myo_upload_path, target: "_blank" %>
+			<%= link_to "Dashboard", controller: "myo", action: "index"%>
 		</div>
 		<div class='small-4 columns text-center panel'>
-			<strong><%= link_to "Participants", myo_participants_path, target: "_blank" %></strong>
+			<strong><%= link_to "Participants", myo_participants_path%></strong>
 		</div>
 		<div class='small-4 columns text-center panel'>
-			<%= link_to "Redcap Data", myo_redcap_path, target: "_blank" %>
+			<%= link_to "Redcap Data", myo_redcap_path%>
 		</div>
 	</div>
 

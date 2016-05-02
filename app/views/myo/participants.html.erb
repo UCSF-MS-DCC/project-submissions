@@ -10,13 +10,13 @@
 
 	<div class='row'>
 		<div class='small-4 columns text-center panel'>
-			<%= link_to "Upload Files", myo_upload_path, target: "_blank" %>
+			<%= link_to "Dashboard", controller: "myo", action: "index"%>
 		</div>
 		<div class='small-4 columns text-center panel'>
-			<strong><%= link_to "Participants", myo_participants_path, target: "_blank" %></strong>
+			<strong><%= link_to "Participants", myo_participants_path%></strong>
 		</div>
 		<div class='small-4 columns text-center panel'>
-			<%= link_to "Redcap Data", myo_redcap_path, target: "_blank" %>
+			<%= link_to "Redcap Data", myo_redcap_path%>
 		</div>
 	</div>
 
@@ -54,13 +54,13 @@
 			    	<td><%= participant.name %></td>
 			    	<td><%= participant.scheduled_date %></td>
 			    	<td><%= participant.exam_date %></td>
-			    	<td><%= link_to participant.trac_visits.count, controller: "myo", action: 'show_visits', id: participant %></td>
+			    	<td><strong style="text-decoration: underline"><%= link_to participant.trac_visits.count, controller: "myo", action: 'show_visits', id: participant %></strong></td>
 			    	<td><%=participant.myo_visit %></td>
 			    	<td><%=participant.redcap_intake_q %></td>
 			    	<td><%=participant.redcap_ms_info %></td>
 			    	<td><%=participant.redcap_whodas %></td>
 			    	<td><%=participant.redcap_health_intake %></td>
-			    	<td> <%= link_to "Edit", controller: "myo", action: "show_participant", class: 'button radius', id: participant %> </td>
+			    	<td> <strong><%= link_to "Edit", controller: "myo", action: "show_participant", class: 'button radius', id: participant %></strong> </td>
 		    </tr>
 			<% end %>
 		</tbody>
@@ -69,6 +69,6 @@
 	</div>
 
 	<div class='row'>
-		<%= link_to "Add New Participant", "#", class: 'button right radius', data: {:"reveal-id" => "newParticipant"} %>
+		<%= button_to "Add New Participant", "#", class: 'button right radius', data: {:"reveal-id" => "newParticipant"} %>
 	</div>
 </div>

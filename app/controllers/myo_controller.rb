@@ -1,8 +1,14 @@
 class MyoController < ApplicationController
-	before_action :check_user
+	before_action :authenticate_user!
+	# before_action :check_user
 	authorize_resource :class => false
 		
 	def index
+		@visits = TracVisit.where("visit_date < ?", DateTime.now + 7)
+		@participants = []
+		@visits.each do |visit|
+			@participants << MyoParticipant.find(visit.myo_participant_id)
+		end
 	end
 
 	def new
@@ -62,15 +68,18 @@ class MyoController < ApplicationController
 
 	def show_visit
 		@visit = TracVisit.find(params["id"])
-		@myo_files = @visit.myo_files.build
+		# @myo_files = @visit.myo_files.build
 		@myo_files = @visit.myo_files.all
 	end
 
 	def update_visit	
 		@visit = TracVisit.find(params["id"])
-		params[:myo_files]['file'].each do |a|
-			@myo_file = @visit.myo_files.create!(:file => a)
-		end		
+		if params[:myo_files]
+			params[:myo_files]['file'].each do |a|
+				@myo_file = @visit.myo_files.create!(:file => a)
+			end		
+		end
+		@visit.update_attributes(visit_params_date)
 		redirect_to myo_participants_path
 	end
 
@@ -82,12 +91,15 @@ class MyoController < ApplicationController
 
 	def create_visit
 		@visit = TracVisit.new(visit_params)
+
 		if @visit.save
-			params[:myo_files]['file'].each do |a|
-				@myo_file = @visit.myo_files.create!(:file => a)
-			end				
-			render "show_participants"
+			if params[:myo_files]
+				params[:myo_files]['file'].each do |a|
+					@myo_file = @visit.myo_files.create!(:file => a)
+				end				
+			end
 		end
+		redirect_to myo_participants_path
 	end
 
 	def delete_file
@@ -96,6 +108,12 @@ class MyoController < ApplicationController
 			@myo_file.destroy
 			format.js 
 		end
+	end
+
+	def download_file
+		@myo_file = MyoFile.find(params[:id])
+		@visit = TracVisit.find(@myo_file.trac_visit_id)
+	  send_file("#{Rails.root}/myo/myo_data/#{@visit.visit_date}/#{@visit.myo_participant_id}/#{@myo_file[:file]}")		
 	end
 
 	private
@@ -120,6 +138,10 @@ class MyoController < ApplicationController
 
 	def visit_params
 		params.require(:trac_visit).permit(:visit_date, :myo_participant_id, myo_files_attributes: [:id, :trac_visit_id, :file])
+	end
+
+	def visit_params_date
+		params.require(:trac_visit).permit(:visit_date)
 	end
 
 end

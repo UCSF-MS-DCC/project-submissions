@@ -9,8 +9,9 @@
 
 <% @myo_files.each do |p| %>
 <div class='row' id= <%= p.id %>>
-	  <%= image_tag p[:file] %>
-	  <%= link_to "Delete File", controller: "myo", action: "delete_file" , remote: true, params: {image_id: p.id} %>
+		<%= fa_icon "file", class: "fa-2x" %>
+	  <%= p[:file] %>
+	  <strong><%= link_to "Delete File", controller: "myo", action: "delete_file" , remote: true, params: {image_id: p.id} %></strong>
 	  <br>
 </div>
 	<% end %>	
@@ -20,12 +21,12 @@
 			<label>Visit Date
 				<%= f.date_field :visit_date %>
 			</label>		
-		<%= f.fields_for :myo_files do |p| %>
 			<label> Visit Files
+		<%= f.fields_for :myo_files, @visit.myo_files.build do |p| %>
 				<%= p.file_field :file, multiple: true, name: "myo_files[file][]" %>
 			</label>
 		<% end %>
-	<%= f.submit "Upload Files", class: "button radius small-12 columns" %>
+		<%= f.submit "Update Visit", class: "button radius small-12 columns" %>
 	<% end %>
 </div>
 
