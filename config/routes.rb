@@ -13,10 +13,10 @@ Rails.application.routes.draw do
   post 'myo/download_redcap_data', to: 'myo#download_redcap_data'
   get 'myo/redcap', to: 'myo#redcap'
   get 'myo/participants', to: 'myo#participants'
-  get 'myo/participants/:id', to: 'myo#show_participant'
+  get 'myo/participants/:id', to: 'myo#show_participant', as: :myo_show_participant
   patch 'myo/participant/:id', to: 'myo#update_participant'
-  get 'myo/participant/:id/visits', to: 'myo#show_visits'
-  get 'myo/visit/:id', to: 'myo#show_visit'
+  get 'myo/participant/:id/visits', to: 'myo#show_visits', as: :myo_show_visits
+  get 'myo/visit/:id', to: 'myo#show_visit', as: :myo_show_visit
   get 'myo/participant/:id/visit', to: 'myo#new_visit'
   post 'myo/participant/:id/visit', to: 'myo#create_visit'
   post 'myo/visit', to: 'myo#create_visit'

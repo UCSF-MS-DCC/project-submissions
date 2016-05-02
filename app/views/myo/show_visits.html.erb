@@ -1,3 +1,5 @@
+<%= render 'layouts/myo_navbar' %>
+
 <div id="myo">
 	<div class="row margin-top">
 	  <div class="large-12 columns">
@@ -7,47 +9,40 @@
 	  </div>
 	</div>
 
-
 	<div class='row'>
-		<div class='small-4 columns text-center panel'>
-			<%= link_to "Dashboard", controller: "myo", action: "index"%>
-		</div>
-		<div class='small-4 columns text-center panel'>
-			<strong><%= link_to "Participants", myo_participants_path%></strong>
-		</div>
-		<div class='small-4 columns text-center panel'>
-			<%= link_to "Redcap Data", myo_redcap_path%>
-		</div>
-	</div>
-
-<div class='row'>
-	<div class='small-12 columns'>
-		<table width='100%'>
-			<thead>
-				<tr>
-					<th>Visit Date</th>
-					<% @visits.each do |visit| %>
-						<% visit.myo_files.each do |file| %>
-							<th></th>
-						<% end %>
-					<% end %>	
-		    </tr>
-			</thead>
-			<tbody>
-				<% @visits.each do |visit| %>
+		<div class='small-12 columns'>
+			<table width='100%'>
+				<thead>
 					<tr>
-						<td><%= visit.visit_date%></td>
-						<% visit.myo_files.each do |file| %>
-							<td><a href=<%= myo_download_file_path(file) %> > <%= file[:file]%> </a></td>
-						<% end %>
-						<td><strong><%= link_to "Edit", controller: "myo", action: "show_visit", id: visit.id %></strong> </td>
+						<th>Visit Date</th>
+						<% @max_images.times do |file| %>
+							<th>File #<%= file+1 %></th>
+						<% end %>	
+						<th></th>
 			    </tr>
-				<% end %>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<% @visits.each do |visit| %>
+						<tr>
+							<td><%= visit.visit_date%></td>
+							<% visit.myo_files.each do |file| %>
+								<td><a href=<%= myo_download_file_path(file) %> > <%= file[:file]%> </a></td>
+							<% end %>
+							<% (@max_images- visit.myo_files.count ).times do |blank| %>
+								<td></td>
+							<% end %>
+							<td><strong><%= link_to "Edit", controller: "myo", action: "show_visit", id: visit.id %></strong> </td>
+				    </tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
 	</div>
-</div>
 
 	<div class='row'>
-		<%= link_to "Add New Visit", controller: "myo", action: "new_visit" , params: {id: @participant.id} %>
+		<div class='small-12 columns button radius'>
+			<%= link_to "Add New Visit", controller: "myo", action: "new_visit" ,  params: {id: @participant.id} %>
+		</div>
 	</div>
+
+</div>

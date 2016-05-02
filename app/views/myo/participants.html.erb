@@ -1,3 +1,5 @@
+<%= render 'layouts/myo_navbar' %>
+
 <div id="myo">
 	<div class="row margin-top">
 	  <div class="large-12 columns">
@@ -5,19 +7,6 @@
 	      <h1>Participants</h1>
 	    </div>
 	  </div>
-	</div>
-
-
-	<div class='row'>
-		<div class='small-4 columns text-center panel'>
-			<%= link_to "Dashboard", controller: "myo", action: "index"%>
-		</div>
-		<div class='small-4 columns text-center panel'>
-			<strong><%= link_to "Participants", myo_participants_path%></strong>
-		</div>
-		<div class='small-4 columns text-center panel'>
-			<%= link_to "Redcap Data", myo_redcap_path%>
-		</div>
 	</div>
 
 	<div class="row">
@@ -43,7 +32,7 @@
 	    	<th>Redcap MS Information</th>
 	    	<th>Redcap WHODAS</th>
 	    	<th>Redcap Health Intake</th>
-	    	<th></th>
+	    	<th> </th>
 	    </tr>
 		</thead>
 		<tbody>
@@ -52,9 +41,13 @@
 						<td><%= participant.participant_id %></td>
 			    	<td><%= participant.tracms_myo_id %></td>
 			    	<td><%= participant.name %></td>
-			    	<td><%= participant.scheduled_date %></td>
+			    	<% if participant.trac_visits.empty? %>
+			    		<td><%= participant.scheduled_date || "NA" %></td>
+			    	<% else%>
+			    		<td><%= participant.trac_visits.order(:visit_date).first.visit_date %></td>
+			    	<% end %>
 			    	<td><%= participant.exam_date %></td>
-			    	<td><strong style="text-decoration: underline"><%= link_to participant.trac_visits.count, controller: "myo", action: 'show_visits', id: participant %></strong></td>
+			    	<td><strong><%= link_to participant.trac_visits.count, controller: "myo", action: 'show_visits', id: participant %></strong></td>
 			    	<td><%=participant.myo_visit %></td>
 			    	<td><%=participant.redcap_intake_q %></td>
 			    	<td><%=participant.redcap_ms_info %></td>
@@ -66,7 +59,7 @@
 		</tbody>
 	</table>
 
-	</div>
+</div>
 
 	<div class='row'>
 		<%= button_to "Add New Participant", "#", class: 'button right radius', data: {:"reveal-id" => "newParticipant"} %>

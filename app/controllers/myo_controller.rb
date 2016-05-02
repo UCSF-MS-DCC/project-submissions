@@ -64,11 +64,16 @@ class MyoController < ApplicationController
 	def show_visits
 		@participant = MyoParticipant.find(params["id"])
 		@visits = @participant.trac_visits
+		@max_images = 0
+		@visits.each do |visit|
+			if visit.myo_files.count > @max_images
+				@max_images = visit.myo_files.count
+			end
+		end
 	end	
 
 	def show_visit
 		@visit = TracVisit.find(params["id"])
-		# @myo_files = @visit.myo_files.build
 		@myo_files = @visit.myo_files.all
 	end
 

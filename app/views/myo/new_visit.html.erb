@@ -1,3 +1,5 @@
+<%= render 'layouts/myo_navbar' %>
+
 <div id="myo">
 	<div class="row margin-top">
 	  <div class="large-12 columns">
@@ -7,31 +9,19 @@
 	  </div>
 	</div>
 
-
 	<div class='row'>
-		<div class='small-4 columns text-center panel'>
-			<%= link_to "Dashboard", controller: "myo", action: "index"%>
-		</div>
-		<div class='small-4 columns text-center panel'>
-			<strong><%= link_to "Participants", myo_participants_path%></strong>
-		</div>
-		<div class='small-4 columns text-center panel'>
-			<%= link_to "Redcap Data", myo_redcap_path%>
-		</div>
-	</div>
-
-<div class='row'>
-	<%= form_for @visit, :html => { :multipart => true }, url: {action: "create_visit", params: {id: @visit.id}} do |f| %>
-		<%= f.fields_for :myo_files do |p| %>
-			<%= f.hidden_field :myo_participant_id %>
-			<label>Visit Date (required)
-				<%= f.date_field :visit_date %>
-			</label>
-			<label> Visit Files (note: more than one file may be selected)
-				<%= p.file_field :file, multiple: true, name: "myo_files[file][]" %>
-			</label>
+		<%= form_for @visit, :html => { :multipart => true }, url: {action: "create_visit", params: {id: @visit.id}} do |f| %>
+			<%= f.fields_for :myo_files do |p| %>
+				<%= f.hidden_field :myo_participant_id %>
+				<label>Visit Date (required)
+					<%= f.date_field :visit_date %>
+				</label>
+				<label> Visit Files (note: more than one file may be selected)
+					<%= p.file_field :file, multiple: true, name: "myo_files[file][]" %>
+				</label>
+			<% end %>
+		<%= f.submit "Create Visit", class: "button radius small-12 columns" %>
 		<% end %>
-	<%= f.submit "Create Visit", class: "button radius small-12 columns" %>
-	<% end %>
+	</div>
 </div>
 
