@@ -1,0 +1,4 @@
+<% @participant.errors.full_messages.each do |message| %>
+	<%= add_gritter( message, :title => "Error") %>
+<% end %>
+

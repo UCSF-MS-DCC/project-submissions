@@ -1,0 +1,27 @@
+<%= render 'layouts/myo_navbar' %>
+
+<div id="myo">
+	<div class="row margin-top">
+	  <div class="large-12 columns">
+	    <div class="callout panel radius text-center">
+	      <h1>New Visit</h1>
+	    </div>
+	  </div>
+	</div>
+
+	<div class='row'>
+		<%= form_for @visit, :html => { :multipart => true }, url: {action: "create_visit", params: {id: @visit.id}} do |f| %>
+			<%= f.fields_for :myo_files do |p| %>
+				<%= f.hidden_field :myo_participant_id %>
+				<label>Visit Date (required)
+					<%= f.date_field :visit_date %>
+				</label>
+				<label> Visit Files (note: more than one file may be selected)
+					<%= p.file_field :file, multiple: true, name: "myo_files[file][]" %>
+				</label>
+			<% end %>
+		<%= f.submit "Create Visit", class: "button radius small-12 columns" %>
+		<% end %>
+	</div>
+</div>
+

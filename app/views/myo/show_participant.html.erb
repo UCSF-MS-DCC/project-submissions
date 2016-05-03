@@ -1,0 +1,49 @@
+<%= render 'layouts/myo_navbar' %>
+<div id='myo'>
+
+  <div class="row margin-top">
+    <div class="large-12 columns">
+      <div class="callout panel radius text-center">
+        <h1>Edit Participant</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class='row'>
+    <%= form_for @participant , url: {action: "update", params: {id: @participant.id}} do |f| %>
+      <label> Participant ID
+        <%= f.text_field :participant_id%>
+      </label>    
+      <label> TracMS Myo ID
+        <%= f.text_field :tracms_myo_id %>
+      </label>    
+      <label> Participant's Name
+        <%= f.text_field :name %>
+      </label>
+      <label> Scheduled Exam Date
+        <%= f.date_field :scheduled_date %>
+      </label>
+      <label> Actual Exam Date
+        <%= f.date_field :exam_date %>
+      </label>
+      <label> Was this a Myo Visit?
+        <%= f.check_box :myo_visit %>
+      </label>
+      <label>Redcap Intake Questionnaire Completed?
+        <%= f.check_box :redcap_intake_q %>
+      </label>    
+      <label> Redcap MS Information Questionnaire Completed?
+        <%= f.check_box :redcap_ms_info %>
+      </label>
+      <label> Redcap WHODAS Completed?
+        <%= f.check_box :redcap_whodas %>
+      </label>    
+      <label> Redcap Health Intake Completed?
+        <%= f.check_box :redcap_health_intake %>
+      </label>
+      <%= f.submit "Update" , class: 'button radius right small-12 columns' %>
+    <% end %>
+  </div>
+</div>
+
+

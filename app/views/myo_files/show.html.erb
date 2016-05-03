@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Trac visit:</strong>
+  <%= @myo_file.trac_visit_id %>
+</p>
+
+<p>
+  <strong>File:</strong>
+  <%= @myo_file.file %>
+</p>
+
+<%= link_to 'Edit', edit_myo_file_path(@myo_file) %> |
+<%= link_to 'Back', myo_files_path %>

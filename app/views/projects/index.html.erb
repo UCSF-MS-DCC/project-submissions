@@ -1,48 +1,50 @@
 <%= render 'layouts/navbar' %>
 
-<div class="row margin-top">
-  <div class="large-12 columns">
-    <div class="panel radius text-center">
-      <span>MS EPIC Projects Catalog</span>
-    </div>
-  </div>
-</div>
- 
-<div class="row">
-  <div class="large-12 columns">
-  	<div id="newProject" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-  		<%= render 'layouts/new_project' %>
+<div id="msdr-theme">
+	<div class="row margin-top">
+	  <div class="large-12 columns">
+	    <div class="panel radius text-center">
+	      <span>MS EPIC Projects Catalog</span>
+	    </div>
+	  </div>
+	</div>
+	 
+	<div class="row">
+	  <div class="large-12 columns">
+	  	<div id="newProject" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	  		<%= render 'layouts/new_project' %>
+			</div>
 		</div>
 	</div>
+	<br>
+	<div class='row'>
+	  <table class="tablesorter radius" id="projects">
+		  <thead>
+		    <tr>
+		      <th width="300">Leading Investigator</th>
+		      <th >Project Title</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+			  <% @projects.all.order(:author).each do |project| %>
+			  	<% if project.approved? %>
+			    	<tr>
+				      <td><%= project.author %></td>
+				      <td class='left-align'><%= project.title %></td>
+			    	</tr>
+			    	<% else %>
+			    	<tr class='awaiting-approval'>
+				      <td><%= project.author %></td>
+				      <td class='left-align'>(awaiting approval)</td>
+			    	</tr>		    	
+			    <% end %>
+			  <% end %>
+				<td>Hauser, Gourraud & Lizee</td>
+			  <td class='left-align'>The Bioscreen</td>
+		  </tbody>
+		</table>
+		<%= link_to "Add New Project", "#", class: 'button right radius', data: {:"reveal-id" => "newProject"} %>
+	</div>		
 </div>
-<br>
-<div class='row'>
-  <table class="tablesorter radius" id="projects">
-	  <thead>
-	    <tr>
-	      <th width="300">Leading Investigator</th>
-	      <th >Project Title</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-		  <% @projects.all.order(:author).each do |project| %>
-		  	<% if project.approved? %>
-		    	<tr>
-			      <td><%= project.author %></td>
-			      <td class='left-align'><%= project.title %></td>
-		    	</tr>
-		    	<% else %>
-		    	<tr class='awaiting-approval'>
-			      <td><%= project.author %></td>
-			      <td class='left-align'>(awaiting approval)</td>
-		    	</tr>		    	
-		    <% end %>
-		  <% end %>
-			<td>Hauser, Gourraud & Lizee</td>
-		  <td class='left-align'>The Bioscreen</td>
-	  </tbody>
-	</table>
-	<%= link_to "Add New Project", "#", class: 'button right radius', data: {:"reveal-id" => "newProject"} %>
-</div>		
 
 <%= render 'layouts/footer' %>

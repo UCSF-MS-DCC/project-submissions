@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="small-12 columns text-center">
+    <h2> Add a new visit </h2>    
+  </div>  
+</div>
+
+<div class='row'>
+  <%= form_for @visit, :html => { :multipart => true }, url: {action: "create_visit", params: {id: @visit.id}} do |f| %>
+    <%= f.fields_for :myo_files do |p| %>
+      <label> Visit Files
+        <%= p.file_field :file, multiple: true, name: "myo_files[file][]" %>
+      </label>
+    <% end %>
+  <%= f.submit "Add Visit", class: "button radius small-12 columns" %>
+  <% end %>
+</div>

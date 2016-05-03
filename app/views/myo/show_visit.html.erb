@@ -1,0 +1,35 @@
+<%= render 'layouts/myo_navbar' %>
+
+<div id="myo">
+	<div class="row margin-top">
+	  <div class="large-12 columns">
+	    <div class="callout panel radius text-center">
+	      <h1>Edit Visit</h1>
+	    </div>
+	  </div>
+	</div>
+
+	<% @myo_files.each do |p| %>
+		<div class='row' id= <%= p.id %>>
+				<%= fa_icon "file", class: "fa-2x" %>
+			  <%= p[:file] %>
+			  <strong><%= link_to "Delete File", controller: "myo", action: "delete_file" , remote: true, params: {image_id: p.id} %></strong>
+			  <br>
+		</div>
+		<br>
+	<% end %>	
+
+	<div class='row'>
+		<%= form_for @visit, :html => { :multipart => true }, url: {action: "update_visit", params: {id: @visit.id}} do |f| %>
+				<label>Visit Date
+					<%= f.date_field :visit_date %>
+				</label>		
+				<label> Visit Files
+				<%= f.fields_for :myo_files, @visit.myo_files.build do |p| %>
+					<%= p.file_field :file, multiple: true, name: "myo_files[file][]" %>
+				</label>
+			<% end %>
+			<%= f.submit "Update Visit", class: "button radius small-12 columns" %>
+		<% end %>
+	</div>
+</div>
