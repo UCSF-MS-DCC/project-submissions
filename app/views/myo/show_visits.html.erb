@@ -1,0 +1,48 @@
+<%= render 'layouts/myo_navbar' %>
+
+<div id="myo">
+	<div class="row margin-top">
+	  <div class="large-12 columns">
+	    <div class="callout panel radius text-center">
+	      <h1>Visits for <%= @participant.name %></h1>
+	    </div>
+	  </div>
+	</div>
+
+	<div class='row'>
+		<div class='small-12 columns'>
+			<table width='100%'>
+				<thead>
+					<tr>
+						<th>Visit Date</th>
+						<% @max_images.times do |file| %>
+							<th>File #<%= file+1 %></th>
+						<% end %>	
+						<th></th>
+			    </tr>
+				</thead>
+				<tbody>
+					<% @visits.each do |visit| %>
+						<tr>
+							<td><%= visit.visit_date%></td>
+							<% visit.myo_files.each do |file| %>
+								<td><a href=<%= myo_download_file_path(file) %> > <%= file[:file]%> </a></td>
+							<% end %>
+							<% (@max_images- visit.myo_files.count ).times do |blank| %>
+								<td></td>
+							<% end %>
+							<td><strong><%= link_to "Edit", controller: "myo", action: "show_visit", id: visit.id %></strong> </td>
+				    </tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='small-12 columns button radius'>
+			<%= link_to "Add New Visit", controller: "myo", action: "new_visit" ,  params: {id: @participant.id} %>
+		</div>
+	</div>
+
+</div>

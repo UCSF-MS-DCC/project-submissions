@@ -1,0 +1,83 @@
+// Place all the styles related to the projects controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#msdr-theme{
+	h2 {
+		color: white;
+	}
+
+	img{
+		border-radius: 5px;
+	}
+
+	a:hover, a:focus{
+		color: black;
+		text-decoration: underline;
+	}
+
+	.close-reveal-modal:hover{
+		text-decoration: none;
+	}
+
+	body{
+		font-family: 'Open Sans', sans-serif;
+		background-color: rgba(253, 190, 92, 0.08);
+	}
+
+
+	.panel {
+		background-color: rgba(255, 141, 0, 0.57);
+		border: 3px;
+		border-color: rgba(255, 141, 0, 0.57);
+
+		span{
+			font-size: 3em;
+		}
+	}
+
+	.button{
+		background-color: rgba(0, 114, 255, 0.72);
+		border-color: rgba(0, 114, 255, 0.72);
+	}
+
+	.button:hover, .button:focus{
+		background-color: rgba(0, 114, 255, 0.92);
+		border-color: rgba(0, 114, 255, 0.92);
+		text-decoration: none;
+	}
+
+	th {
+		background-color: rgba(255, 141, 0, 0.57);
+	}
+
+	table {
+		width: 100%;
+		border-radius: 5px;
+	}
+
+	a:hover, a:focus{
+		color: black;
+		text-decoration: underline;
+	}
+
+	.close-reveal-modal:hover{
+		text-decoration: none;
+	}
+
+	.awaiting-approval{
+		opacity: .25;
+	}
+
+	.full-width{
+		max-width:none !important;
+	}
+
+	table thead tr table tfoot tr th, table tfoot tr td, table tbody tr th, table tbody tr td, table tr td {
+		padding:0 !important;
+		margin:0 !important;
+		text-align: center;
+	}
+
+	
+}

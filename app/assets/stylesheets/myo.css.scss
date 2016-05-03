@@ -1,0 +1,97 @@
+// Place all the styles related to the projects controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#myo{
+	* :not(.fa){
+	 font-family: 'Lato', sans-serif !important;
+	}
+
+	img{
+		border-radius: 5px;
+	}
+
+	a:hover, a:focus{
+		background: none;
+		text-decoration: underline;
+	}
+
+	.close-reveal-modal:hover{
+		text-decoration: none;
+	}
+
+	body{
+		font-family: 'Lato', sans-serif;
+		background-color: rgba(253, 190, 92, 0.08);
+	}
+
+
+	.panel {
+		background-color: #98DBC6;
+		border: 3px;
+		border-color: #98DBC6;
+
+		span{
+			font-size: 3em;
+		}
+	}
+
+	.button{
+		background-color: rgba(0, 114, 255, 0.72);
+		border-color: rgba(0, 114, 255, 0.72);
+	}
+
+	.button:hover, .button:focus{
+		background-color: rgba(0, 114, 255, 0.92);
+		border-color: rgba(0, 114, 255, 0.92);
+		text-decoration: none;
+	}
+
+	th {
+		background-color: #98DBC6;
+	}
+
+	table {
+		width: 100%;
+		border-radius: 5px;
+	}
+
+	a:hover, a:focus{
+		color: black;
+		text-decoration: underline;
+	}
+
+	.navbar-link a:hover {
+		color: white;
+	}
+
+	.close-reveal-modal:hover{
+		text-decoration: none;
+	}
+
+	.awaiting-approval{
+		opacity: .25;
+	}
+
+	.full-width{
+		max-width:none !important;
+	}
+
+	table thead tr table tfoot tr th, table tfoot tr td, table tbody tr th, table tbody tr td, table tr td {
+		padding:0 !important;
+		margin:0 !important;
+		text-align: center;
+	}
+
+	button, .button{
+		background-color: rgba(241, 141, 158, 0.58) !important;
+		border-color: rgba(241, 141, 158, 0.58) !important;
+	}
+
+	button:hover, .button:hover{
+		background-color:  #f18d9e !important;
+		border-color:  #f18d9e !important;
+	}
+
+	
+}
