@@ -21,38 +21,24 @@
 	<table id='participants'>
 		<thead>
 			<tr>
-				<th>Id</th>
 	    	<th>Trac MS Myo ID</th>
 	    	<th>Name</th>
-	    	<th>Scheduled Date</th>
 	    	<th>Exam Date</th>
 	    	<th>Number of Visits</th>
 	    	<th>Myo Visit?</th>
-	    	<th>Redcap Intake</th>
-	    	<th>Redcap MS Information</th>
-	    	<th>Redcap WHODAS</th>
-	    	<th>Redcap Health Intake</th>
+	    	<th>Redcap Intake?</th>
 	    	<th> </th>
 	    </tr>
 		</thead>
 		<tbody>
 			<% @participants.each do |participant| %>
 				<tr>
-						<td><%= participant.participant_id %></td>
 			    	<td><%= participant.tracms_myo_id %></td>
 			    	<td><%= participant.name %></td>
-			    	<% if participant.trac_visits.empty? %>
-			    		<td><%= participant.scheduled_date || "NA" %></td>
-			    	<% else%>
-			    		<td><%= participant.trac_visits.order(:visit_date).first.visit_date %></td>
-			    	<% end %>
-			    	<td><%= participant.exam_date %></td>
+			    	<td><%= participant.trac_visits.order(:visit_date).first.visit_date %></td>
 			    	<td><strong><%= link_to participant.trac_visits.count, controller: "myo", action: 'show_visits', id: participant %></strong></td>
 			    	<td><%=participant.myo_visit %></td>
 			    	<td><%=participant.redcap_intake_q %></td>
-			    	<td><%=participant.redcap_ms_info %></td>
-			    	<td><%=participant.redcap_whodas %></td>
-			    	<td><%=participant.redcap_health_intake %></td>
 			    	<td> <strong><%= link_to "Edit", controller: "myo", action: "show_participant", class: 'button radius', id: participant %></strong> </td>
 		    </tr>
 			<% end %>
