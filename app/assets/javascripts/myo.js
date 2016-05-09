@@ -65,7 +65,6 @@ $(document).ready(function(){
 
   });
 
-  $('#redcap_data').tablesorter({widgets: ['stickyHeaders']})  
-  $( '#redcap_data' ).trigger( 'setFixedColumnSize', 1 );
+  $('#redcap_data').tablesorter({widgets: ['stickyHeaders']})    
   
 })
