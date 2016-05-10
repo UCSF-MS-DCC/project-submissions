@@ -1,7 +1,6 @@
 class MyoParticipant < ActiveRecord::Base
 	has_many :trac_visits
 
-	validates :participant_id, uniqueness: true
 	validates :tracms_myo_id,  uniqueness: true
 	validates :scheduled_date, presence: true
 

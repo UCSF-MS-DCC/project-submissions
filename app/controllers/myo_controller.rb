@@ -16,6 +16,7 @@ class MyoController < ApplicationController
 
 	def create
 		@participant = MyoParticipant.new(participant_params)
+		puts @participant.id
 		respond_to do |format|
 			if @participant.save
 				format.js 
