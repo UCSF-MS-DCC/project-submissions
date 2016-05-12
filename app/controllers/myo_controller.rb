@@ -1,6 +1,5 @@
 class MyoController < ApplicationController
 	before_action :authenticate_user!
-	# before_action :check_user
 	authorize_resource :class => false
 		
 	def index

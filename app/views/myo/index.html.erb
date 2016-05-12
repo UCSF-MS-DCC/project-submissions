@@ -1,39 +1,6 @@
 <%= render 'layouts/myo_navbar' %>
 
 <div id="myo">
-	<div class="row margin-top">
-	  <div class="large-12 columns">
-	    <div class="callout panel radius text-center">
-	      <h1>Upcoming Visits</h1>
-	    </div>
-	  </div>
-	</div>
-
-	<div class='row'>
-		<table width='100%'>
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>MRN</th>
-					<th>Exam Date</th>
-					<th>Myo Visit?</th>
-		    </tr>
-			</thead>
-			<tbody>
-				<% @visits.each do |visit| %>
-				<% participant = MyoParticipant.find(visit.myo_participant_id) %>
-					<tr>
-						<td><a><%= link_to participant.name, myo_show_visits_path(participant) %> </a></td>
-						<td><%= participant.mrn || "N/A" %></td>
-						<td><%= link_to visit.visit_date, myo_show_visits_path(participant) %></td>
-						<td><%= participant.myo_visit %></td>
-		    	</tr>
-				<% end %>
-			</tbody>
-		</table>
-	</div>
-
-
 
 	<div class="row margin-top">
 	  <div class="large-12 columns">
@@ -42,7 +9,7 @@
 	    </div>
 	  </div>
 	  <div class='small-12 columns'>
-	  	
+	  	<p class='text-center'>(Will populate as more data rolls in)</p>
 	  </div>
 	</div>
 
