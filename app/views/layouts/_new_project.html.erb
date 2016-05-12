@@ -1,94 +1,48 @@
-<div class="row">
-  <div class="small-12 columns text-center">
-    <h2> Upload a new project </h2>    
-  </div>  
-</div>
-
-<%= form_for(@project, remote: true, data: {abide: ''}) do |f| %>
+<div class='msrd-theme'>
   <div class="row">
-    <div class="large-12 columns">
+    <div class="small-12 columns text-center">
+      <h2> Upload a new project </h2>    
+    </div>  
+  </div>
+
+  <%= form_for(@project, remote: true, data: {abide: ''}) do |f| %>
+    <div class="row">
+      <div class="large-12 columns">
+        <small>Required</small>
+        <div class="row collapse prefix-radius">
+          <div class="small-4 columns">
+            <span class="prefix">Principal Investigator and Others</span>
+          </div>
+          <div class="small-8 columns">
+              <%= f.text_field :author, placeholder: 'e.g. Jorge Oksenberg, Noriko Isobe', required: true %>
+              <small class="error">This field is required.</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="large-12 columns">
       <small>Required</small>
-      <div class="row collapse prefix-radius">
-        <div class="small-4 columns">
-          <span class="prefix">Principal Investigator and Others</span>
-        </div>
-        <div class="small-8 columns">
-            <%= f.text_field :author, placeholder: 'e.g. Jorge Oksenberg, Noriko Isobe', required: true %>
-            <small class="error">This field is required.</small>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="large-12 columns">
-    <small>Required</small>
-      <div class="row collapse prefix-radius">
-        <div class="small-4 columns">
-          <span class="prefix">Project Title</span>
-        </div>
-        <div class="small-8 columns">
-            <%= f.text_field :title, placeholder: 'e.g. Study of MS Genetics Susceptibility', required: true %>
-            <small class="error">This field is required.</small>
+        <div class="row collapse prefix-radius">
+          <div class="small-4 columns">
+            <span class="prefix">Project Title</span>
+          </div>
+          <div class="small-8 columns">
+              <%= f.text_field :title, placeholder: 'e.g. Study of MS Genetics Susceptibility', required: true %>
+              <small class="error">This field is required.</small>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-<!--   <div class="row">
-    <div class="large-12 columns">
-      <label>Project Description <small>required</small>
-        <%= f.text_area :project_description, placeholder: 'A description of what the project is', required: true %>
-        <small class="error">This field is required.</small>
-      </label>
+    <div class="row">
+      <div class="large-12 columns">
+        <%= f.submit 'Submit', :class => 'button radius right' %>
+      </div>
     </div>
-  </div> -->
 
-  <!-- <div class="row">
-    <div class="large-12 columns">
-      <label>Data Description (100 words or less) <small>required</small>
-        <%= f.text_area :data_description, placeholder: 'Briefly describe which datasets you intend to use', required: true, maxlength: 1000 %>
-        <small class="error">This field is required.</small>
-      </label>
-    </div>
-  </div>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 
-  <div class="row">
-    <div class="large-12 columns">
-      <label>Repository Data
-        <%= f.text_area :biological_description, placeholder: 'Which (if any) biological samples do you require from the repository (plasma, serum, DNA, etc...)', required: false %>
-        <small class="error">This field is required.</small>
-      </label>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="large-12 columns">
-      <label>Data Frequency <small>required</small></label>
-        <%= f.radio_button(:data_frequency, "Single Time", required: true) %> <label>Single Time</label>
-        <%= f.radio_button(:data_frequency, "Multiple Times", required: true) %> <label> Multiple Times </label> 
-        <small class="error">This field is required.</small>
-    </div>
-  </div> -->
-
-<!--   <div class="row">
-    <div class="large-12 columns">
-      <small> This is a simple captcha to prevent spambots from filling the site.</small> 
-      <%= f.label :humanizer_answer, @project.humanizer_question %>
-      <%= f.text_field :humanizer_answer, required: true %>
-      <%= f.hidden_field :humanizer_question_id %>
-      <small class="error">This field is required.</small>
-    </div>
-  </div> -->
-
-
-
-  <div class="row">
-    <div class="large-12 columns">
-      <%= f.submit 'Submit', :class => 'button radius right' %>
-    </div>
-  </div>
-
-  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-
-<% end %>
+  <% end %>
+</div>

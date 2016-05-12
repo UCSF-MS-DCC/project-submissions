@@ -31,7 +31,7 @@
 			// on a touchscreen unless the play event is attached to a user click
 			forceAutoplay:false,
 			controls:false,
-			doLoop:false,
+			doLoop:true,
 			container:$('body'),
 			shrinkable:false
 		};

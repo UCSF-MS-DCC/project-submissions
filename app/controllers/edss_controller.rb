@@ -1,5 +1,5 @@
 class EdssController < ApplicationController
-	before_action :check_user
+	before_action :authenticate_user!
 	authorize_resource :class => false
 	respond_to :html, :csv
 
