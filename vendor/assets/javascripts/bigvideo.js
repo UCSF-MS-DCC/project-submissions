@@ -31,7 +31,7 @@
 			// on a touchscreen unless the play event is attached to a user click
 			forceAutoplay:false,
 			controls:false,
-			doLoop:true,
+			doLoop:false,
 			container:$('body'),
 			shrinkable:false
 		};
@@ -74,7 +74,7 @@
 						$(vidEl)
 							.css('top',0)
 							.css('left',-(containerH*mediaAspect-containerW)/2)
-							.css('height','containerH');
+							.css('height',containerH);
 					} else {
 						$(vidEl)
 							.css('top',-(containerW/mediaAspect-containerH)/2)
@@ -82,10 +82,10 @@
 							.css('height',containerW/mediaAspect);
 					}
 					$(vidEl+'_html5_api')
-						.css('max-width','100%')
+						.css('width',containerH*mediaAspect)
 						.css('height',containerH);
 					$(vidEl+'_flash_api')
-						.css('max-width','100%')
+						.css('width',containerH*mediaAspect)
 						.css('height',containerH);
 				} else {
 					// is image
