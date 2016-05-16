@@ -11,12 +11,12 @@
  * file per style scope.
  *
  *= require foundation
+ *= require foundation_and_overrides
  *= require video-js
  *= require_tree
  *= require_self
  *= require jquery-tablesorter/theme.blue
  *= require jquery-ui
- *= require foundation_and_overrides
  *= require gritter
  *= require froala_editor.min.css
  *= require froala_style.min.css

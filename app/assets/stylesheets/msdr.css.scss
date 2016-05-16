@@ -4,10 +4,6 @@
 
 #msdr-theme{
 
-	h2 {
-		color: white;
-	}
-
 	.left-align{
 		text-align: left;
 		margin-left: 5px
@@ -28,28 +24,28 @@
 
 
 	.panel {
-		background-color: rgba(255, 141, 0, 0.57);
+		background-color: rgba(0, 114, 255, 0.4);
 		border: 3px;
-		border-color: rgba(255, 141, 0, 0.57);
+		border-color: rgba(0, 114, 255, 0.4);
 
 		span{
 			font-size: 3em;
 		}
 	}
 
-	.button{
-		background-color: rgba(0, 114, 255, 0.72);
-		border-color: rgba(0, 114, 255, 0.72);
+	.button, #button{
+		background-color: rgba(0, 114, 255, 0.72) !important;
+		border-color: rgba(0, 114, 255, 0.72) !important;
 	}
 
 	.button:hover, .button:focus{
-		background-color: rgba(0, 114, 255, 0.92);
-		border-color: rgba(0, 114, 255, 0.92);
-		text-decoration: none;
+		background-color: rgba(0, 114, 255, 0.92) !important;
+		border-color: rgba(0, 114, 255, 0.92) !important;
+		text-decoration: none !important;
 	}
 
 	th {
-		background-color: rgba(255, 141, 0, 0.57);
+		background-color: rgba(0, 114, 255, 0.4);
 	}
 
 	table {

@@ -25,7 +25,6 @@
 		background-color: rgba(253, 190, 92, 0.08);
 	}
 
-
 	.panel {
 		background-color: #98DBC6;
 		border: 3px;
@@ -34,17 +33,6 @@
 		span{
 			font-size: 3em;
 		}
-	}
-
-	.button{
-		background-color: rgba(0, 114, 255, 0.72);
-		border-color: rgba(0, 114, 255, 0.72);
-	}
-
-	.button:hover, .button:focus{
-		background-color: rgba(0, 114, 255, 0.92);
-		border-color: rgba(0, 114, 255, 0.92);
-		text-decoration: none;
 	}
 
 	th {
@@ -89,5 +77,8 @@
 		border-color:  #f18d9e !important;
 	}
 
+	a, a:hover { 
+		text-decoration: none !important;
+	}
 	
 }

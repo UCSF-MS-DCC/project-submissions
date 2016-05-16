@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="353px" height="111px" viewBox="0 0 353 111" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.1 (15681) - http://www.bohemiancoding.com/sketch -->
+    <title>Artboard 1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Artboard-1" sketch:type="MSArtboardGroup" stroke="#2185D0" font-weight="420" font-family="Futura" fill="#2185D0">
+            <text id="Epi" sketch:type="MSTextLayer" font-size="70">
+                <tspan x="0" y="73">Epi</tspan>
+            </text>
+            <text id="C" sketch:type="MSTextLayer" font-size="100">
+                <tspan x="97" y="104">C</tspan>
+            </text>
+            <text id="entral" sketch:type="MSTextLayer" font-size="70">
+                <tspan x="167" y="104">entral</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
