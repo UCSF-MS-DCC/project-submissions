@@ -9,7 +9,7 @@ class GoodinCalculation
 			aI = calculate_AI(participant)
 			nrs = calculate_nrs(participant, sfs)	
 			mds = calculate_mds(edss, nrs, aI, participant["fs"].to_i, sfs)
-			data = {record_id: participant["record_id"].to_i, first_name: participant["first_name"], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
+			data = {record_id: participant["record_id"].to_i, first_name: participant["first_name"], last_name: participant["last_name"], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
 			@data_set<< data
 		end
 	end
