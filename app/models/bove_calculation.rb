@@ -9,7 +9,7 @@ class BoveCalculation
 			aI = calculate_AI(participant)
 			nrs = calculate_nrs(participant, sfs)	
 			mds = calculate_mds(edss, nrs, aI, participant["fs"].to_i, sfs)
-			data = {record_id: participant["record_id"].to_i, first_name: participant["first_name"], last_name: participant["last_name"], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
+			data = {record_id: participant["record_id"].to_i, first_name: participant["first_name"], last_name: participant["last_name"], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds, f1: sfs[:f1], f2: sfs[:f2], f3: sfs[:f3], f4:sfs[:f4], f5: sfs[:f5], f6: sfs[:f6], f7: sfs[:f7], f8: sfs[:f8]}
 			@data_set<< data
 		end
 	end

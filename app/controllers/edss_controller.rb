@@ -43,7 +43,7 @@ class EdssController < ApplicationController
 		ids = calc.record_ids(calc.data_set)		
 
 		csv_string = 	CSV.generate do |csv|
-			csv << ["record_id", "first_name", "last_name", "sfs", "edss", "aI", "nrs", "mds"]
+			csv << ["record_id", "first_name", "last_name", "sfs", "edss", "aI", "nrs", "mds", "Ambulation", "Cerebellar", "Brainstem", "Sensory", "Bowel/Bladder", "Vision", "Cerebral", "Pyramidal"]
 			ids.each do |participant|
 				csv << participant.values
 			end
