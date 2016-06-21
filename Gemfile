@@ -46,6 +46,7 @@ gem 'paper_trail'
 gem 'pry'
 gem 'binding_of_caller'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
+gem 'thin'
 
 group :development do 
 	gem 'better_errors'

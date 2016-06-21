@@ -8,6 +8,9 @@ class MyoController < ApplicationController
 		@visits.each do |visit|
 			@participants << MyoParticipant.find(visit.myo_participant_id)
 		end
+		@demographics = get_demographics
+		@goodin_edss_scores = get_goodin
+		asd
 	end
 
 	def new
@@ -42,7 +45,7 @@ class MyoController < ApplicationController
 		respond_to do |format|
 			format.html
 	    format.csv do
-	    	response.headers['Content-Disposition'] = 'attachment; filename="BoveRemoteEDSS.csv"'
+	    	response.headers['Content-Disposition'] = 'attachment; filename="MyoData.csv"'
 	     	render :csv => @data
 	   	end
 	  end				
@@ -123,12 +126,81 @@ class MyoController < ApplicationController
 
 	private
 
+	def get_demographics
+		url = URI.parse(ENV['myo_api_url'])
+
+		post_args = {
+			'token' => ENV['myo_api_token'],
+			'content' => 'record',
+			'rawOrLabel' => 'label',
+			'format' => 'csv',
+			'type' => 'flat',
+			'rawOrLabelHeaders' => 'label'
+		}
+		request= Net::HTTP.post_form(url, post_args)
+		@data = CSV.parse(request.body).transpose
+		@data_no_transpose = CSV.parse(request.body).transpose
+		demographic_data = {}
+		@age = Hash.new(0)
+		@sex = Hash.new(0)
+		@relapses = Hash.new(0)
+		@edss_scores = Hash.new(0)
+		@disease_type = Hash.new(0)
+		
+		#Sex- We do this because the question about sex is asked multiple times through all instruments.
+		@data[16].each{|key| @sex[key]+=1}
+
+		#Age- We do this because the question about age is asked multiple times through all instruments.
+		@data[15].each{|key| @sex[key]+=1}
+		@data.each do |x|
+			if x[0] 
+				if x[0] == "Please put your sex:"
+					x.each{|key| @sex[key]+=1}
+				end
+				if x[0] == "Age"
+					x.each{|key| @age[key]+=1}
+				end
+				if x[0] == "How many relapses have you had?"
+					x.each{|key| @relapses[key]+=1}
+				end			
+				if x[0].include?("Patient-entered Diagnosis of type of demyelinating disease")
+					@disease_type[x[0]] = x.count("Checked")
+				end
+			else
+			end
+			@subject_ids = @data_no_transpose[1]
+			@data_no_transpose.each do |subject|
+				if subject[0] == "Final EDSS Score"
+					@scores = subject
+				end
+			end
+			@subject_ids.zip(@scores).each do |id, score|
+				@edss_scores[id] = score
+			end
+		end
+		[@age, @sex, @relapses, @disease_type, @edss_scores]
+	end
+
+	def get_goodin
+		url = URI.parse(ENV['myo_api_url'])
+		post_args = {
+			'token' => ENV['myo_api_token'],
+			'content' => 'record',
+			'format' => 'json',
+			'type' => 'flat',
+			'rawOrLabelHeaders' => 'raw'
+		}
+		request= Net::HTTP.post_form(url, post_args)
+		@goodin_scores = GoodinCalculation.new(JSON.parse(request.body))
+	end
+
 	def redcap_data
 		url = URI.parse(ENV['myo_api_url'])
 
 		post_args = {
 			'token' => ENV['myo_api_token'],
 			'content' => 'record',
+			'rawOrLabel' => 'label',
 			'format' => 'csv',
 			'type' => 'flat',
 			'rawOrLabelHeaders' => 'label'
