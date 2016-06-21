@@ -80,5 +80,13 @@
 	a, a:hover { 
 		text-decoration: none !important;
 	}
+
+	line.slope-line{
+	    stroke:#98DBC6
+	}
+	text.slope-label{
+	    fill:red;
+	    font: 20px Arial;
+	}
 	
 }

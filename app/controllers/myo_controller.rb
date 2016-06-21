@@ -10,7 +10,18 @@ class MyoController < ApplicationController
 		end
 		@demographics = get_demographics
 		@goodin_edss_scores = get_goodin
-		asd
+		@goodin_array = []
+		@physician_array =[]
+		@subject_array = []
+		@goodin_edss_scores.each do |score|
+			@goodin_array.push(score[:edss])
+		end
+		@demographics[4].drop(1).each do |participant|
+			@subject_array.push(participant[0].to_i)
+			@physician_array.push(participant[1].to_f)
+		end
+		@edss_array = [@goodin_array, @physician_array]
+		@physician_array.delete(0)
 	end
 
 	def new
@@ -151,15 +162,9 @@ class MyoController < ApplicationController
 		@data[16].each{|key| @sex[key]+=1}
 
 		#Age- We do this because the question about age is asked multiple times through all instruments.
-		@data[15].each{|key| @sex[key]+=1}
+		@data[15].each{|key| @age[key]+=1}
 		@data.each do |x|
 			if x[0] 
-				if x[0] == "Please put your sex:"
-					x.each{|key| @sex[key]+=1}
-				end
-				if x[0] == "Age"
-					x.each{|key| @age[key]+=1}
-				end
 				if x[0] == "How many relapses have you had?"
 					x.each{|key| @relapses[key]+=1}
 				end			
@@ -192,6 +197,7 @@ class MyoController < ApplicationController
 		}
 		request= Net::HTTP.post_form(url, post_args)
 		@goodin_scores = GoodinCalculation.new(JSON.parse(request.body))
+		@goodin_scores.data_set
 	end
 
 	def redcap_data

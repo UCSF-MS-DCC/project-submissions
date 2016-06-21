@@ -47,6 +47,7 @@ gem 'pry'
 gem 'binding_of_caller'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'thin'
+gem "d3-rails"
 
 group :development do 
 	gem 'better_errors'
