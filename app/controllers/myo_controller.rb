@@ -8,6 +8,7 @@ class MyoController < ApplicationController
 		@visits.each do |visit|
 			@participants << MyoParticipant.find(visit.myo_participant_id)
 		end
+		@participants = MyoParticipant.all
 		update_db_from_redcap
 	end
 

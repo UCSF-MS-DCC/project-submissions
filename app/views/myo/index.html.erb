@@ -21,14 +21,13 @@
 			    <tr>
 			      <th>Female</th>
 			      <th>Male</th>
-			      <th>Unrecorded</th>
 			    </tr>
 			  </thead>
 			  <tbody>
 			    <tr>
+				    <th><%= @participants.where(sex: "Male").count %> </th>
+				    <th><%= @participants.where(sex: "Female").count %> </th>
 			    </tr>			    
-			    <tr>
-			    </tr>
 			  </tbody>
 			</table>					
 		</div>
@@ -56,61 +55,18 @@
 			  </thead>
 			  <tbody>
 			    <tr>
-			    </tr>			    
-			    <tr>
-			    </tr>
+			    	<th><%= @participants.where(sex: "RR").count %> </th>
+			    	<th><%= @participants.where(sex: "SP").count %> </th>
+			    	<th><%= @participants.where(sex: "PR").count %> </th>
+			    	<th><%= @participants.where(sex: "Optic Neuritis").count %> </th>
+			    	<th><%= @participants.where(sex: "Transverse Myelitis").count %> </th>
+			    	<th><%= @participants.where(sex: "CIS").count %> </th>
+			    	<th><%= @participants.where(sex: "RIS").count %> </th>
+			    	<th><%= @participants.where(sex: "Demyelinating disease not otherwise specified").count %> </th>			    				    				    				    				    				    				    	
+			    </tr>			    	
 			  </tbody>
 			</table>
 		</div>
 	</div>
-
-	<div class='row'>
-		<div class='small-12 columns'>
-			<h4>Physician EDSS Breakdown:</h4>
-			<!-- <div id='edssGraph'></div> -->
-		</div>
-	</div>
-	<div class='row'>
-		<div class='small-12 columns'> 
-			<table>
-			<thead>
-				<tr>
-					<th>Mean</th>
-					<th>Median</th>
-					<th>Mode</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-				</tr>
-			</tbody>
-				
-			</table>
-		</div>
-	</div>
-
-	<div class='row'>
-		<div class='small-12 columns'>
-			<h4>Remote EDSS Breakdown:</h4>
-			<!-- <div id='edssGraph'></div> -->
-		</div>
-	</div>
-	<div class='row'>
-		<div class='small-12 columns'> 
-			<table>
-			<thead>
-				<tr>
-					<th>Mean</th>
-					<th>Median</th>
-					<th>Mode</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-				</tr>
-			</tbody>
-				
-			</table>
-		</div>
-	</div>	
+	
 </div>
