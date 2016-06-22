@@ -9,7 +9,7 @@ class MyoController < ApplicationController
 			@participants << MyoParticipant.find(visit.myo_participant_id)
 		end
 		@participants = MyoParticipant.all
-		update_db_from_redcap
+		# update_db_from_redcap
 	end
 
 	def new
@@ -145,7 +145,9 @@ class MyoController < ApplicationController
 		goodin_scores = GoodinCalculation.new(data)	
 
 		data.zip(goodin_scores.data_set).each do |physician, goodin|
+			puts "Only here"
 			myo_participant = MyoParticipant.where(tracms_myo_id: physician["record_id"].to_i).first
+			puts "made it here"
 			if myo_participant
 				myo_participant.update_attributes(email: physician["email"], sex: physician["sex"] , dob: physician["dob"])
 				if physician["date_enrolled"] != ""
