@@ -9,7 +9,7 @@ class MyoController < ApplicationController
 			@participants << MyoParticipant.find(visit.myo_participant_id)
 		end
 		@participants = MyoParticipant.all
-		update_db_from_redcap
+		# update_db_from_redcap
 	end
 
 	def new
