@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160429175113) do
+ActiveRecord::Schema.define(version: 20160622211808) do
 
   create_table "myo_files", force: true do |t|
     t.integer  "trac_visit_id"
@@ -34,6 +34,12 @@ ActiveRecord::Schema.define(version: 20160429175113) do
     t.string   "mrn"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "dob"
+    t.string   "email"
+    t.string   "sex"
+    t.string   "case_or_control"
+    t.string   "onset"
+    t.string   "disease_type"
   end
 
   create_table "projects", force: true do |t|
@@ -71,6 +77,8 @@ ActiveRecord::Schema.define(version: 20160429175113) do
     t.date     "visit_date"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "physician_edss"
+    t.integer  "goodin_edss"
   end
 
   create_table "users", force: true do |t|

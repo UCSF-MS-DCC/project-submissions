@@ -8,20 +8,7 @@ class MyoController < ApplicationController
 		@visits.each do |visit|
 			@participants << MyoParticipant.find(visit.myo_participant_id)
 		end
-		@demographics = get_demographics
-		@goodin_edss_scores = get_goodin
-		@goodin_array = []
-		@physician_array =[]
-		@subject_array = []
-		@goodin_edss_scores.each do |score|
-			@goodin_array.push(score[:edss])
-		end
-		@demographics[4].drop(1).each do |participant|
-			@subject_array.push(participant[0].to_i)
-			@physician_array.push(participant[1].to_f)
-		end
-		@edss_array = [@goodin_array, @physician_array]
-		@physician_array.delete(0)
+		update_db_from_redcap
 	end
 
 	def new
@@ -137,67 +124,50 @@ class MyoController < ApplicationController
 
 	private
 
-	def get_demographics
+	def update_db_from_redcap
+		# little bit of a beast method. Calls the redcap API and populates the DB with redcap information. A little costly because it happens
+		# on every index.html page load but since this page isn't high traffic it should be OK. Otherwise we would rely on the coordinator
+		# to manually import and that could lead to data issues.
+		@captured_participants= []
 		url = URI.parse(ENV['myo_api_url'])
-
 		post_args = {
 			'token' => ENV['myo_api_token'],
 			'content' => 'record',
 			'rawOrLabel' => 'label',
-			'format' => 'csv',
-			'type' => 'flat',
-			'rawOrLabelHeaders' => 'label'
-		}
-		request= Net::HTTP.post_form(url, post_args)
-		@data = CSV.parse(request.body).transpose
-		@data_no_transpose = CSV.parse(request.body).transpose
-		demographic_data = {}
-		@age = Hash.new(0)
-		@sex = Hash.new(0)
-		@relapses = Hash.new(0)
-		@edss_scores = Hash.new(0)
-		@disease_type = Hash.new(0)
-		
-		#Sex- We do this because the question about sex is asked multiple times through all instruments.
-		@data[16].each{|key| @sex[key]+=1}
-
-		#Age- We do this because the question about age is asked multiple times through all instruments.
-		@data[15].each{|key| @age[key]+=1}
-		@data.each do |x|
-			if x[0] 
-				if x[0] == "How many relapses have you had?"
-					x.each{|key| @relapses[key]+=1}
-				end			
-				if x[0].include?("Patient-entered Diagnosis of type of demyelinating disease")
-					@disease_type[x[0]] = x.count("Checked")
-				end
-			else
-			end
-			@subject_ids = @data_no_transpose[1]
-			@data_no_transpose.each do |subject|
-				if subject[0] == "Final EDSS Score"
-					@scores = subject
-				end
-			end
-			@subject_ids.zip(@scores).each do |id, score|
-				@edss_scores[id] = score
-			end
-		end
-		[@age, @sex, @relapses, @disease_type, @edss_scores]
-	end
-
-	def get_goodin
-		url = URI.parse(ENV['myo_api_url'])
-		post_args = {
-			'token' => ENV['myo_api_token'],
-			'content' => 'record',
 			'format' => 'json',
 			'type' => 'flat',
 			'rawOrLabelHeaders' => 'raw'
 		}
 		request= Net::HTTP.post_form(url, post_args)
-		@goodin_scores = GoodinCalculation.new(JSON.parse(request.body))
-		@goodin_scores.data_set
+		data = JSON.parse(request.body)
+
+		goodin_scores = GoodinCalculation.new(data)	
+
+		data.zip(goodin_scores.data_set).each do |physician, goodin|
+			myo_participant = MyoParticipant.where(tracms_myo_id: physician["record_id"].to_i).first
+			if myo_participant
+				myo_participant.update_attributes(email: physician["email"], sex: physician["sex"] , dob: physician["dob"])
+				if physician["date_enrolled"] != ""
+					(1..8).each do |x|
+						if physician["patientreportdx___" + x.to_s] == "Checked"
+							@disease_number = x.to_s
+						end
+					end
+					myo_participant.trac_visits.where(visit_date: DateTime.parse(physician["date_enrolled"])-60.days..DateTime.parse(physician["date_enrolled"])+60.days).first.update_attributes(physician_edss: physician["edss"], goodin_edss: goodin[:edss])
+					myo_participant.update_attributes(onset: physician["dateonset"], case_or_control: physician["ms_or_hc"], disease_type: convert_to_disease(@disease_number))
+				else
+				end
+			else
+				@captured_participants.push(physician['record_id'])
+			end
+		end		
+			flash[:notice] = "Participant with Tracms_myo_id: #{@captured_participants.join(" , ")} have completed a redcap survey but cannot be found in the database! Please add this/these user(s)."
+			return redirect_to myo_participants_path		
+	end
+
+	def convert_to_disease(number)
+		codebook = {"1"=>"RR", "2"=>"SP", "3"=>"PR", "4"=>"Optic Neuritis", "5"=>"Transverse Myelitis", "6"=>"CIS", "7"=>"RIS", "8"=>"Demyelinating disease not otherwise specified"}
+			return codebook[number]
 	end
 
 	def redcap_data

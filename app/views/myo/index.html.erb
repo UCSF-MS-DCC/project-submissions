@@ -26,14 +26,8 @@
 			  </thead>
 			  <tbody>
 			    <tr>
-			      <td><%= @demographics[1]["Female"]   %></td>
-			      <td><%= @demographics[1]["Male"]   %></td>		
-			      <td><%= @demographics[1][nil]   %></td>		  	
 			    </tr>			    
 			    <tr>
-			      <td><%= (((@demographics[1]["Female"]).to_f / (@demographics[1]["Male"] + @demographics[1]["Female"] + @demographics[1][nil]).to_f) * 100).round   %>%</td>
-			      <td><%= (((@demographics[1]["Male"]).to_f / (@demographics[1]["Male"] + @demographics[1]["Female"] + @demographics[1][nil]).to_f) * 100).round   %>%</td>		
-			      <td><%= (((@demographics[1][nil]).to_f / (@demographics[1]["Male"] + @demographics[1]["Female"] + @demographics[1][nil]).to_f) * 100).round   %>%</td>		  	
 			    </tr>
 			  </tbody>
 			</table>					
@@ -62,24 +56,8 @@
 			  </thead>
 			  <tbody>
 			    <tr>
-			      <td><%= @demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Relapsing remitting MS)"]%></td>
-			      <td><%= @demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Secondary progressive MS)"] %></td>
-			      <td><%= @demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Progressive-onset MS (primary or primary relapsing MS))"]%></td>
-			      <td><%= @demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Optic neuritis)"]%></td>
-			      <td><%= @demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Transverse myelitis)"]%></td>
-			      <td><%= @demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Clinically isolated syndrome (CIS))"]%></td>
-			      <td><%= @demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Radiologically isolated syndrome (RIS))"]%></td>
-			      <td><%= @demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Demyelinating disease not otherwise specified)"]%></td>		      
 			    </tr>			    
 			    <tr>
-			      <td><%= (((@demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Relapsing remitting MS)"]).to_f / (@demographics[3].values.reduce(:+)).to_f) * 100).round   %>%</td>
-			      <td><%= (((@demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Secondary progressive MS)"]).to_f / (@demographics[3].values.reduce(:+)).to_f) * 100).round %>%</td>
-			      <td><%= (((@demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Progressive-onset MS (primary or primary relapsing MS))"]).to_f / (@demographics[3].values.reduce(:+)).to_f) * 100).round   %>%</td>
-			      <td><%= (((@demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Optic neuritis)"]).to_f / (@demographics[3].values.reduce(:+)).to_f) * 100).round   %>%</td>
-			      <td><%= (((@demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Transverse myelitis)"]).to_f / (@demographics[3].values.reduce(:+)).to_f) * 100).round   %>%</td>
-			      <td><%= (((@demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Clinically isolated syndrome (CIS))"]).to_f / (@demographics[3].values.reduce(:+)).to_f) * 100).round   %>%</td>
-			      <td><%= (((@demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Radiologically isolated syndrome (RIS))"]).to_f / (@demographics[3].values.reduce(:+)).to_f) * 100).round   %>%</td>
-			      <td><%= (((@demographics[3]["Patient-entered Diagnosis of type of demyelinating disease (choice=Demyelinating disease not otherwise specified)"]).to_f / (@demographics[3].values.reduce(:+)).to_f) * 100).round   %>%</td>		      		      		      		      
 			    </tr>
 			  </tbody>
 			</table>
@@ -104,9 +82,6 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td><%= (@physician_array.reduce(:+) / @physician_array.length).round(2)  %></td>
-					<td><%= @physician_array.sort.length.even? ? ((@physician_array.sort[(@physician_array.length)/2]) + (@physician_array.sort[((@physician_array.length)/2) -1]))/2.to_f   : @physician_array.sort[(@physician_array.length)/2]   %></td>
-					<td> <%= @physician_array.max_by { | i| @physician_array.count(i)} %></td>
 				</tr>
 			</tbody>
 				
@@ -132,9 +107,6 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td><%= (@goodin_array.reduce(:+) / @goodin_array.length).round(2)  %></td>
-					<td><%= @goodin_array.sort.length.even? ? ((@goodin_array.sort[(@goodin_array.length)/2]) + (@goodin_array.sort[((@goodin_array.length)/2) -1]))/2.to_f   : @goodin_array.sort[(@goodin_array.length)/2]   %></td>
-					<td> <%= @goodin_array.max_by { | i| @goodin_array.count(i)} %></td>
 				</tr>
 			</tbody>
 				
@@ -142,51 +114,3 @@
 		</div>
 	</div>	
 </div>
-
-<div id="graph" class='text-center'>
-	
-</div>
-
-<script type="text/javascript">
-var computerOwnership = {
-  title: 'Physician Vs Remote EDSS Scores'
-, header: ['Physician', 'Remote']
-, data: [
-    
-      <%= @demographics[4].drop(1).zip(@goodin_edss_scores).each do |physician| %>
-				{ name: <%= (physician[1][:record_id]).to_s %>,
-    , series: <%= [physician[1][:edss], 0] %>},
-			<% end %>
-  , {
-      name: 'Arab States'
-    , series: [14.9, 30.7] 
-    }
-    // and so on...
-  ]
-}; 
-
-// Display options
-var options = {
-  slopeWidth: 110
-, dotSize: 4
-, dotColor: '#212121'
-};
-
-// Call jquery-slopegraph
-$('#graph').slopegraph(computerOwnership, options);	
-
-</script>
-<!-- 
-<script type="text/javascript">
-	var data = {
-	    "data":<%= @edss_array %>,
-	    "label":[<%= @subject_array %>]
-	};
-	var slopeGraph = d3.custom.slopegraph();
-	d3.select('#edssGraph')
-	    .datum(data)
-	    .call(slopeGraph);
-	slopeGraph.width(500);
-	d3.select('#edssGraph')
-	    .call(slopeGraph);
-    </script> -->
