@@ -3,16 +3,13 @@ class MyoController < ApplicationController
 	authorize_resource :class => false
 		
 	def index
+		@missing_participants = MyoParticipant.update_db_from_redcap
 		@visits = TracVisit.where("visit_date < ?", DateTime.now + 7)
 		@participants = []
 		@visits.each do |visit|
 			@participants << MyoParticipant.find(visit.myo_participant_id)
 		end
 		@participants = MyoParticipant.all
-		# update_db_from_redcap
-	end
-
-	def new
 	end
 
 	def create
@@ -40,15 +37,22 @@ class MyoController < ApplicationController
 
 	def download_redcap_data
 		@data = redcap_data
-
 		respond_to do |format|
-			format.html
 	    format.csv do
-	    	response.headers['Content-Disposition'] = 'attachment; filename="MyoData.csv"'
-	     	render :csv => @data
+				render :csv => @data, filename: "redcap_data.csv"				
 	   	end
 	  end				
 	end
+
+	def download_computed_data
+		respond_to do |format|
+			@data = MyoParticipant.prepare_completed_csv
+			format.csv do
+	     	render :csv => @data, filename: "computed_data.csv"				
+			end
+	  end				
+
+	end	
 
 	def participants
 		@participants = MyoParticipant.all
@@ -124,55 +128,6 @@ class MyoController < ApplicationController
 	end
 
 	private
-
-	def update_db_from_redcap
-		# little bit of a beast method. Calls the redcap API and populates the DB with redcap information. A little costly because it happens
-		# on every index.html page load but since this page isn't high traffic it should be OK. Otherwise we would rely on the coordinator
-		# to manually import and that could lead to data issues.
-		@captured_participants= []
-		url = URI.parse(ENV['myo_api_url'])
-		post_args = {
-			'token' => ENV['myo_api_token'],
-			'content' => 'record',
-			'rawOrLabel' => 'label',
-			'format' => 'json',
-			'type' => 'flat',
-			'rawOrLabelHeaders' => 'raw'
-		}
-		request= Net::HTTP.post_form(url, post_args)
-		data = JSON.parse(request.body)
-
-		goodin_scores = GoodinCalculation.new(data)	
-
-		data.zip(goodin_scores.data_set).each do |physician, goodin|
-			puts "Only here"
-			myo_participant = MyoParticipant.where(tracms_myo_id: physician["record_id"].to_i).first
-			puts myo_participant
-			puts "made it here"
-			if myo_participant
-				myo_participant.update_attributes(email: physician["email"], sex: physician["sex"] , dob: physician["dob"])
-				if physician["date_enrolled"] != ""
-					(1..8).each do |x|
-						if physician["patientreportdx___" + x.to_s] == "Checked"
-							@disease_number = x.to_s
-						end
-					end
-					myo_participant.trac_visits.where(visit_date: DateTime.parse(physician["date_enrolled"])-60.days..DateTime.parse(physician["date_enrolled"])+60.days).first.update_attributes(physician_edss: physician["edss"], goodin_edss: goodin[:edss])
-					myo_participant.update_attributes(onset: physician["dateonset"], case_or_control: physician["ms_or_hc"], disease_type: convert_to_disease(@disease_number))
-				else
-				end
-			else
-				@captured_participants.push(physician['record_id'])
-			end
-		end		
-			flash[:notice] = "Participant with Tracms_myo_id: #{@captured_participants.join(" , ")} have completed a redcap survey but cannot be found in the database! Please add this/these user(s)."
-			return redirect_to myo_participants_path		
-	end
-
-	def convert_to_disease(number)
-		codebook = {"1"=>"RR", "2"=>"SP", "3"=>"PR", "4"=>"Optic Neuritis", "5"=>"Transverse Myelitis", "6"=>"CIS", "7"=>"RIS", "8"=>"Demyelinating disease not otherwise specified"}
-			return codebook[number]
-	end
 
 	def redcap_data
 		url = URI.parse(ENV['myo_api_url'])

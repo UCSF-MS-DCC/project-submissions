@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # ideally move these routes into a separate engine to completetly separate myo project from MSDR
   
   post 'myo/download_redcap_data', to: 'myo#download_redcap_data'
+  post 'myo/download_computed_data', to: 'myo#download_computed_data'
   get 'myo/redcap', to: 'myo#redcap'
   get 'myo/participants', to: 'myo#participants'
   get 'myo/participants/:id', to: 'myo#show_participant', as: :myo_show_participant
@@ -25,7 +26,7 @@ Rails.application.routes.draw do
   get 'myo/delete_file/:id', to: 'myo#delete_file'
   get 'myo/download_file/:id', to: 'myo#download_file', as: :myo_download_file
 
-  resources :myo  do 
+  resources :myo, except: [:new]  do 
     patch :update, :on => :collection
     post :create, :on => :collection
     patch :update_visit, :on => :collection
@@ -33,14 +34,12 @@ Rails.application.routes.draw do
 
 
   # routes for the goodin/bove EDSS
-
   get 'edss/bove', to: 'edss#bove'
   post 'edss/bove/calculate', to: 'edss#bove_calculate'
   get 'edss/goodin', to: 'edss#goodin'
   post 'edss/goodin/calculate', to: 'edss#goodin_calculate'
 
   # root path and default not found path
-
   root 'welcome#index'
   get "*path", to: 'application#raise_not_found'
   

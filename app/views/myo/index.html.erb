@@ -25,8 +25,8 @@
 			  </thead>
 			  <tbody>
 			    <tr>
-				    <th><%= @participants.where(sex: "Male").count %> </th>
-				    <th><%= @participants.where(sex: "Female").count %> </th>
+				    <td><%= @participants.where(sex: "Male").count %> </td>
+				    <td><%= @participants.where(sex: "Female").count %> </td>
 			    </tr>			    
 			  </tbody>
 			</table>					
@@ -55,17 +55,23 @@
 			  </thead>
 			  <tbody>
 			    <tr>
-			    	<th><%= @participants.where(sex: "RR").count %> </th>
-			    	<th><%= @participants.where(sex: "SP").count %> </th>
-			    	<th><%= @participants.where(sex: "PR").count %> </th>
-			    	<th><%= @participants.where(sex: "Optic Neuritis").count %> </th>
-			    	<th><%= @participants.where(sex: "Transverse Myelitis").count %> </th>
-			    	<th><%= @participants.where(sex: "CIS").count %> </th>
-			    	<th><%= @participants.where(sex: "RIS").count %> </th>
-			    	<th><%= @participants.where(sex: "Demyelinating disease not otherwise specified").count %> </th>			    				    				    				    				    				    				    	
+			    	<td><%= @participants.where(sex: "RR").count %> </td>
+			    	<td><%= @participants.where(sex: "SP").count %> </td>
+			    	<td><%= @participants.where(sex: "PR").count %> </td>
+			    	<td><%= @participants.where(sex: "Optic Neuritis").count %> </td>
+			    	<td><%= @participants.where(sex: "Transverse Myelitis").count %> </td>
+			    	<td><%= @participants.where(sex: "CIS").count %> </td>
+			    	<td><%= @participants.where(sex: "RIS").count %> </td>
+			    	<td><%= @participants.where(sex: "Demyelinating disease not otherwise specified").count %> </td>			    				    				    				    				    				    				    	
 			    </tr>			    	
 			  </tbody>
 			</table>
+		</div>
+	</div>
+	<div class='row'>
+		<%= link_to "Download Redcap Data and Upload Database", '/myo/download_computed_data.csv', :method=> :post, class: 'button radius small-12 columns' %>
+		<div class='small-12 columns'>
+		<p>Note: the following participants will not be added to the report: <%= @missing_participants.join(" , ") %>. Please ensure all subjects are added to this databse before downloading data.</p>
 		</div>
 	</div>
 	

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160622211808) do
+ActiveRecord::Schema.define(version: 20160623163733) do
 
   create_table "myo_files", force: true do |t|
     t.integer  "trac_visit_id"
@@ -79,6 +79,10 @@ ActiveRecord::Schema.define(version: 20160622211808) do
     t.datetime "updated_at"
     t.integer  "physician_edss"
     t.integer  "goodin_edss"
+    t.integer  "goodin_sfs"
+    t.integer  "goodin_ai"
+    t.integer  "goodin_nrs"
+    t.integer  "goodin_mds"
   end
 
   create_table "users", force: true do |t|
