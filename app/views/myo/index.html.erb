@@ -55,14 +55,14 @@
 			  </thead>
 			  <tbody>
 			    <tr>
-			    	<td><%= @participants.where(sex: "RR").count %> </td>
-			    	<td><%= @participants.where(sex: "SP").count %> </td>
-			    	<td><%= @participants.where(sex: "PR").count %> </td>
-			    	<td><%= @participants.where(sex: "Optic Neuritis").count %> </td>
-			    	<td><%= @participants.where(sex: "Transverse Myelitis").count %> </td>
-			    	<td><%= @participants.where(sex: "CIS").count %> </td>
-			    	<td><%= @participants.where(sex: "RIS").count %> </td>
-			    	<td><%= @participants.where(sex: "Demyelinating disease not otherwise specified").count %> </td>			    				    				    				    				    				    				    	
+			    	<td><%= @participants.where(disease_type: "RR").count %> </td>
+			    	<td><%= @participants.where(disease_type: "SP").count %> </td>
+			    	<td><%= @participants.where(disease_type: "PR").count %> </td>
+			    	<td><%= @participants.where(disease_type: "Optic Neuritis").count %> </td>
+			    	<td><%= @participants.where(disease_type: "Transverse Myelitis").count %> </td>
+			    	<td><%= @participants.where(disease_type: "CIS").count %> </td>
+			    	<td><%= @participants.where(disease_type: "RIS").count %> </td>
+			    	<td><%= @participants.where(disease_type: "Demyelinating disease not otherwise specified").count %> </td>			    				    				    				    				    				    				    	
 			    </tr>			    	
 			  </tbody>
 			</table>
