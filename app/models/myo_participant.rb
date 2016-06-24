@@ -56,9 +56,9 @@ class MyoParticipant < ActiveRecord::Base
 
 	def self.prepare_completed_csv
 		download_string = CSV.generate do |csv|
-			csv << TracVisit.attribute_names.prepend("tracms_myo_id")
+			csv << TracVisit.attribute_names.prepend("tracms_myo_id") - ["updated_at"]
 			TracVisit.all.each do |visit|
-				csv << visit.attributes.values.prepend(visit.myo_participant.tracms_myo_id)
+				csv << visit.attributes.values.prepend(visit.myo_participant.tracms_myo_id) - [visit.updated_at]
 			end
 		end
 	end
