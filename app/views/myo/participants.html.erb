@@ -18,36 +18,42 @@
 	</div>
 
 <div class='row'>
-	<table id='participants'>
-		<thead>
-			<tr>
-	    	<th>Trac MS Myo ID</th>
-	    	<th>Name</th>
-	    	<th>Exam Date</th>
-	    	<th>Number of Visits</th>
-	    	<th>Myo Visit?</th>
-	    	<th>Redcap Intake?</th>
-	    	<th> </th>
-	    </tr>
-		</thead>
-		<tbody>
-			<% @participants.each do |participant| %>
+	<div class='small-12 columns'>
+		<table id='participants'>
+			<thead>
 				<tr>
-			    	<td><%= participant.tracms_myo_id %></td>
-			    	<td><%= participant.name %></td>
-			    	<td><%= participant.trac_visits.order(:visit_date).first.visit_date %></td>
-			    	<td><strong><%= link_to participant.trac_visits.count, controller: "myo", action: 'show_visits', id: participant %></strong></td>
-			    	<td><%=participant.myo_visit %></td>
-			    	<td><%=participant.redcap_intake_q %></td>
-			    	<td> <strong><%= link_to "Edit", controller: "myo", action: "show_participant", class: 'button radius', id: participant %></strong> </td>
+		    	<th>Trac MS Myo ID</th>
+		    	<th>Name</th>
+		    	<th>Exam Date</th>
+		    	<th>Number of Visits</th>
+		    	<th>Myo Visit?</th>
+		    	<th>Redcap Intake?</th>
+		    	<th> </th>
 		    </tr>
-			<% end %>
-		</tbody>
-	</table>
+			</thead>
+			<tbody>
+				<% @participants.each do |participant| %>
+					<tr>
+				    	<td><%= participant.tracms_myo_id %></td>
+				    	<td><%= participant.name %></td>
+				    	<td><%= participant.trac_visits.order(:visit_date).first.visit_date %></td>
+				    	<td><strong><%= link_to participant.trac_visits.count, controller: "myo", action: 'show_visits', id: participant %></strong></td>
+				    	<td><%=participant.myo_visit %></td>
+				    	<td><%=participant.redcap_intake_q %></td>
+				    	<td> <strong><%= link_to "Edit", controller: "myo", action: "show_participant", class: 'button radius', id: participant %></strong> </td>
+			    </tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
 
 </div>
 
 	<div class='row'>
-		<%= button_to "Add New Participant", "#", class: 'button right radius', data: {:"reveal-id" => "newParticipant"} %>
+		<div class='small-12 columns'>
+			<%= button_to "Add New Participant", "#", class: 'button right radius', data: {:"reveal-id" => "newParticipant"} %>
+		</div>
 	</div>
 </div>
+
+<%= render 'layouts/footer' %>
