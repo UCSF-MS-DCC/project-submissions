@@ -38,8 +38,13 @@ class MyoParticipant < ActiveRecord::Base
 							@disease_number = x.to_s
 						end
 					end
-					myo_participant.trac_visits.where(visit_date: DateTime.parse(physician["date_enrolled"])-60.days..DateTime.parse(physician["date_enrolled"])+60.days).first.update_attributes(physician_edss: physician["edss"], goodin_edss: goodin[:edss], goodin_sfs: goodin[:sfs], goodin_ai: goodin[:ai], goodin_nrs: goodin[:nrs], goodin_mds: goodin[:mds])
-					myo_participant.update_attributes(onset: physician["dateonset"], case_or_control: physician["ms_or_hc"], disease_type: convert_to_disease(@disease_number))
+					if physician["ms_or_hc"] == "MS"
+						myo_participant.trac_visits.where(visit_date: DateTime.parse(physician["date_enrolled"])-60.days..DateTime.parse(physician["date_enrolled"])+60.days).first.update_attributes(physician_edss: physician["edss"], goodin_edss: goodin[:edss], goodin_sfs: goodin[:sfs], goodin_ai: goodin[:aI], goodin_nrs: goodin[:nrs], goodin_mds: goodin[:mds])
+						myo_participant.update_attributes(onset: physician["dateonset"], case_or_control: physician["ms_or_hc"], disease_type: convert_to_disease(@disease_number))
+					else
+						myo_participant.trac_visits.where(visit_date: DateTime.parse(physician["date_enrolled"])-60.days..DateTime.parse(physician["date_enrolled"])+60.days).first.update_attributes(physician_edss: "", goodin_edss: "", goodin_sfs: "", goodin_ai: "", goodin_nrs: "", goodin_mds: "")
+						myo_participant.update_attributes(onset: "", case_or_control: physician["ms_or_hc"], disease_type: "")						
+					end
 				else
 				end
 			else
