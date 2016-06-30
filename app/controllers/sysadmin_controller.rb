@@ -1,5 +1,5 @@
 class SysadminController < ApplicationController
-	before_action :check_user
+	before_action :authenticate_user!
 
 	def index
 		@sysadmins = Sysadmin.all
@@ -30,14 +30,6 @@ class SysadminController < ApplicationController
 	end
 
 	private
-
-	def check_user
-		if current_user
-			authorize_resource :class => false
-		else
-			redirect_to root_path
-		end
-	end
 
 	def strong_params
 		params.require(:sysadmin).permit(:title, :content)
