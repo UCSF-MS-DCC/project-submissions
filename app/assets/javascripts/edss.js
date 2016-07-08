@@ -1,3 +1,5 @@
+// The purpose of this file is to check the api token for both bove and goodin EDSS validity. If they fail, then the download won't happen
+
 $(document).ready(function(){
 	checkedForValid = false;
 	$("#goodinEDSS").click(function(e){

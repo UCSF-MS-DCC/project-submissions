@@ -1,41 +1,51 @@
+# MyoController is responsible for handling all things related to Dr. Graves TracMS project.
 class MyoController < ApplicationController
+	# Always make sure to authenticate and authorize user before visitng this page (contains potentially sensitive information ). Check 
+	# app/models/ability.rb for authorization informaton
 	before_action :authenticate_user!
 	authorize_resource :class => false
 		
 	def index
+		# The missing participants instance variable serves to show the coordinator which individuals have filled out a redcap form
+		# but HAVE NOT been added manually to the DB via the participants page. The update_db_from_redcap method is a very lage method called on the 
+		# myo participant model (via MyoParticipant.rb) and is worth checking out.
 		@missing_participants = MyoParticipant.update_db_from_redcap
-		@visits = TracVisit.where("visit_date < ?", DateTime.now + 7)
-		@participants = []
-		@visits.each do |visit|
-			@participants << MyoParticipant.find(visit.myo_participant_id)
-		end
 		@participants = MyoParticipant.all
 	end
 
 	def create
+		# Creating an ajax route so coordinator can upload a participant easily.
 		@participant = MyoParticipant.new(participant_params)
-		puts @participant.id
 		respond_to do |format|
 			if @participant.save
+				# If the participant is saved, you should render the create.js.erb file found in views/myo/create.js.erb
 				format.js 
 			else
+				# Otherwise render the notifications file should be rendered which explains the error to the user.
 				format.js { render 'notifications.js.erb'}
 			end
 		end
 	end
 
 	def update
+		# Standard update path, searches for the proper individual and then updates.
 		@participant = MyoParticipant.find(params["id"])
 		@participant.update_attributes(participant_params)
 		redirect_to myo_participants_path
 	end
 
 	def redcap
+		# This method is what is called for vieiwing the redcap data at /myo/redcap. The following function is what is called when after clicking: 
+		# "download redcap data" at redcap.html.erb
+		# The method 'redcap_data' is a simple call to the redcap server to obtain information.
+		# Note, because the way data is stored via the redcap surveys it's always best to download the data straight from redcap. 
 		@data = CSV.parse(redcap_data)
+		# Transpose is a nifty function that makes the data easier to read.
 		@data = @data.transpose
 	end
 
 	def download_redcap_data
+		# Allows for the actual downloading of redcap data.
 		@data = redcap_data
 		respond_to do |format|
 	    format.csv do
@@ -45,6 +55,9 @@ class MyoController < ApplicationController
 	end
 
 	def download_computed_data
+		# This is the method that is called from the /myo page where the link reads "Download Redcap Data and Upload Database". The 'prepare_completed_csv' 
+		# method is a simple way to take the rails models for each individual (and their visits) and put their information into a csv sheet. To see what items are
+		# being sent to the CSV sheet, checkout schema.rb and look at the TracVisit model.
 		respond_to do |format|
 			@data = MyoParticipant.prepare_completed_csv
 			format.csv do
@@ -63,13 +76,11 @@ class MyoController < ApplicationController
 		@participant = MyoParticipant.find(params["id"])
 	end
 
-	def upload
-		@participants = MyoParticipant.all
-	end
-
 	def show_visits
+		# Method that displays all the visits for an individual.
 		@participant = MyoParticipant.find(params["id"])
 		@visits = @participant.trac_visits
+		# The @max_images holder is to help with formatting in the view. See 'show_visits.html.erb' for more.
 		@max_images = 0
 		@visits.each do |visit|
 			if visit.myo_files.count > @max_images
@@ -79,11 +90,13 @@ class MyoController < ApplicationController
 	end	
 
 	def show_visit
+		# Method that ONLY shows one visit when it is clicked on (as opposed to all visits an individual has- see 'show_visits' method).
 		@visit = TracVisit.find(params["id"])
 		@myo_files = @visit.myo_files.all
 	end
 
 	def update_visit	
+		# When updating a visit you only want to update the files if a new file is being added.
 		@visit = TracVisit.find(params["id"])
 		if params[:myo_files]
 			params[:myo_files]['file'].each do |a|
@@ -91,12 +104,14 @@ class MyoController < ApplicationController
 			end		
 		end
 		@visit.update_attributes(visit_params_date)
+		flash[:notice] = 'Successfully updated visit'
 		redirect_to myo_participants_path
 	end
 
 	def new_visit
 		@participant = MyoParticipant.find(params["id"])
 		@visit = @participant.trac_visits.new
+		# The build function creates the nested myo_files so that they are uploaded and attached to the apropriate visit.
 		@myo_files = @visit.myo_files.build
 	end
 
@@ -114,6 +129,7 @@ class MyoController < ApplicationController
 	end
 
 	def delete_file
+		# Enables for the ajax route to delete files.
 		@myo_file = MyoFile.find(params[:image_id])
 		respond_to do |format|
 			@myo_file.destroy
@@ -130,6 +146,7 @@ class MyoController < ApplicationController
 	private
 
 	def redcap_data
+		# Method used to call the redcap API
 		url = URI.parse(ENV['myo_api_url'])
 
 		post_args = {
@@ -143,6 +160,9 @@ class MyoController < ApplicationController
 		request= Net::HTTP.post_form(url, post_args)
 		request.body
 	end
+
+	# Note, we use the different params down here because of rails 'strong parameters' which prevents us from mass assigning
+	# attributes to models. View: http://edgeapi.rubyonrails.org/classes/ActionController/StrongParameters.html for more info.
 
 	def participant_params
 		params.require(:myo_participant).permit(:participant_id, :tracms_myo_id, :name, :scheduled_date, :exam_date, :myo_visit, :redcap_intake_q, :redcap_ms_info, :redcap_whodas, :redcap_health_intake, :mrn)

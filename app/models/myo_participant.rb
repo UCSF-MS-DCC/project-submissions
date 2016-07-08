@@ -7,6 +7,7 @@ class MyoParticipant < ActiveRecord::Base
 	after_create :create_visit
 
 	def create_visit
+		# Method for automatically creating a visit once an individual is created. Called from a active record callback (see above)
 		self.trac_visits.create(visit_date: self.scheduled_date)
 	end
 
@@ -28,17 +29,23 @@ class MyoParticipant < ActiveRecord::Base
 		data = JSON.parse(request.body)
 		goodin_scores = GoodinCalculation.new(data)	
 
+		# You're zipping together the goodin scores along with the redcap information per individual. That way when we loop through each individual it's a lot easier to
+		# update the db.
 		data.zip(goodin_scores.data_set).each do |physician, goodin|
 			myo_participant = MyoParticipant.where(tracms_myo_id: physician["record_id"].to_i).first
 			if myo_participant
+				# Updating an individual MyoParticipant model.
 				myo_participant.update_attributes(email: physician["email"], sex: physician["sex"] , dob: physician["dob"])
 				if physician["date_enrolled"] != ""
 					(1..8).each do |x|
+						# This is called because the way the raw data is imported from redcap you don't necessary know the disease of the individual because the data is raw.
+						# Thus, you need to call the 'convert_to_disease' method which will translate the number to a disease.
 						if physician["patientreportdx___" + x.to_s] == "Checked"
 							@disease_number = x.to_s
 						end
 					end
 					if physician["ms_or_hc"] == "MS"
+						# If the individual is a healthy control, you don't want to run the goodin algorithm or include a few of the other fields.
 						myo_participant.trac_visits.where(visit_date: DateTime.parse(physician["date_enrolled"])-60.days..DateTime.parse(physician["date_enrolled"])+60.days).first.update_attributes(physician_edss: physician["edss"], goodin_edss: goodin[:edss], goodin_sfs: goodin[:sfs], goodin_ai: goodin[:aI], goodin_nrs: goodin[:nrs], goodin_mds: goodin[:mds])
 						myo_participant.update_attributes(onset: physician["dateonset"], case_or_control: physician["ms_or_hc"], disease_type: convert_to_disease(@disease_number))
 					else
@@ -55,11 +62,13 @@ class MyoParticipant < ActiveRecord::Base
 	end
 
 	def self.convert_to_disease(number)
+		# Basically converting the raw data for disease type. 
 		codebook = {"1"=>"RR", "2"=>"SP", "3"=>"PR", "4"=>"Optic Neuritis", "5"=>"Transverse Myelitis", "6"=>"CIS", "7"=>"RIS", "8"=>"Demyelinating disease not otherwise specified"}
 		codebook[number]
 	end	
 
 	def self.prepare_completed_csv
+		# Preparing the CSV for download of redcap data along with goodin edss scores
 		download_string = CSV.generate do |csv|
 			csv << TracVisit.attribute_names.prepend("tracms_myo_id") - ["updated_at"]
 			TracVisit.all.each do |visit|

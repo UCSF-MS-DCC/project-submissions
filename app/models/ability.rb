@@ -1,3 +1,4 @@
+# The model that is responsible for defining roles with CanCanCan. Pretty self explanatory.
 class Ability
   include CanCan::Ability
 

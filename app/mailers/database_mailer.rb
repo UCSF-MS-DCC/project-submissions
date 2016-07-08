@@ -1,3 +1,4 @@
+# This is what we're using to backup the database from the server. 
 class DatabaseMailer < ActionMailer::Base
   default from: "thomas.carpenito@ucsf.edu"
 

@@ -1,5 +1,10 @@
+# Sysadmin hasn't really taken off but is a place where we can store information pertinent to the servers etc...
+# The controller is straightforward. Information about the roles can be viewed at: app/models/ability.rb
 class SysadminController < ApplicationController
+	# Always make sure to authenticate user before visitng this page (contains potentially sensitive information ). No need to authorize as railsadmin does
+	# this separately
 	before_action :authenticate_user!
+	authorize_resource :class => false
 
 	def index
 		@sysadmins = Sysadmin.all

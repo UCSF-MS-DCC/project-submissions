@@ -1,7 +1,10 @@
+# It's probably best to not touch this model. If you need to make modifications, change the initialize method. 
+# Otherwise you'll need to do a lot of tracing through the file.
 class GoodinCalculation
 	attr_reader :data_set
 
 	def initialize(redcap_data)
+		# Everything is pretty self-explainatory. You're essentially creating the 'data' hash to prepare for a data download of all individuals
 		@data_set = []
 		redcap_data.each do |participant|
 			sfs = calculate_sfs(participant)

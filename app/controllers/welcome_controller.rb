@@ -1,6 +1,5 @@
+# This controller only really serves for the root path of the site. That's about it.
 class WelcomeController < ApplicationController
   def index
-  	@projects = Project.all
-  	@project = Project.new
   end
 end

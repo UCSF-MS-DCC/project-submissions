@@ -1,3 +1,4 @@
+# This is not used yet, but is ready for use. Check lib/tasks/db_backup.rake for task to backup DB.
 class ProjectApprover < ActionMailer::Base
   default from: "carpenito.t@gmail.com"
 

@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.5'
 # Use sqlite3 as the database for Active Record
@@ -17,20 +16,7 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-
 gem 'foundation-rails'
-gem 'humanizer'
 gem 'jquery-tablesorter'
 gem 'jquery-ui-rails'
 gem "gritter", "1.2.0"
@@ -43,13 +29,12 @@ gem 'cancancan'
 gem 'rolify'
 gem "wysiwyg-rails"
 gem 'paper_trail'
-gem 'pry'
 gem 'binding_of_caller'
 gem 'carrierwave', github: 'carrierwaveuploader/carrierwave'
 gem 'thin'
-gem "d3-rails"
 
 group :development do 
 	gem 'better_errors'
 	gem 'spring'
+	gem 'pry'
 end

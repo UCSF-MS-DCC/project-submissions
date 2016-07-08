@@ -1,17 +1,19 @@
 Rails.application.routes.draw do
-
-  resources :myo_files
+  # This app has grown "too big" for a single application and should be broken down into separate engines.
 
   devise_for :users
+
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+
   resources :projects, only: [:index, :new, :create]
   resources :publications, only: [:index]
   resources :fundings, only: [:index]
   resources :dictionary, only: [:index]
   resources :sysadmin
   
-  # ideally move these routes into a separate engine to completetly separate myo project from MSDR
-  
+  # These are the individualized routes for the myo controller. To view where each of the actions goes to, 
+  # check in the myo_controller followed by the action after the "#" ex: 'myo#download_redcap_data' is called 
+  # at the myo controller, 'download_redcap_data' method.
   post 'myo/download_redcap_data', to: 'myo#download_redcap_data'
   post 'myo/download_computed_data', to: 'myo#download_computed_data'
   get 'myo/redcap', to: 'myo#redcap'
@@ -39,8 +41,10 @@ Rails.application.routes.draw do
   get 'edss/goodin', to: 'edss#goodin'
   post 'edss/goodin/calculate', to: 'edss#goodin_calculate'
 
-  # root path and default not found path
+  # root, not found/authorized paths
   root 'welcome#index'
+  get 'notfound', to: 'application#not_found'
+  get 'notauthorized', to: 'application#not_authorized'
   get "*path", to: 'application#raise_not_found'
   
 end
