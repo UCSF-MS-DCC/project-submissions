@@ -1,17 +1,20 @@
 <%= render 'layouts/navbar' %>
 
-<div class="row margin-top">
-  <div class="large-12 columns">
-    <div class="panel radius text-center">
-      <span>MSDCC Sysadmin</span>
-    </div>
-  </div>
-</div>
+<div id="msdr-theme">
+		<div class="row margin-top">
+		  <div class="large-12 columns">
+		    <div class="panel radius text-center">
+		      <span>MSDCC Sysadmin</span>
+		    </div>
+		  </div>
+		</div>
 
-<div class='row'>
-	<% @sysadmins.each do |sysadmin| %>
-		<%= link_to sysadmin.title, sysadmin %>
-		<br>
-	<% end %>
-	<%= link_to "Create new project", new_sysadmin_path, :class => "button right radius" %>
-</div>		
+	<div class='row'>
+		<% @sysadmins.each do |sysadmin| %>
+		<div class='small-12 columns'>
+			<h4> <%= link_to sysadmin.title, sysadmin %></h4>
+		</div>
+		<% end %>
+		<%= link_to "Create new project", new_sysadmin_path, :class => "button right radius" %>
+	</div>		
+</div>

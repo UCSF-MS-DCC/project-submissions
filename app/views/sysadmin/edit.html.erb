@@ -1,26 +1,30 @@
 <%= render 'layouts/navbar' %>
 
-<div class="row margin-top">
-  <div class="large-12 columns">
-    <div class="panel radius text-center">
-      <span>MSDCC Sysadmin</span>
-    </div>
-  </div>
+<div id="msdr-theme">
+		<div class="row margin-top">
+		  <div class="large-12 columns">
+		    <div class="panel radius text-center">
+		      <span>MSDCC Sysadmin</span>
+		    </div>
+		  </div>
+		</div>
+
+	<div class='row'>
+		<div class='small-12 columns'>
+			<%= link_to "Index of Pages", sysadmin_index_path, class: "button radius right" %>
+		</div>
+	</div>
+
+	<div class='row'>
+		<%= form_for @sysadmin do |f| %>
+			<%= f.text_field :title%>
+			<%= f.text_area :content, :class => "wysiwyg" %>
+			<br>
+			<%= f.submit 'Save', :class => 'button radius right' %>
+		<% end %>
+	</div>
 </div>
 
-<div class='row'>
-	<%= link_to "Index of Pages", sysadmin_index_path, class: "left" %>
-</div>
-<br>
-
-<div class='row'>
-	<%= form_for @sysadmin do |f| %>
-		<%= f.text_field :title%>
-		<%= f.text_area :content, :class => "wysiwyg" %>
-		<br>
-		<%= f.submit 'Save', :class => 'button radius right' %>
-	<% end %>
-</div>
 
 
 	<script>

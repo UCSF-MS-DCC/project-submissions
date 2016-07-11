@@ -1,22 +1,24 @@
 <%= render 'layouts/navbar' %>
 
-<div class="row margin-top">
-  <div class="large-12 columns">
-    <div class="panel radius text-center">
-      <span>MSDCC Sysadmin</span>
-    </div>
-  </div>
-</div>
+<div id="msdr-theme">
+	<div class="row margin-top">
+	  <div class="large-12 columns">
+	    <div class="panel radius text-center">
+	      <span>MSDCC Sysadmin</span>
+	    </div>
+	  </div>
+	</div>
 
 <div class='row'>
-	<%= link_to "Index of Pages", sysadmin_index_path, class: "left" %>
+	<div class='small-12 columns'>
+		<%= link_to "Index of Pages", sysadmin_index_path, class: "button radius right" %>
+	</div>
 </div>
-<br>
 
 <div class='row'>
 	<h1 class="text-center" style="background-color: white"><%= @sysadmin.title %></h1>
 	<br>
-	<div class='small-12 columns' style='background-color: white'>
+	<div class='small-12 columns'>
 		<%= @sysadmin.content.html_safe %>
 	</div>
 </div>
