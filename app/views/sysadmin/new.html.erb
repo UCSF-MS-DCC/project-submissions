@@ -4,7 +4,7 @@
 		<div class="row margin-top">
 		  <div class="large-12 columns">
 		    <div class="panel radius text-center">
-		      <span>MSDCC Sysadmin</span>
+		      <h1>MSDCC Sysadmin</h1>
 		    </div>
 		  </div>
 		</div>
@@ -13,15 +13,19 @@
 		<div class='small-12 columns'>
 			<%= link_to "Index of Pages", sysadmin_index_path, class: "right" %>
 		</div>
+		<br>
+		<br>
 	</div>
 
 	<div class='row'>
-		<%= form_for @sysadmin, url: {action: "create"} do |f| %>
-			<%= f.text_area :title, placeholder: "title" %>
-			<%= f.text_area :content, :class => "wysiwyg" %>
-			<br>
-			<%= f.submit 'Submit', :class => 'button radius right' %>
-		<% end %>
+		<div class='small-12 columns'>
+			<%= form_for @sysadmin, url: {action: "create"} do |f| %>
+				<%= f.text_area :title, placeholder: "title" %>
+				<%= f.text_area :content, :class => "wysiwyg" %>
+				<br>
+				<%= f.submit 'Submit', :class => 'button radius right' %>
+			<% end %>
+		</div>
 	</div>
 </div>
 

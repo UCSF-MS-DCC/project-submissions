@@ -4,7 +4,7 @@
 		<div class="row margin-top">
 		  <div class="large-12 columns">
 		    <div class="panel radius text-center">
-		      <span>MSDCC Sysadmin</span>
+		      <h1>MSDCC Sysadmin</h1>
 		    </div>
 		  </div>
 		</div>
@@ -16,12 +16,14 @@
 	</div>
 
 	<div class='row'>
-		<%= form_for @sysadmin do |f| %>
-			<%= f.text_field :title%>
-			<%= f.text_area :content, :class => "wysiwyg" %>
-			<br>
-			<%= f.submit 'Save', :class => 'button radius right' %>
-		<% end %>
+		<div class='small-12 columns'>
+			<%= form_for @sysadmin do |f| %>
+				<%= f.text_field :title%>
+				<%= f.text_area :content, :class => "wysiwyg" %>
+				<br>
+				<%= f.submit 'Save', :class => 'button radius right' %>
+			<% end %>
+		</div>
 	</div>
 </div>
 

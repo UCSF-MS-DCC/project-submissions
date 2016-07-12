@@ -4,25 +4,32 @@
 	<div class="row margin-top">
 	  <div class="large-12 columns">
 	    <div class="panel radius text-center">
-	      <span>MSDCC Sysadmin</span>
+	      <h1>MSDCC Sysadmin</h1>
 	    </div>
 	  </div>
 	</div>
 
-<div class='row'>
-	<div class='small-12 columns'>
-		<%= link_to "Index of Pages", sysadmin_index_path, class: "right" %>
+	<div class='row'>
+		<div class='small-12 columns'>
+			<%= link_to "Index of Pages", sysadmin_index_path, class: "right" %>
+		</div>
+	</div>
+
+	<div class='row'>
+		<div class='small-12 columns text-center'>
+			<h1> <%= @sysadmin.title %></h1>
+		</div>
+		<div class='small-12 columns'>
+			<div style="border: 1px solid rgba(0, 114, 255, 0.4); background-color: white; padding: 2em; border-radius: 3px">	<%= @sysadmin.content.html_safe %> </div>
+		</div>
+	</div>
+
+	<br>
+
+	<div class='row'>
+		<div class='small-12 columns'>
+			<%= link_to "Edit", edit_sysadmin_path, class: "button right radius" %>
+		</div>
 	</div>
 </div>
 
-<div class='row'>
-	<h1 class="text-center" style="background-color: white"><%= @sysadmin.title %></h1>
-	<br>
-	<div class='small-12 columns'>
-		<%= @sysadmin.content.html_safe %>
-	</div>
-</div>
-<br>
-<div class='row'>
-	<%= link_to "Edit", edit_sysadmin_path, class: "button right radius" %>
-</div>
