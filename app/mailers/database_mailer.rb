@@ -1,6 +1,6 @@
 # This is what we're using to backup the database from the server. 
 class DatabaseMailer < ActionMailer::Base
-  default from: "thomas.carpenito@ucsf.edu"
+  default from: "adam.santaniello@ucsf.edu"
 
   def backup_database
   	attachments['MSDR.sqlite3'] = File.read("#{Rails.root}/db/production.sqlite3")
