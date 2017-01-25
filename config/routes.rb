@@ -40,6 +40,9 @@ Rails.application.routes.draw do
   post 'edss/bove/calculate', to: 'edss#bove_calculate'
   get 'edss/goodin', to: 'edss#goodin'
   post 'edss/goodin/calculate', to: 'edss#goodin_calculate'
+  get 'edss/bove2', to: 'edss#bove2'
+  post 'edss/bove2/calculate', to: 'edss#bove2_calculate'
+
 
   # root, not found/authorized paths
   root 'welcome#index'

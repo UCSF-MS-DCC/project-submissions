@@ -20,6 +20,10 @@ class EdssController < ApplicationController
 		# Same as 'goodin' method with bove used.
 	end
 
+	def bove2
+		# Same as 'goodin' and 'bove' method with bove2 used.
+	end
+
 	def goodin_calculate
 		# This method uses the goodin_calculation model to parse the incoming redcap data, and generate the required scores. 
 		# The variable calc is just holding all the redcap scores in a single variable to more easily parse when determining individual scores.
@@ -72,6 +76,29 @@ class EdssController < ApplicationController
 	  end		
 	end
 
+	def bove2_calculate
+		# More or less the same as the bove_calculate only the bove2_calculation model is being called.
+		redirect_to notauthorized_path and return if redcap_data(params[:boveAPI]).nil?
+		calc = Bove2Calculation.new(JSON.parse(redcap_data(params[:boveAPI])))
+		edss = calc.edss_histogram(calc.data_set)
+		sfs = calc.sfs_histogram(calc.data_set)
+		ai = calc.ai_histogram(calc.data_set)
+		ids = calc.record_ids(calc.data_set)
+
+		csv_string = 	CSV.generate do |csv|
+			csv << ["record_id", "first_name", "last_name", "sfs", "edss", "aI", "nrs", "mds", "Ambulation", "Cerebellar", "Brainstem", "Sensory", "Bowel/Bladder", "Vision", "Cerebral", "Pyramidal"]
+			ids.each do |participant|
+				csv << participant.values
+			end
+		end
+		respond_to do |format|
+			format.html
+			format.csv do
+				response.headers['Content-Disposition'] = 'attachment; filename="Bove2RemoteEDSS.csv"'
+				render :csv => csv_string
+			end
+		end
+	end
 	private
 
 	def redcap_data(key)

@@ -1,6 +1,6 @@
 # It's probably best to not touch this model. If you need to make modifications, change the initialize method. 
 # Otherwise you'll need to do a lot of tracing through the file.
-class BoveCalculation 
+class Bove2Calculation
 	attr_reader :data_set
 
 	def initialize(redcap_data)
@@ -15,447 +15,6 @@ class BoveCalculation
 			data = {record_id: participant["record_id"].to_i, first_name: participant["first_name"], last_name: participant["last_name"], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds, f1: sfs[:f1], f2: sfs[:f2], f3: sfs[:f3], f4:sfs[:f4], f5: sfs[:f5], f6: sfs[:f6], f7: sfs[:f7], f8: sfs[:f8]}
 			@data_set<< data
 		end
-	end
-
-	def record_ids(data)
-		participant_ids = []
-		data.each do |participant|
-			participant_ids << participant["record_id"]
-		end
-	end
-
-	def edss_histogram(data)
-		edss_hash= {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0}
-		data.each do |participant|
-			edss_hash[:"#{(participant[:edss].floor).to_s}"] +=1
-		end 
-		edss_hash
-	end
-
-	def sfs_histogram(data)
-		sfs_hash= {"0":0, "5": 0, "10": 0, "15": 0, "20": 0, "25": 0, "30": 0, "35":0}
-		data.each do |participant|
-			hash_conversion = ((participant[:sfs]/5.0).ceil * 5).to_s
-			sfs_hash[:"#{hash_conversion}"] += 1
-		end
-		 sfs_hash
-	end
-
-	def ai_histogram(data)
-		ai_hash= {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0}
-		data.each do |participant|
-			ai_hash[:"#{(participant[:aI]).to_s}"] +=1
-		end 
-		ai_hash
-
-	end
-
-	def calc_tf1u(f1u,fs)
-		tf1u=0
-		if f1u==1 || f1u==2 
-			tf1u=1
-		elsif f1u==3 
-			tf1u=2
-		elsif f1u==4 
-			tf1u=3
-		elsif f1u>4
-		 tf1u=4
-		end
-
-		if f1u>4 && fs<=2 
-			tf1u=3
-		end
-
-		return tf1u
-	end
-
-	
-	def calc_tf1l(f1l, a1)
-		tf1l=0
-		if f1l==1 || f1l==2 
-			tf1l=1
-		elsif f1l==3 
-			tf1l=2
-		elsif f1l==4 
-			tf1l=3
-		elsif f1l>4 
-			tf1l=4
-		end
-
-		if f1l>=3 && a1<=2 
-			tf1l=1
-		elsif f1l>=3 && a1==3 
-			tf1l=2
-		elsif f1l>=5 && a1==4 
-			tf1l=3
-		end
-
-		return tf1l
-	end
-
-	def calc_f1(tf1l, tf1u, f1h)
-		f1=0
-		if tf1l>=tf1u 
-			f1=tf1l
-		else
-			f1=tf1u
-		end
-
-		if f1<2 && f1h==2 
-			f1=2
-		elsif f1<3 && f1h==2.5 
-			f1=3
-		elsif f1<3 && (tf1u+tf1l)>=4 && (tf1u+tf1l)<=5 
-			f1=3
-		elsif f1h==3 
-			f1=4
-		elsif (tf1u+tf1l)>=6 && (tf1u+tf1l)<=7 
-			f1=4    
-		elsif (tf1u+tf1l)==8 
-			f1=5 
-		end   
-		return f1
-	end
-
-	def calc_tf2u(f2u, tf1u, fs)
-		tf2u=0
-		if f2u==1 || f2u==2 
-			tf2u=1
-		elsif f2u==3 
-			tf2u=2
-		elsif f2u==4 
-			tf2u=3
-		elsif f2u>4 
-			tf2u=4
-		end
-
-		if f2u>4 && fs<=2 
-			tf2u=3
-		end
-
-		if tf1u>=3 && tf2u>=3 
-			tf2u-=1
-		end
-
-		return tf2u
-	end
-
-	def calc_tf2l(f2l, a1, tf1l, f1h)
-		tf2l=0
-		if f2l==1 || f2l==2 
-			tf2l=1
-		elsif f2l==3 
-			tf2l=2
-		elsif f2l==4 
-			tf2l=3
-		elsif f2l>4 
-			tf2l=4
-		end
-
-		if f2l>=3 && a1<=2 
-			tf2l=1
-		elsif f2l>=3 && a1==3 
-			tf2l=2
-		elsif f2l>=5 && a1==4 
-			tf2l=3
-		end
-
-		if tf1l>=3 && tf2l>=3 
-			tf2l-=1
-		end
-
-		return tf2l
-	end
-
-	def calc_f2h(f1h)
-		if f1h>=2.5 
-			f2h=f2h-0.5
-		end
-		return f2h
-	end
-
-	def calc_f2(tf2l,tf2u,f2h)
-		f2=0
-		if tf2l>=tf2u 
-			f2=tf2l
-		else 
-			f2=tf2u
-		end
-
-		if f2<2 && f2h==2 
-			f2=2
-		elsif f2<3 && f2h==2.5 
-			f2=3
-		end
-
-		if f2<3 && (tf2u+tf2l)>=4 && (tf2u+tf2l)<=5 
-			f2=3
-		end
-
-		if f2h==3 
-			f2=4
-		end
-
-		if (tf2u+tf2l)>=6 && (tf2u+tf2l)<=7 
-			f2=4    
-		end
-
-		if (tf2u+tf2l)==8 
-			f2=5  
-		end
-
-		return f2
-
-	end
-
-	def calc_f1f(f1fr,f1fl)
-		if (f1fr+f1fl)==0      	
-			f1f=0
-		end
-		if (f1fr+f1fl)<=2   	
-			f1f=1
-		end
-		if (f1fr+f1fl)<=4	
-			f1f=2
-		end
-		if f1fr==3 || f1fl==3	
-			f1f=3 
-		end
-		return f1f
-	end
-
-	def calc_f4f(f14r, f4fr,f4fl)
-		if (f4fr+f4fl)==0      	
-			f4f=0
-		end
-		if (f4fr+f4fl)<=2   	
-			f4f=1
-		end
-		if (f4fr+f4fl)<=4	
-			f4f=2
-		end
-		if f14r==3 || f4fl==3	
-			f4f=3 
-		end
-		return f4f
-	end
-
-	def calc_f3(f2s,f1f,f4f,b1,b2,b3,b4)
-		sbs=f2s+f1f+f4f+b1+b2+b3
-		if sbs==0 
-			f3=0
-		end
-		if sbs>0 || b4>1 
-			f3=1
-		end
-		if f4f==3 || b3==3 || f2s==2 || f1f==2 || b1==2 || b2==2 
-			f3=2
-		end
-		if f2s==3 || f1f==3 
-			f3=4
-		end
-		if b1==3 && f3<4 
-			f3=3
-		end
-		if f3==4 && b2==3 
-			f3=5
-		end
-		if sbs<=5 && f3<=2 
-			f3=1
-		end
-		if sbs>=6 && f3<=2 
-			f3=2
-		end
-		return f3
-	end	
-
-	def calc_tf4u(fs, f4u)
-		tf4u=0
-		if f4u==1 || f4u==2 
-			tf4u=1
-		elsif f4u==3 
-			tf4u=2
-		elsif f4u==4 
-			tf4u=3
-		elsif f4u>=5 
-			tf4u=4
-		end
-
-		if f4u>4 && fs<=2 
-			tf4u=3
-		end
-		return tf4u
-	end
-
-	def calc_tf4l(f4l, a1)
-		tf4l=0
-		if f4l==1 || f4l==2 
-			tf4l=1
-		elsif f4l==3 
-			tf4l=2
-		elsif f4l==4 
-			tf4l=3
-		elsif f4l>=5 
-			tf4l=4
-		end
-		
-		if f4l>4 && a1<=2 
-			tf4l=tf4l-1
-		end
-		return tf4l
-	end
-
-	def calc_f4(tf4l, tf4u, f4h)
-		f4=0
-		if tf4l>=tf4u 
-			f4=tf4l
-		else 
-			f4=tf4u
-		end
-
-		if f4<2 && f4h==2 
-			f4=2
-		end
-
-		if f4<3 && (tf4u+tf4l)>=4 && (tf4u+tf4l)<=5 
-			f4=3
-		end
-
-		if f4<3 && f4h==2.5 
-			f4=3
-		end
-
-		if f4h==3 
-			f4=4
-		end
-
-		if (tf4u+tf4l)>=6 && (tf4u+tf4l)<=7 
-			f4=4    
-		elsif (tf4u+tf4l)==8 
-			f4=5    
-		end
-		return f4
-	end
-
-	def calc_f5(f5t)
-		if f5t==1 
-			f5=0
-		elsif f5t>1 && f5t<=4 
-			f5=1
-		elsif f5t==5 
-			f5=2
-		elsif f5t==6 
-			f5=3
-		elsif f5t==7 || f5t==8 
-			f5=4
-		else
-			f5=5
-		end
-		return f5
-	end
-
-	def calc_f6(f6t)
-		f6=0
-		if f6t>=1 && f6t<=2 
-			f6=1
-		elsif f6t==3 
-			f6=2
-		elsif f6t==4 
-			f6=3
-		elsif f6t==5 
-			f6=4
-		elsif f6t==6 
-			f6=5
-		end
-		return f6
-	end
-
-	def calc_f7(f7t, c1)
-		 f7=f7t
-		if f7t==1 
-			f7=0
-		end
-
-		if c1>1 && f7==0 
-			f7=1
-		end
-
-		if f7==2 
-			f7=1
-		end
-
-		if f7>1 && c1==2 
-			f7=f7-1
-		end
-
-		return f7
-	end
-
-	def calc_tf8u(f8l, a1, fs, f8u)
-		tf8u=0
-		if f8u==1 || f8u==2 
-			tf8u=1
-		elsif f8u>=3 && f8u<=4 
-			tf8u=2
-		end
-
-		if f8l>=4 && a1<=2 && tf8u>=2 
-			tf8u=tf8u-1  
-		end
-
-		if f8u>4 && fs<=2 
-			tf8u=2
-		end
-
-		if f8u>4 
-			tf8u=3
-		end
-		return tf8u
-	end
-
-	def calc_tf8l(f8l, a1)
-		tf8l=0
-		if f8l==1 || f8l==2 
-			tf8l=1
-		elsif f8l>=3 && f8l<=4 
-			tf8l=2
-		end
-
-		if f8l>=3 && a1>=3 && a1<=4 
-			tf8l=2
-		end
-
-		if f8l>=3 && a1<=2 
-			tf8l=1
-		end
-
-		if f8l>4 
-			tf8l=3
-		end
-		return tf8l
-	end
-
-	def calc_f8(tf8l, tf8u, f8h)
-		f8=0
-		if tf8l>=tf8u 
-			f8=tf8l
-		else
-			f8=tf8u
-		end
-
-		if f8<2 && f8h==2 
-			f8=2
-		end
-
-		if (tf8u+tf8l)>=4 
-			f8=3
-		end
-
-		if f8h>2 
-			f8=3
-		end
-
-		return f8
 	end
 
 	def calculate_sfs(redcap_data)
@@ -497,7 +56,7 @@ class BoveCalculation
 		f3 = self.calc_f3(f2s,f1f,f4f,redcap_data["b1"].to_i, redcap_data["b2"].to_i, redcap_data["b3"].to_i, redcap_data["b4"].to_i)
 
 		tf4l=self.calc_tf4l(f4l, redcap_data["a1"].to_i)
-		tf4u=self.calc_tf4u(redcap_data["fs"].to_i, f4u)	
+		tf4u=self.calc_tf4u(redcap_data["fs"].to_i, f4u)
 		f4=self.calc_f4(tf4l, tf4u, f4h)
 
 		f5=self.calc_f5(f5t)
@@ -515,15 +74,523 @@ class BoveCalculation
 		return {sfs: sfs, f1: f1, f2: f2, f3: f3, f4: f4, f5: f5, f6: f6, f7: f7, f8: f8}
 	end
 
+	#### START SFS SUB-FUNCTIONS ####
+
+	def calc_f1f(f1fr,f1fl)
+		if (f1fr+f1fl)==0
+			f1f=0
+		end
+		if (f1fr+f1fl)<=2
+			f1f=1
+		end
+		if (f1fr+f1fl)<=4
+			f1f=2
+		end
+		if f1fr==3 || f1fl==3
+			f1f=3
+		end
+		return f1f
+	end
+
+	def calc_f4f(f14r, f4fr,f4fl)
+		if (f4fr+f4fl)==0
+			f4f=0
+		end
+		if (f4fr+f4fl)<=2
+			f4f=1
+		end
+		if (f4fr+f4fl)<=4
+			f4f=2
+		end
+		if f14r==3 || f4fl==3
+			f4f=3
+		end
+		return f4f
+	end
+
+	def calc_tf1u(f1u,fs)
+		tf1u=0
+		if f1u==1 || f1u==2
+			tf1u=1
+		elsif f1u==3
+			tf1u=2
+		elsif f1u==4
+			tf1u=3
+		elsif f1u>4
+			tf1u=4
+		end
+
+		if f1u>4 && fs<=2
+			tf1u=3
+		end
+
+		return tf1u
+	end
+
+	def calc_tf1l(f1l, a1)
+		tf1l=0
+		if f1l==1 || f1l==2
+			tf1l=1
+		elsif f1l==3
+			tf1l=2
+		elsif f1l==4
+			tf1l=3
+		elsif f1l>4
+			tf1l=4
+		end
+
+		if f1l>=3 && a1<=2
+			tf1l=1
+		elsif f1l>=3 && a1==3
+			tf1l=2
+		elsif f1l>=5 && a1==4
+			tf1l=3
+		end
+
+		return tf1l
+	end
+
+	def calc_f1(tf1l, tf1u, f1h)
+		f1=0
+		if tf1l>=tf1u
+			f1=tf1l
+		else
+			f1=tf1u
+		end
+
+		if f1<2 && f1h==2
+			f1=2
+		elsif f1<3 && f1h==2.5
+			f1=3
+		elsif f1<3 && (tf1u+tf1l)>=4 && (tf1u+tf1l)<=5
+			f1=3
+		elsif f1h==3
+			f1=4
+		elsif (tf1u+tf1l)>=6 && (tf1u+tf1l)<=7
+			f1=4
+		elsif (tf1u+tf1l)==8
+			f1=5
+		end
+		return f1
+	end
+
+	def calc_tf2u(f2u, tf1u, fs)
+		tf2u=0
+		if f2u==1 || f2u==2
+			tf2u=1
+		elsif f2u==3
+			tf2u=2
+		elsif f2u==4
+			tf2u=3
+		elsif f2u>4
+			tf2u=4
+		end
+
+		if f2u>4 && fs<=2
+			tf2u=3
+		end
+
+		if tf1u>=3 && tf2u>=3
+			tf2u-=1
+		end
+
+		return tf2u
+	end
+
+	def calc_tf2l(f2l, a1, tf1l, f1h)
+		tf2l=0
+		if f2l==1 || f2l==2
+			tf2l=1
+		elsif f2l==3
+			tf2l=2
+		elsif f2l==4
+			tf2l=3
+		elsif f2l>4
+			tf2l=4
+		end
+
+		if f2l>=3 && a1<=2
+			tf2l=1
+		elsif f2l>=3 && a1==3
+			tf2l=2
+		elsif f2l>=5 && a1==4
+			tf2l=3
+		end
+
+		if tf1l>=3 && tf2l>=3
+			tf2l-=1
+		end
+
+		return tf2l
+	end
+
+	def calc_f2(tf2l,tf2u,f2h)
+		f2=0
+		if tf2l>=tf2u
+			f2=tf2l
+		else
+			f2=tf2u
+		end
+
+		if f2<2 && f2h==2
+			f2=2
+		elsif f2<3 && f2h==2.5
+			f2=3
+		end
+
+		if f2<3 && (tf2u+tf2l)>=4 && (tf2u+tf2l)<=5
+			f2=3
+		end
+
+		if f2h==3
+			f2=4
+		end
+
+		if (tf2u+tf2l)>=6 && (tf2u+tf2l)<=7
+			f2=4
+		end
+
+		if (tf2u+tf2l)==8
+			f2=5
+		end
+
+		return f2
+
+	end
+
+	def calc_f3(f2s,f1f,f4f,b1,b2,b3,b4)
+		sbs=f2s+f1f+f4f+b1+b2+b3
+		if sbs==0
+			f3=0
+		end
+		if sbs>0 || b4>1
+			f3=1
+		end
+		if f4f==3 || b3==3 || f2s==2 || f1f==2 || b1==2 || b2==2
+			f3=2
+		end
+		if f2s==3 || f1f==3
+			f3=4
+		end
+		if b1==3 && f3<4
+			f3=3
+		end
+		if f3==4 && b2==3
+			f3=5
+		end
+		if sbs<=5 && f3<=2
+			f3=1
+		end
+		if sbs>=6 && f3<=2
+			f3=2
+		end
+		return f3
+	end
+
+	def calc_tf4u(fs, f4u)
+		tf4u=0
+		if f4u==1 || f4u==2
+			tf4u=1
+		elsif f4u==3
+			tf4u=2
+		elsif f4u==4
+			tf4u=3
+		elsif f4u>=5
+			tf4u=4
+		end
+
+		if f4u>4 && fs<=2
+			tf4u=3
+		end
+		return tf4u
+	end
+
+	def calc_tf4l(f4l, a1)
+		tf4l=0
+		if f4l==1 || f4l==2
+			tf4l=1
+		elsif f4l==3
+			tf4l=2
+		elsif f4l==4
+			tf4l=3
+		elsif f4l>=5
+			tf4l=4
+		end
+
+		if f4l>4 && a1<=2
+			tf4l=tf4l-1
+		end
+		return tf4l
+	end
+
+	def calc_f4(tf4l, tf4u, f4h)
+		f4=0
+		if tf4l>=tf4u
+			f4=tf4l
+		else
+			f4=tf4u
+		end
+
+		if f4<2 && f4h==2
+			f4=2
+		end
+
+		if f4<3 && (tf4u+tf4l)>=4 && (tf4u+tf4l)<=5
+			f4=3
+		end
+
+		if f4<3 && f4h==2.5
+			f4=3
+		end
+
+		if f4h==3
+			f4=4
+		end
+
+		if (tf4u+tf4l)>=6 && (tf4u+tf4l)<=7
+			f4=4
+		elsif (tf4u+tf4l)==8
+			f4=5
+		end
+		return f4
+	end
+
+	def calc_f5(f5t)
+		if f5t==1
+			f5=0
+		elsif f5t>1 && f5t<=4
+			f5=1
+		elsif f5t==5
+			f5=2
+		elsif f5t==6
+			f5=3
+		elsif f5t==7 || f5t==8
+			f5=4
+		else
+			f5=5
+		end
+		return f5
+	end
+
+	def calc_f6(f6t)
+		f6=0
+		if f6t>=1 && f6t<=2
+			f6=1
+		elsif f6t==3
+			f6=2
+		elsif f6t==4
+			f6=3
+		elsif f6t==5
+			f6=4
+		elsif f6t==6
+			f6=5
+		end
+		return f6
+	end
+
+	def calc_f7(f7t, c1)
+		f7=f7t
+		if f7t==1
+			f7=0
+		end
+
+		if c1>1 && f7==0
+			f7=1
+		end
+
+		if f7==2
+			f7=1
+		end
+
+		if f7>1 && c1==2
+			f7=f7-1
+		end
+
+		return f7
+	end
+
+	def calc_tf8u(f8l, a1, fs, f8u)
+		tf8u=0
+		if f8u==1 || f8u==2
+			tf8u=1
+		elsif f8u>=3 && f8u<=4
+			tf8u=2
+		end
+
+		if f8l>=4 && a1<=2 && tf8u>=2
+			tf8u=tf8u-1
+		end
+
+		if f8u>4 && fs<=2
+			tf8u=2
+		end
+
+		if f8u>4
+			tf8u=3
+		end
+		return tf8u
+	end
+
+	def calc_tf8l(f8l, a1)
+		tf8l=0
+		if f8l==1 || f8l==2
+			tf8l=1
+		elsif f8l>=3 && f8l<=4
+			tf8l=2
+		end
+
+		if f8l>=3 && a1>=3 && a1<=4
+			tf8l=2
+		end
+
+		if f8l>=3 && a1<=2
+			tf8l=1
+		end
+
+		if f8l>4
+			tf8l=3
+		end
+		return tf8l
+	end
+
+	def calc_f8(tf8l, tf8u, f8h)
+		f8=0
+		if tf8l>=tf8u
+			f8=tf8l
+		else
+			f8=tf8u
+		end
+
+		if f8<2 && f8h==2
+			f8=2
+		end
+
+		if (tf8u+tf8l)>=4
+			f8=3
+		end
+
+		if f8h>2
+			f8=3
+		end
+
+		return f8
+	end
+
+	#### END SFS SUB-FUNCTIONS ####
+
+	def calculate_edss(redcap_data, sfs_hash)
+		# reminder:
+		# redcap_data = participant's redcap record data
+		# sfs_hash = output of calculate_sfs = [sfs, f1...f8]
+
+		fs_nums = calc_f_num(sfs_hash)
+		fs2= fs_nums[:fs2]
+		fs3= fs_nums[:fs3]
+		fs4= fs_nums[:fs4]
+		fs5= fs_nums[:fs5]
+		a1= redcap_data["a1"].to_i
+		fs= redcap_data["fs"].to_i
+		a21= redcap_data["a21"].to_i
+		a22= redcap_data["a22"].to_i
+		a23= redcap_data["a23"].to_i
+		a24= redcap_data["a24"].to_i
+
+		edss=4
+		if sfs_hash[:sfs]==0
+			edss=0
+		elsif sfs_hash[:sfs]==1
+			edss=1
+		elsif fs2==0 && fs3==0 && fs4==0 && fs5==0 && sfs_hash[:sfs]==2
+			edss=1.5
+		elsif fs2==0 && fs3==0 && fs4==0 && fs5==0 && sfs_hash[:sfs]>2
+			edss=2
+		elsif fs2==1 && fs3==0 && fs4==0 && fs5==0
+			edss=2
+		elsif fs2==2 && fs3==0 && fs4==0 && fs5==0
+			edss=2.5
+		elsif fs2<=1 && fs3==1 && fs4==0 && fs5==0
+			edss=3
+		elsif fs2>=3 && fs2<=4 && fs3==0 && fs4==0 && fs5==0
+			edss=3
+		elsif fs2>=2 && fs2<=3 && fs3==1 && fs4==0 && fs5==0
+			edss=3.5
+		elsif fs2==0 && fs3==2 && fs4==0 && fs5==0
+			edss=3.5
+		elsif fs2==5 && fs3==0 && fs4==0 && fs5==0
+			edss=3.5
+		elsif fs2==0 && fs3==0 && fs4==1 && fs5==0
+			edss=3.5
+		end
+
+		if a1==3 && fs<=2
+			edss=4.5
+		elsif a1>=2 && a1<=3 && fs>=3
+			edss=5
+		elsif a1>=4 && a1<=5 && fs==1
+			edss=4.5
+		elsif a1>=4 && a1<=5 && fs==2
+			edss=5
+		elsif a1>=4 && a1<=5 && fs>=3
+			edss=5.5
+		elsif a1==6 && fs<=2 && a21>=80
+			edss=5.0
+		elsif a1==6 && fs>=3 && a21>=80
+			edss=5.5
+		elsif a1==6 && fs<=2 && a21>=60 && a21<80
+			edss=5.5
+		elsif a1==6 && fs>=3 && a21>=60 && a21<80
+			edss=6
+		elsif a1==6 && a21<60 && (a23+a24)<50
+			edss=6
+		elsif a1==6 && (a23+a24)>=50
+			edss=6.5
+		elsif a1>=7 && a1<=8 && (a23+a24)<=20 && a22<20
+			edss=5.5
+		elsif a1>=7 && a1<=8 && (a23+a24)<=20 && a22>=20
+			edss=6
+		elsif a1>=7 && a1<=8 && (a23+a24)>20 && a24<40
+			edss=6.5
+		elsif a1==7 && (a23+a24)>20 && (a23+a24)<60 && a24>=40
+			edss=6.5
+		elsif a1==7 && (a23+a24)>20 && (a23+a24)>=60 && a24>=40
+			edss=7
+		elsif a1==8 && (a23+a24)>20 && (a23+a24)<50 && a24>=40
+			edss=6.5
+		elsif a1==8 && (a23+a24)>20 && (a23+a24)>=50 && a24>=40
+			edss=7
+		elsif a1==9 && fs<=3
+			edss=7
+		elsif a1==9 && fs==4  && sfs_hash[:sfs]<20
+			edss=7.5
+		elsif a1==9 && fs==4 && sfs_hash[:sfs]>=20
+			edss=8
+		elsif a1==9 && fs==5 && sfs_hash[:sfs]<=15
+			edss=7.5
+		elsif a1==9 && fs==5 && sfs_hash[:sfs]>15
+			edss=8
+		elsif a1==10 && fs<5
+			edss=8
+		elsif a1==10 && fs==5 && sfs_hash[:sfs]<20
+			edss=8.5
+		elsif a1==10 && fs==5 && sfs_hash[:sfs]>=20 && sfs_hash[:sfs]<30
+			edss=9
+		elsif a1==10 && fs==5 && sfs_hash[:sfs]>=30
+			edss=9.5
+		end
+		return edss
+	end
+
+	#### START EDSS SUB-FUNCTIONS ####
+
 	def calc_f_num(f_hash)
 		fs2 = 0
 		fs3 = 0
 		fs4 = 0
 		fs5 = 0
 
-		if f_hash[:f1]==2 
+		if f_hash[:f1]==2
 			fs2=fs2+1
-		elsif f_hash[:f1]==3 
+		elsif f_hash[:f1]==3
 			fs3=fs3+1
 		elsif f_hash[:f1]==4
 			fs4=fs4+1
@@ -531,9 +598,9 @@ class BoveCalculation
 			fs5=fs5+1
 		end
 
-		if f_hash[:f2]==2 
+		if f_hash[:f2]==2
 			fs2=fs2+1
-		elsif f_hash[:f2]==3 
+		elsif f_hash[:f2]==3
 			fs3=fs3+1
 		elsif f_hash[:f2]==4
 			fs4=fs4+1
@@ -541,9 +608,9 @@ class BoveCalculation
 			fs5=fs5+1
 		end
 
-		if f_hash[:f3]==2 
+		if f_hash[:f3]==2
 			fs2=fs2+1
-		elsif f_hash[:f3]==3 
+		elsif f_hash[:f3]==3
 			fs3=fs3+1
 		elsif f_hash[:f3]==4
 			fs4=fs4+1
@@ -551,9 +618,9 @@ class BoveCalculation
 			fs5=fs5+1
 		end
 
-		if f_hash[:f4]==2 
+		if f_hash[:f4]==2
 			fs2=fs2+1
-		elsif f_hash[:f4]==3 
+		elsif f_hash[:f4]==3
 			fs3=fs3+1
 		elsif f_hash[:f4]==4
 			fs4=fs4+1
@@ -561,9 +628,9 @@ class BoveCalculation
 			fs5=fs5+1
 		end
 
-		if f_hash[:f5]==2 
+		if f_hash[:f5]==2
 			fs2=fs2+1
-		elsif f_hash[:f5]==3 
+		elsif f_hash[:f5]==3
 			fs3=fs3+1
 		elsif f_hash[:f5]==4
 			fs4=fs4+1
@@ -571,9 +638,9 @@ class BoveCalculation
 			fs5=fs5+1
 		end
 
-		if f_hash[:f6]==2 
+		if f_hash[:f6]==2
 			fs2=fs2+1
-		elsif f_hash[:f6]==3 
+		elsif f_hash[:f6]==3
 			fs3=fs3+1
 		elsif f_hash[:f6]==4
 			fs4=fs4+1
@@ -581,9 +648,9 @@ class BoveCalculation
 			fs5=fs5+1
 		end
 
-		if f_hash[:f7]==2 
+		if f_hash[:f7]==2
 			fs2=fs2+1
-		elsif f_hash[:f7]==3 
+		elsif f_hash[:f7]==3
 			fs3=fs3+1
 		elsif f_hash[:f7]==4
 			fs4=fs4+1
@@ -591,9 +658,9 @@ class BoveCalculation
 			fs5=fs5+1
 		end
 
-		if f_hash[:f8]==2 
+		if f_hash[:f8]==2
 			fs2=fs2+1
-		elsif f_hash[:f8]==3 
+		elsif f_hash[:f8]==3
 			fs3=fs3+1
 		elsif f_hash[:f8]==4
 			fs4=fs4+1
@@ -604,106 +671,10 @@ class BoveCalculation
 		return {fs2: fs2, fs3: fs3, fs4: fs4, fs5: fs5}
 	end
 
-	def calculate_edss(redcap_data, sfs_hash)
-		fs_nums = calc_f_num(sfs_hash)
-		fs2= fs_nums[:fs2] 
-		fs3= fs_nums[:fs3] 
-		fs4= fs_nums[:fs4] 
-		fs5= fs_nums[:fs5] 
-		a1= redcap_data["a1"].to_i
-		fs= redcap_data["fs"].to_i
-		a21= redcap_data["a21"].to_i 
-		a22= redcap_data["a22"].to_i 
-		a23= redcap_data["a23"].to_i  
-		a24= redcap_data["a24"].to_i
-
-		edss=4
-		if sfs_hash[:sfs]==0 
-			edss=0
-		elsif sfs_hash[:sfs]==1 
-			edss=1
-		elsif fs2==0 && fs3==0 && fs4==0 && fs5==0 && sfs_hash[:sfs]==2 
-			edss=1.5
-		elsif fs2==0 && fs3==0 && fs4==0 && fs5==0 && sfs_hash[:sfs]>2 
-			edss=2
-		elsif fs2==1 && fs3==0 && fs4==0 && fs5==0 
-			edss=2 
-		elsif fs2==2 && fs3==0 && fs4==0 && fs5==0 
-			edss=2.5
-		elsif fs2<=1 && fs3==1 && fs4==0 && fs5==0 
-			edss=3
-		elsif fs2>=3 && fs2<=4 && fs3==0 && fs4==0 && fs5==0 
-			edss=3
-		elsif fs2>=2 && fs2<=3 && fs3==1 && fs4==0 && fs5==0 
-			edss=3.5 
-		elsif fs2==0 && fs3==2 && fs4==0 && fs5==0 
-			edss=3.5 
-		elsif fs2==5 && fs3==0 && fs4==0 && fs5==0 
-			edss=3.5 
-		elsif fs2==0 && fs3==0 && fs4==1 && fs5==0 
-			edss=3.5
-		end
-
-		if a1==3 && fs<=2 
-			edss=4.5
-		elsif a1>=2 && a1<=3 && fs>=3 
-			edss=5
-		elsif a1>=4 && a1<=5 && fs==1 
-			edss=4.5 
-		elsif a1>=4 && a1<=5 && fs==2 
-			edss=5
-		elsif a1>=4 && a1<=5 && fs>=3 
-			edss=5.5 
-		elsif a1==6 && fs<=2 && a21>=80 
-			edss=5.0
-		elsif a1==6 && fs>=3 && a21>=80 
-			edss=5.5
-		elsif a1==6 && fs<=2 && a21>=60 && a21<80 
-			edss=5.5
-		elsif a1==6 && fs>=3 && a21>=60 && a21<80 
-			edss=6 
-		elsif a1==6 && a21<60 && (a23+a24)<50 
-			edss=6
-		elsif a1==6 && (a23+a24)>=50 
-			edss=6.5
-		elsif a1>=7 && a1<=8 && (a23+a24)<=20 && a22<20 
-			edss=5.5
-		elsif a1>=7 && a1<=8 && (a23+a24)<=20 && a22>=20 
-			edss=6  
-		elsif a1>=7 && a1<=8 && (a23+a24)>20 && a24<40 
-			edss=6.5  
-		elsif a1==7 && (a23+a24)>20 && (a23+a24)<60 && a24>=40 
-			edss=6.5  
-		elsif a1==7 && (a23+a24)>20 && (a23+a24)>=60 && a24>=40 
-			edss=7 
-		elsif a1==8 && (a23+a24)>20 && (a23+a24)<50 && a24>=40 
-			edss=6.5  
-		elsif a1==8 && (a23+a24)>20 && (a23+a24)>=50 && a24>=40 
-			edss=7 
-		elsif a1==9 && fs<=3 
-			edss=7
-		elsif a1==9 && fs==4  && sfs_hash[:sfs]<20 
-			edss=7.5
-		elsif a1==9 && fs==4 && sfs_hash[:sfs]>=20 
-			edss=8
-		elsif a1==9 && fs==5 && sfs_hash[:sfs]<=15 
-			edss=7.5
-		elsif a1==9 && fs==5 && sfs_hash[:sfs]>15 
-			edss=8
-		elsif a1==10 && fs<5 
-			edss=8  
-		elsif a1==10 && fs==5 && sfs_hash[:sfs]<20 
-			edss=8.5
-		elsif a1==10 && fs==5 && sfs_hash[:sfs]>=20 && sfs_hash[:sfs]<30 
-			edss=9
-		elsif a1==10 && fs==5 && sfs_hash[:sfs]>=30 
-			edss=9.5
-		end
-		return edss
-	end
+	#### END EDSS SUB-FUNCTIONS ####
 
 	def calculate_AI(redcap_data)
-		a1= redcap_data["a1"].to_i 
+		a1= redcap_data["a1"].to_i
 		a21= redcap_data["a21"].to_i
 		a22= redcap_data["a22"].to_i
 		a23= redcap_data["a23"].to_i
@@ -713,63 +684,174 @@ class BoveCalculation
 		data = {a1: a1, a21: a21, a22: a22, a23: a23, a24: a24, fs: fs}
 
 		aI = 0
-		if a1==1 
+		if a1==1
 			aI=0
-		elsif a1==2 
+		elsif a1==2
 			aI=1
-		elsif a1>=3 && a1<=4 
+		elsif a1>=3 && a1<=4
 			aI=2
-		elsif a1==5 && a21>=20 && (a23+a24)<=10 
+		elsif a1==5 && a21>=20 && (a23+a24)<=10
 			aI=3
-		elsif a1==5 && a21>=20 && (a23+a24)>=10 
+		elsif a1==5 && a21>=20 && (a23+a24)>=10
 			aI=4
-		elsif a1==5 && a21<20 
+		elsif a1==5 && a21<20
 			aI=4
-		elsif a1==6 && (a23+a24)<50 && a24<=20 
-			aI=4 
-		elsif a1==6 && (a23+a24)>=50 && a24<=20 
+		elsif a1==6 && (a23+a24)<50 && a24<=20
+			aI=4
+		elsif a1==6 && (a23+a24)>=50 && a24<=20
 			aI=5
-		elsif a1==6 && a24>20 
+		elsif a1==6 && a24>20
 			aI=6
 		end
 
-		if a1==6 && (a21+a22)>=80 
-			aI=4 
+		if a1==6 && (a21+a22)>=80
+			aI=4
 		end
 
-		if a1==6 && a21>=80 
+		if a1==6 && a21>=80
 			aI=3
-		elsif a1>=7 && a1<=8 && (a23+a24)<50 && a24<=20 
+		elsif a1>=7 && a1<=8 && (a23+a24)<50 && a24<=20
 			aI=5
-		elsif a1>=7 && a1<=8 && (a23+a24)<50 && a24>20 
-			aI=6 
-		elsif a1>=7 && a1<=8 && (a23+a24)>=50 && a24<=20 
-			aI=6 
-		elsif a1>=7 && a1<=8 && (a23+a24)>=50 && a24>20 
-			aI=7 
-		end
-		
-		if a1>=7 && a1<=8 && (a21+a22)>=80 
-			aI=4 
+		elsif a1>=7 && a1<=8 && (a23+a24)<50 && a24>20
+			aI=6
+		elsif a1>=7 && a1<=8 && (a23+a24)>=50 && a24<=20
+			aI=6
+		elsif a1>=7 && a1<=8 && (a23+a24)>=50 && a24>20
+			aI=7
 		end
 
-		if a1>=7 && a1<=8 && a21>=80 
+		if a1>=7 && a1<=8 && (a21+a22)>=80
+			aI=4
+		end
+
+		if a1>=7 && a1<=8 && a21>=80
 			aI=3
 		end
 
-		if a1==9 && fs<=2 
+		if a1==9 && fs<=2
 			aI=7
-		elsif a1==9 && fs>2 
+		elsif a1==9 && fs>2
 			aI=8
 		end
 
-		if a1==10 && fs<=4 
+		if a1==10 && fs<=4
 			aI=8
-		elsif a1==10 && fs==5 
+		elsif a1==10 && fs==5
 			aI=9
 		end
 		return aI
 	end
+
+	def calculate_nrs (redcap_data, sfs)
+		f1fr = redcap_data["f1fr"].to_i
+		f1fl = redcap_data["f1fl"].to_i
+		f14r = redcap_data["f14r"].to_i
+		f4fr = redcap_data["f4fr"].to_i
+		f4fl = redcap_data["f4fl"].to_i
+
+		f2s = redcap_data["f2s"].to_i
+
+		f1u = redcap_data["f1a"].to_i + redcap_data["f1b"].to_i
+		f1l = redcap_data["f1c"].to_i + redcap_data["f1d"].to_i
+		f2l = redcap_data["f2c"].to_i + redcap_data["f2d"].to_i
+		f2u = redcap_data["f2a"].to_i + redcap_data["f2b"].to_i
+		f1h = ((redcap_data["f1a"].to_i + redcap_data["f1c"].to_i) - (redcap_data["f1b"].to_i + redcap_data["f1d"].to_i)).abs / 2.0
+		f2h = ((redcap_data["f2a"].to_i + redcap_data["f2c"].to_i) - (redcap_data["f2b"].to_i + redcap_data["f2d"].to_i)).abs / 2.0
+
+		f4h = ((redcap_data["f4a"].to_i + redcap_data["f4c"].to_i) - (redcap_data["f4b"].to_i + redcap_data["f4d"].to_i)).abs / 2.0
+		f4u = redcap_data["f4a"].to_i + redcap_data["f4b"].to_i
+		f4l = redcap_data["f4c"].to_i + redcap_data["f4d"].to_i
+
+		f5t = [redcap_data["f5ta"].to_i, redcap_data["f5tb"].to_i].max
+		f6t = redcap_data["f6a"].to_i + redcap_data["f6b"].to_i
+		f8l = redcap_data["f8c"].to_i + redcap_data["f8d"].to_i
+		f8u = redcap_data["f8a"].to_i + redcap_data["f8b"].to_i
+		f8h = ((redcap_data["f8a"].to_i + redcap_data["f8c"].to_i) - (redcap_data["f8b"].to_i + redcap_data["f8d"].to_i)).abs / 2.0
+
+		f1f = calc_f1f(f1fr,f1fl)
+		f4f = calc_f4f(f14r,f4fr,f4fl)
+
+		f3 = calc_f3(f2s,f1f,f4f,redcap_data["b1"].to_i, redcap_data["b2"].to_i, redcap_data["b3"].to_i, redcap_data["b4"].to_i)
+
+		nf1l = calc_nf1l(f1l, redcap_data["a1"].to_i)
+		nf1u = calc_nf1u(f1u, redcap_data["fs"].to_i)
+		nf1 = calc_nf1(nf1u, nf1l, f1h)
+
+		nf2l = calc_nf2l(f2l, redcap_data["a1"].to_i)
+		nf2u = calc_nf2u(redcap_data["fs"].to_i, f2u)
+		nf2 = calc_nf2(nf2u, nf2l, f2h)
+
+		nf3 = calc_nf3(redcap_data["b1"].to_i, redcap_data["b2"].to_i, redcap_data["b3"].to_i, f1f, redcap_data["f2s"].to_i)
+
+		nf4l= calc_nf4l(f4l)
+		nf4u= calc_nf4u(f4u)
+		nf4 = calc_nf4(nf4u, nf4l)
+
+		nf5 = calc_nf5(f5t)
+
+		nf6 = calc_nf6(sfs[:f6])
+
+		nf7 = calc_nf7(sfs[:f7])
+
+		tf8u = calc_tf8u(f8l, redcap_data["a1"].to_i, redcap_data["fs"].to_i, f8u)
+		tf8l = calc_tf8l(f8l, redcap_data["a1"].to_i)
+		nf8u = calc_nf8u(tf8u, f8u)
+		nf8l = calc_nf8l(tf8l, f8l)
+		nf8 = calc_nf8(nf8u, nf8l, f8h)
+
+		nf9 = calc_nf9(redcap_data["a1"].to_i, redcap_data["bal"].to_i)
+
+		nrs=nf1+nf2+nf3+nf4-nf5+nf6+nf7+nf8+nf9
+		if nrs>=95
+			nrs-=sfs[:sfs]
+		end
+
+		return nrs
+	end
+
+	#### UI FUNCTIONS ####
+
+	def record_ids(data)
+		participant_ids = []
+		data.each do |participant|
+			participant_ids << participant["record_id"]
+		end
+	end
+
+	def edss_histogram(data)
+		edss_hash= {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0}
+		data.each do |participant|
+			edss_hash[:"#{(participant[:edss].floor).to_s}"] +=1
+		end 
+		edss_hash
+	end
+
+	def sfs_histogram(data)
+		sfs_hash= {"0":0, "5": 0, "10": 0, "15": 0, "20": 0, "25": 0, "30": 0, "35":0}
+		data.each do |participant|
+			hash_conversion = ((participant[:sfs]/5.0).ceil * 5).to_s
+			sfs_hash[:"#{hash_conversion}"] += 1
+		end
+		 sfs_hash
+	end
+
+	def ai_histogram(data)
+		ai_hash= {"0": 0, "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0}
+		data.each do |participant|
+			ai_hash[:"#{(participant[:aI]).to_s}"] +=1
+		end 
+		ai_hash
+
+	end
+
+
+	def calc_f2h(f1h)
+		if f1h>=2.5 
+			f2h=f2h-0.5
+		end
+		return f2h
+	end
+
 
 	def calc_nf1u(f1u, fs)
 		nf1u=10
@@ -1122,71 +1204,6 @@ class BoveCalculation
 		return sumq/30
 	end
 
-	def calculate_nrs (redcap_data, sfs)
-		f1fr = redcap_data["f1fr"].to_i
-		f1fl = redcap_data["f1fl"].to_i
-		f14r = redcap_data["f14r"].to_i
-		f4fr = redcap_data["f4fr"].to_i
-		f4fl = redcap_data["f4fl"].to_i
-
-		f2s = redcap_data["f2s"].to_i
-
-		f1u = redcap_data["f1a"].to_i + redcap_data["f1b"].to_i
-		f1l = redcap_data["f1c"].to_i + redcap_data["f1d"].to_i
-		f2l = redcap_data["f2c"].to_i + redcap_data["f2d"].to_i
-		f2u = redcap_data["f2a"].to_i + redcap_data["f2b"].to_i
-		f1h = ((redcap_data["f1a"].to_i + redcap_data["f1c"].to_i) - (redcap_data["f1b"].to_i + redcap_data["f1d"].to_i)).abs / 2.0
-		f2h = ((redcap_data["f2a"].to_i + redcap_data["f2c"].to_i) - (redcap_data["f2b"].to_i + redcap_data["f2d"].to_i)).abs / 2.0
-
-		f4h = ((redcap_data["f4a"].to_i + redcap_data["f4c"].to_i) - (redcap_data["f4b"].to_i + redcap_data["f4d"].to_i)).abs / 2.0
-		f4u = redcap_data["f4a"].to_i + redcap_data["f4b"].to_i
-		f4l = redcap_data["f4c"].to_i + redcap_data["f4d"].to_i
-
-		f5t = [redcap_data["f5ta"].to_i, redcap_data["f5tb"].to_i].max
-		f6t = redcap_data["f6a"].to_i + redcap_data["f6b"].to_i
-		f8l = redcap_data["f8c"].to_i + redcap_data["f8d"].to_i
-		f8u = redcap_data["f8a"].to_i + redcap_data["f8b"].to_i
-		f8h = ((redcap_data["f8a"].to_i + redcap_data["f8c"].to_i) - (redcap_data["f8b"].to_i + redcap_data["f8d"].to_i)).abs / 2.0
-
-		f1f = calc_f1f(f1fr,f1fl)
-		f4f = calc_f4f(f14r,f4fr,f4fl)
-		f3 = calc_f3(f2s,f1f,f4f,redcap_data["b1"].to_i, redcap_data["b2"].to_i, redcap_data["b3"].to_i, redcap_data["b4"].to_i)
-
-		nf1l = calc_nf1l(f1l, redcap_data["a1"].to_i)
-		nf1u = calc_nf1u(f1u, redcap_data["fs"].to_i)
-		nf1 = calc_nf1(nf1u, nf1l, f1h)
-
-		nf2l = calc_nf2l(f2l, redcap_data["a1"].to_i)
-		nf2u = calc_nf2u(redcap_data["fs"].to_i, f2u)
-		nf2 = calc_nf2(nf2u, nf2l, f2h)
-		
-		nf3 = calc_nf3(redcap_data["b1"].to_i, redcap_data["b2"].to_i, redcap_data["b3"].to_i, f1f, redcap_data["f2s"].to_i)
-
-		nf4l= calc_nf4l(f4l)
-		nf4u= calc_nf4u(f4u)
-		nf4 = calc_nf4(nf4u, nf4l)
-
-		nf5 = calc_nf5(f5t)
-
-		nf6 = calc_nf6(sfs[:f6])
-
-		nf7 = calc_nf7(sfs[:f7])
-
-		tf8u = calc_tf8u(f8l, redcap_data["a1"].to_i, redcap_data["fs"].to_i, f8u)
-		tf8l = calc_tf8l(f8l, redcap_data["a1"].to_i)
-		nf8u = calc_nf8u(tf8u, f8u)
-		nf8l = calc_nf8l(tf8l, f8l)
-		nf8 = calc_nf8(nf8u, nf8l, f8h)
-
-		nf9 = calc_nf9(redcap_data["a1"].to_i, redcap_data["bal"].to_i)
-		
-		nrs=nf1+nf2+nf3+nf4-nf5+nf6+nf7+nf8+nf9
-		if nrs>=95 
-			nrs-=sfs[:sfs]
-		end
-
-		return nrs
-	end
 
 	def calc_sue(nf1u,nf2u,nf4u,nf8u)
 		return nf1u+nf2u+nf4u+nf8u
