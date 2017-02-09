@@ -45,6 +45,8 @@
 //= require plugins/url.min.js
 //= require_self
 //= require_tree .
+//= require jquery.tabletoCSV
+//= require table2csv
 
 $(document).ready(function(){
 	$(document).foundation();
