@@ -17,6 +17,6 @@
 
 .env
 /myo
-.idea/
+.idea
 
 .DS_Store

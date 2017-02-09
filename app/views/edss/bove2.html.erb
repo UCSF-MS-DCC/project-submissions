@@ -4,7 +4,7 @@
 	<div class'row margin-top'>
 		<div class='panel small-12 columns text-center'>
 			<h1>
-				Bove Remote EDSS Data v2
+				Bove Remote EDSS Data v2 Form
 			</h1>
 		</div>
 	</div>
@@ -17,9 +17,9 @@
 
 	<div class='row'>
 		<div class='small-12 columns'>
-			<%= form_tag '/edss/bove2/calculate.csv' do %>
-			    <%=text_field_tag 'boveAPI', nil, placeholder: 'Enter project API key'%>
-			    <div><%= submit_tag 'Download Data', class: "button right radius", id: "boveEDSS" %></div>
+			<%= form_tag '/edss/bove2' do %>
+			    <%=text_field_tag 'bove2API', nil, placeholder: 'Enter project API key'%>
+			    <div><%= submit_tag 'View Results', class: "button right radius", id: "bove2EDSS" %></div>
 			<% end %>
 		</div>
 	</div>

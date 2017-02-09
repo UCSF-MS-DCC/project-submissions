@@ -3,6 +3,71 @@
 class Bove2Calculation
 	attr_reader :data_set
 
+=begin
+		Questionnaire responses:
+		a1		walk_overall
+		a21		walk_pct_unaided
+		a22		walk_pct_unilateral
+		a23		walk_pct_bilateral
+		a24		walk_pct_wheelchair
+		b1		visual_double
+		b2		swallowing
+		b3		vertigo
+		b4		hearing
+		bal		balance
+		c1		mood
+			f1		metavar_strength
+		f1a		strength_right_arm
+		f1b		strength_left_arm
+		f1c		strength_right_leg
+		f1d		strength_left_leg
+		f1fl	face_left
+		f1fr	face_right
+			f2		metavar_coord
+		f2a		coord_right_arm
+		f2b		coord_left_arm
+		f2c		coord_right_leg
+		f2d		coord_left_leg
+		f2s		speaking
+			f4		metavar_sense
+		f4a		sense_right_arm
+		f4b		sense_left_arm
+		f4c		sense_right_leg
+		f4d		sense_left_leg
+		f4fl	sense_face_left
+		f4fr	sense_face_right
+			f5t		metavar_bowelbladder
+		f5ta	bowel
+		f5tb	bladder
+		f6a		visual_right
+		f6b		visual_left
+			f6t		metavar_visual
+		f7t		cog_overall
+			f8		metavar_spasm
+		f8a		spasm_right_arm
+		f8b		spasm_left_arm
+		f8c		spasm_right_leg
+		f8d		spasm_left_leg
+		FS		funcional_overall
+
+		Algorithm:
+			sfs
+				f1f <- f1fl, f1fr
+				f1u = f1a + f1b
+				f1l = f1c + f1d
+				f2u = f2a + f2b
+				f2l = f2c + f2d
+				f1h = (f1a + f1c - f1b - f1d ) / 2
+				f2h = (f2a + f2c - f2b - f2d ) / 2
+				f4f <- f14r, f4fr, f4fl  ### f14r  DOES NOT EXIST!!!!!!!!!!!!!!!!!!!!!!
+				f4u = f4a + f4d
+				f4l = f4c + f4d
+				f4h = (f4a + f4c - f4b - f4d ) / 2
+
+
+
+=end
+
 	def initialize(redcap_data)
 		# Everything is pretty self-explainatory. You're essentially creating the 'data' hash to prepare for a data download of all individuals 
 		@data_set = []
@@ -12,7 +77,60 @@ class Bove2Calculation
 			aI = calculate_AI(participant)
 			nrs = calculate_nrs(participant, sfs)	
 			mds = calculate_mds(edss, nrs, aI, participant["fs"].to_i, sfs)
-			data = {record_id: participant["record_id"].to_i, first_name: participant["first_name"], last_name: participant["last_name"], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds, f1: sfs[:f1], f2: sfs[:f2], f3: sfs[:f3], f4:sfs[:f4], f5: sfs[:f5], f6: sfs[:f6], f7: sfs[:f7], f8: sfs[:f8]}
+			data = {
+					record_id: participant["record_id"].to_i,
+					first_name: participant["first_name"],
+					last_name: participant["last_name"],
+					sfs: sfs[:sfs],
+					edss: edss,
+					aI: aI,
+					nrs: nrs,
+					mds: mds,
+					f1: sfs[:f1],
+					f2: sfs[:f2],
+					f3: sfs[:f3],
+					f4:sfs[:f4],
+					f5: sfs[:f5],
+					f6: sfs[:f6],
+					f7: sfs[:f7],
+					f8: sfs[:f8],
+					a1: participant["a1"],
+					a21: participant["a21"],
+					a22: participant["a22"],
+					a23: participant["a23"],
+					a24: participant["a24"],
+					f2a: participant["f2a"],
+					f2b: participant["f2b"],
+					f2c: participant["f2c"],
+					f2d: participant["f2d"],
+					bal: participant["bal"],
+					b3: participant["b3"],
+					f1fr: participant["f1fr"],
+					f1fl: participant["f1fl"],
+					f4fr: participant["f4fr"],
+					frfl: participant["frfl"],
+					b1: participant["b1"],
+					f2s: participant["f2s"],
+					b2: participant["b2"],
+					b4: participant["b4"],
+					f4a: participant["f4a"],
+					f4b: participant["f4b"],
+					f4c: participant["f4c"],
+					f4d: participant["f4d"],
+					f5ta: participant["f5ta"],
+					f6a: participant["f6a"],
+					f6b: participant["f6b"],
+					f7t: participant["f7t"],
+					c1: participant["c1"],
+					f1a: participant["f1a"],
+					f1b: participant["f1b"],
+					f1c: participant["f1c"],
+					f1d: participant["f1d"],
+					f8a: participant["f8a"],
+					f8b: participant["f8b"],
+					f8c: participant["f8c"],
+					f8d: participant["f8d"]
+			}
 			@data_set<< data
 		end
 	end
@@ -28,16 +146,16 @@ class Bove2Calculation
 		f1u = redcap_data["f1a"].to_i + redcap_data["f1b"].to_i
 		f1l = redcap_data["f1c"].to_i + redcap_data["f1d"].to_i
 		f1f = calc_f1f(f1fr,f1fl)
-		f2l = redcap_data["f2c"].to_i + redcap_data["f2d"].to_i
 		f2u = redcap_data["f2a"].to_i + redcap_data["f2b"].to_i
+		f2l = redcap_data["f2c"].to_i + redcap_data["f2d"].to_i
 
 		f1h = ((redcap_data["f1a"].to_i + redcap_data["f1c"].to_i) - (redcap_data["f1b"].to_i + redcap_data["f1d"].to_i)).abs / 2.0
 		f2h = ((redcap_data["f2a"].to_i + redcap_data["f2c"].to_i) - (redcap_data["f2b"].to_i + redcap_data["f2d"].to_i)).abs / 2.0
 
-		f4f = calc_f4f(f14r, f4fr,f4fl)
-		f4h = ((redcap_data["f4a"].to_i + redcap_data["f4c"].to_i) - (redcap_data["f4b"].to_i + redcap_data["f4d"].to_i)).abs / 2.0
 		f4u = redcap_data["f4a"].to_i + redcap_data["f4b"].to_i
 		f4l = redcap_data["f4c"].to_i + redcap_data["f4d"].to_i
+		f4f = calc_f4f(f14r, f4fr,f4fl)
+		f4h = ((redcap_data["f4a"].to_i + redcap_data["f4c"].to_i) - (redcap_data["f4b"].to_i + redcap_data["f4d"].to_i)).abs / 2.0
 
 		f5t = [redcap_data["f5ta"].to_i, redcap_data["f5tb"].to_i].max
 		f6t = redcap_data["f6a"].to_i + redcap_data["f6b"].to_i
@@ -844,14 +962,12 @@ class Bove2Calculation
 
 	end
 
-
 	def calc_f2h(f1h)
 		if f1h>=2.5 
 			f2h=f2h-0.5
 		end
 		return f2h
 	end
-
 
 	def calc_nf1u(f1u, fs)
 		nf1u=10
@@ -905,7 +1021,6 @@ class Bove2Calculation
 
 		return nf1l
 	end
-
 
 	def calc_nf1(nf1u, nf1l, f1h)
 		nf1=nf1u+nf1l
@@ -1183,7 +1298,6 @@ class Bove2Calculation
 		return suml-sumu
 	end
 
-
 	def pctu(sumu)
 		return (15-sumu)/15
 	end
@@ -1203,7 +1317,6 @@ class Bove2Calculation
 	def pctq(sumq)
 		return sumq/30
 	end
-
 
 	def calc_sue(nf1u,nf2u,nf4u,nf8u)
 		return nf1u+nf2u+nf4u+nf8u

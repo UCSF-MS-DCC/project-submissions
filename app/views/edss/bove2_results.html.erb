@@ -1,0 +1,138 @@
+<%= render 'layouts/navbar' %>
+
+<div id='msdr-theme'>
+	<div class'row margin-top'>
+		<div class='panel small-12 columns text-center'>
+			<h1>
+				Bove Remote EDSS Data v2 - results
+			</h1>
+		</div>
+	</div>
+
+<script>
+  $("#edss th[title]").tooltip();
+</script>
+
+<table id="edss">
+  <thead>
+  <tr>
+  <th>REDCap record_id</th>
+  <th>ucsf_bovegoodin_update_questionnaire_complete</th>
+  <th><span data-tooltip aria-haspopup="true" class="has-tip" title="Tooltips are awesome, you should totally use them!">extended information
+    EDSS</span></th>
+  <th>A.I.</th>
+  <th>F1<br>Pyramidal</th>
+  <th>F2<br>Cerebellar</th>
+  <th>F3<br>Brainstem</th>
+  <th>F4<br>Sensory</th>
+  <th>F5<br>Bowel/Bladder</th>
+  <th>F6<br>Vision</th>
+  <th>F7<br>Cerebral</th>
+  <th>F8<br>Spasm+Ambulation</th>
+  <th>REDCap data<br>--></th>
+  <th>a1<br> walk_overall</th>
+  <th>a21<br> walk_pct_unaided</th>
+  <th>a22<br> walk_pct_unilateral</th>
+  <th>a23<br> walk_pct_bilateral</th>
+  <th>a24<br> walk_pct_wheelchair</th>
+  <th>b1<br> visual_double</th>
+  <th>b2<br> swallowing</th>
+  <th>b3<br> vertigo</th>
+  <th>b4<br> hearing</th>
+  <th>bal<br> balance</th>
+  <th>c1<br> mood</th>
+  <th>f1a<br> strength_right_arm</th>
+  <th>f1b<br> strength_left_arm</th>
+  <th>f1c<br> strength_right_leg</th>
+  <th>f1d<br> strength_left_leg</th>
+  <th>f1fl<br> strength_face_left</th>
+  <th>f1fr<br> strength_face_right</th>
+  <th>f2a<br> coord_right_arm</th>
+  <th>f2b<br> coord_left_arm</th>
+  <th>f2c<br> coord_right_leg</th>
+  <th>f2d<br> coord_left_leg</th>
+  <th>f2s<br> speaking</th>
+  <th>f4a<br> sense_right_arm</th>
+  <th>f4b<br> sense_left_arm</th>
+  <th>f4c<br> sense_right_leg</th>
+  <th>f4d<br> sense_left_leg</th>
+  <th>f4fl<br> sense_face_left</th>
+  <th>f4fr<br> sense_face_right</th>
+  <th>f5ta<br> bowel</th>
+  <th>f5tb<br> bladder</th>
+  <th>f6a<br> visual_right</th>
+  <th>f6b<br> visual_left</th>
+  <th>f7t<br> cog_overall</th>
+  <th>f8a<br> spasm_right_arm</th>
+  <th>f8b<br> spasm_left_arm</th>
+  <th>f8c<br> spasm_right_leg</th>
+  <th>f8d<br> spasm_left_leg</th>
+  <th>fs<br> functional_overall</th>
+  </tr>
+  </thead>
+  <tbody>
+<%
+  @results.each do |r|
+%>
+  <tr>
+  <td><%= r.record_id %> </td>
+  <td><%= r.ucsf_bovegoodin_update_questionnaire_complete %></td>
+  <td><%= r.calc_edss %></td>
+  <td><%= r.calc_ai %></td>
+  <td><%= r.calc_pyramidal %></td>
+  <td><%= r.calc_cerebellar %></td>
+  <td><%= r.calc_brainstem %></td>
+  <td><%= r.calc_sensory %></td>
+  <td><%= r.calc_bowelbladder %></td>
+  <td><%= r.calc_vision %></td>
+  <td><%= r.calc_cerebral %></td>
+  <td><%= r.calc_f8 %></td>
+  <td></td>
+  <td><%= r.walk_overall %></td>
+  <td><%= r.walk_pct_unaided %></td>
+  <td><%= r.walk_pct_unilateral %></td>
+  <td><%= r.walk_pct_bilateral %></td>
+  <td><%= r.walk_pct_wheelchair %></td>
+  <td><%= r.visual_double %></td>
+  <td><%= r.swallowing %></td>
+  <td><%= r.vertigo %></td>
+  <td><%= r.hearing %></td>
+  <td><%= r.balance %></td>
+  <td><%= r.mood %></td>
+  <td><%= r.strength_right_arm %></td>
+  <td><%= r.strength_left_arm %></td>
+  <td><%= r.strength_right_leg %></td>
+  <td><%= r.strength_left_leg %></td>
+  <td><%= r.strength_face_left %></td>
+  <td><%= r.strength_face_right %></td>
+  <td><%= r.coord_right_arm %></td>
+  <td><%= r.coord_left_arm %></td>
+  <td><%= r.coord_right_leg %></td>
+  <td><%= r.coord_left_leg %></td>
+  <td><%= r.speaking %></td>
+  <td><%= r.sense_right_arm %></td>
+  <td><%= r.sense_left_arm %></td>
+  <td><%= r.sense_right_leg %></td>
+  <td><%= r.sense_left_leg %></td>
+  <td><%= r.sense_face_left %></td>
+  <td><%= r.sense_face_right %></td>
+  <td><%= r.bowel %></td>
+  <td><%= r.bladder %></td>
+  <td><%= r.visual_right %></td>
+  <td><%= r.visual_left %></td>
+  <td><%= r.cog_overall %></td>
+  <td><%= r.spasm_right_arm %></td>
+  <td><%= r.spasm_left_arm %></td>
+  <td><%= r.spasm_right_leg %></td>
+  <td><%= r.spasm_left_leg %></td>
+  <td><%= r.functional_overall %></td>
+  </tr>
+<%
+  end
+%>
+  </tbody>
+</table>
+
+</div>
+
+<%= render 'layouts/footer' %>
