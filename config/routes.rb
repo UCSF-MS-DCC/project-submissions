@@ -34,12 +34,16 @@ Rails.application.routes.draw do
     patch :update_visit, :on => :collection
   end
 
-
   # routes for the goodin/bove EDSS
   get 'edss/bove', to: 'edss#bove'
   post 'edss/bove/calculate', to: 'edss#bove_calculate'
   get 'edss/goodin', to: 'edss#goodin'
   post 'edss/goodin/calculate', to: 'edss#goodin_calculate'
+  get 'edss/bove2', to: 'edss#bove2'
+  post 'edss/bove2/calculate', to: 'edss#bove2_calculate'
+
+  post 'edss/bove2', to: 'edss#bove2_results'
+
 
   # root, not found/authorized paths
   root 'welcome#index'

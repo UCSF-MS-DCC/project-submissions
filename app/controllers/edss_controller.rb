@@ -20,6 +20,10 @@ class EdssController < ApplicationController
 		# Same as 'goodin' method with bove used.
 	end
 
+	def bove2
+		# Same as 'goodin' and 'bove' method with bove2 used.
+	end
+
 	def goodin_calculate
 		# This method uses the goodin_calculation model to parse the incoming redcap data, and generate the required scores. 
 		# The variable calc is just holding all the redcap scores in a single variable to more easily parse when determining individual scores.
@@ -70,6 +74,127 @@ class EdssController < ApplicationController
 	     	render :csv => csv_string
 	   	end
 	  end		
+	end
+
+	def bove2_results
+		# V2 of Goodin/Bove that fixes pyramidal<->ambulation issues
+		redirect_to notauthorized_path and return if redcap_data(params[:bove2API]).nil?
+
+		# json string of redcap data
+		@redcaps = redcap_data(params[:bove2API])
+		# convert JSON to array of arrays
+		@redcaps_ar = JSON.parse(@redcaps)
+
+		# field renaming map
+		mappings = {
+				"record_id" => "record_id",
+				"xxxx" => "xxxx",
+				"ucsf_bovegoodin_update_questionnaire_timestamp" => "ucsf_bovegoodin_update_questionnaire_timestamp",
+				"a1" => "walk_overall",
+				"a21" => "walk_pct_unaided",
+				"a22" => "walk_pct_unilateral",
+				"a23" => "walk_pct_bilateral",
+				"a24" => "walk_pct_wheelchair",
+				"b1" => "visual_double",
+				"b2" => "swallowing",
+				"b3" => "vertigo",
+				"b4" => "hearing",
+				"bal" => "balance",
+				"c1" => "mood",
+				"f1a" => "strength_right_arm",
+				"f1b" => "strength_left_arm",
+				"f1c" => "strength_right_leg",
+				"f1d" => "strength_left_leg",
+				"f1fl" => "strength_face_left",
+				"f1fr" => "strength_face_right",
+				"f2a" => "coord_right_arm",
+				"f2b" => "coord_left_arm",
+				"f2c" => "coord_right_leg",
+				"f2d" => "coord_left_leg",
+				"f2s" => "speaking",
+				"f4a" => "sense_right_arm",
+				"f4b" => "sense_left_arm",
+				"f4c" => "sense_right_leg",
+				"f4d" => "sense_left_leg",
+				"f4fl" => "sense_face_left",
+				"f4fr" => "sense_face_right",
+				"f5ta" => "bowel",
+				"f5tb" => "bladder",
+				"f6a" => "visual_right",
+				"f6b" => "visual_left",
+				"f7t" => "cog_overall",
+				"f8a" => "spasm_right_arm",
+				"f8b" => "spasm_left_arm",
+				"f8c" => "spasm_right_leg",
+				"f8d" => "spasm_left_leg",
+				"fs" => "functional_overall",
+				"ucsf_bovegoodin_update_questionnaire_complete" => "ucsf_bovegoodin_update_questionnaire_complete"
+		}
+
+		# rename all fields and put into a new array of sub-arrays
+		@relabeled_ar = []
+		@redcaps_ar.each do |r|
+			rh = r.map {|k, v| [mappings[k], v] }.to_h
+			@relabeled_ar.push(rh)
+		end
+
+		# array to contain each bove2 object
+		@results = []
+		@relabeled_ar.each do |record|
+			# initialize object w/ this record's REDCap values
+			bov = Bove2CalculationVarnames.new(record)
+			#puts bov.pretty_inspect
+			# calculate functional system scores f1-8
+			bov.calculate_sys_functional_scores
+			# calculate fs2-5
+			bov.calculate_fs_nums
+			# calculate edss
+			bov.calculate_edss
+			# calculate AI
+			bov.calculate_AI
+
+			#puts "#{bov.record_id} EDSS = #{bov.calc_edss} \t AI #{bov.calc_ai}"
+			@results << bov
+		end
+
+=begin
+		edss = calc.edss_histogram(calc.data_set)
+		sfs = calc.sfs_histogram(calc.data_set)
+		ai = calc.ai_histogram(calc.data_set)
+		ids = calc.record_ids(calc.data_set)
+
+		@csv_string = 	CSV.generate do |csv|
+			csv << ["record_id", "first_name", "last_name", "sfs", "edss", "aI", "nrs", "mds", "Ambulation", "Cerebellar", "Brainstem", "Sensory", "Bowel/Bladder", "Vision", "Cerebral", "Pyramidal","a1","a21",
+			"a22","a23","a24","a1","a21","a22","a23","a24","f2a","f2b","f2c","f2d","bal","b3","f1fr","f1fl","f4fr","frfl","b1","f2s","b2","b4","f4a","f4b","f4c","f4d","f5ta","f6a","f6b","f7t","c1","f1a","f1b","f1c","f1d","f8a","f8b","f8c","f8d"]
+		end
+
+			ids.each do |participant|
+				csv << participant.values
+			end
+		end
+=end
+=begin
+		respond_to do |format|
+			format.html do
+				puts "HTML!"
+			end
+			format.csv do
+				response.headers['Content-Disposition'] = 'attachment; filename="BoveV2RemoteEDSS.csv"'
+				render :csv => csv_string
+			end
+=end
+
+=begin
+		respond_to do |format|
+			format.html
+			format.csv {
+			send_data redcaps_hash,
+								filename: "Bove2.csv",
+								type: 'text/csv; charset=utf-8'
+			}
+		end
+=end
+
 	end
 
 	private
