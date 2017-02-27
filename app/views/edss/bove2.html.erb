@@ -17,11 +17,19 @@
 
 	<div class='row'>
 		<div class='small-12 columns'>
-			<%= form_tag '/edss/bove2' do %>
-			    <%=text_field_tag 'bove2API', nil, placeholder: 'Enter project API key'%>
-			    <div><%= submit_tag 'View Results', class: "button right radius", id: "bove2EDSS" %></div>
+      Use the pre-Feb-2017 Goodin/Bove/Carpenito v2
+			<%= form_tag '/edss/bove2a' do %>
+			    <%=text_field_tag 'bove2APIkey', nil, placeholder: 'Enter project API key'%>
+			    <div><%= submit_tag 'View Results', class: "button right radius", id: "bove2aEDSS" %></div>
 			<% end %>
 		</div>
+    <div class='small-12 columns'>
+      Use the Bove v2b that includes adjustment for sensory/brainstem
+      <%= form_tag '/edss/bove2b' do %>
+          <%=text_field_tag 'bove2APIkey', nil, placeholder: 'Enter project API key'%>
+          <div><%= submit_tag 'View Results', class: "button right radius", id: "bove2bEDSS" %></div>
+      <% end %>
+    </div>
 	</div>
 </div>
 <%= render 'layouts/footer' %>
