@@ -27,7 +27,7 @@ class MyoParticipant < ActiveRecord::Base
 		}
 		request= Net::HTTP.post_form(url, post_args)
 		data = JSON.parse(request.body)
-		goodin_scores = GoodinCalculation.new(data)	
+		goodin_scores = GoodinCalculation.new(data)
 
 		# You're zipping together the goodin scores along with the redcap information per individual. That way when we loop through each individual it's a lot easier to
 		# update the db.

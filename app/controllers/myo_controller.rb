@@ -4,7 +4,9 @@ class MyoController < ApplicationController
 	# app/models/ability.rb for authorization informaton
 	before_action :authenticate_user!
 	authorize_resource :class => false
-		
+
+	require 'net/http'
+
 	def index
 		# The missing participants instance variable serves to show the coordinator which individuals have filled out a redcap form
 		# but HAVE NOT been added manually to the DB via the participants page. The update_db_from_redcap method is a very lage method called on the 
