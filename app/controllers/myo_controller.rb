@@ -11,7 +11,9 @@ class MyoController < ApplicationController
 		# The missing participants instance variable serves to show the coordinator which individuals have filled out a redcap form
 		# but HAVE NOT been added manually to the DB via the participants page. The update_db_from_redcap method is a very lage method called on the 
 		# myo participant model (via MyoParticipant.rb) and is worth checking out.
-		@missing_participants = MyoParticipant.update_db_from_redcap
+
+		# Destructure array that is returned from update_db_from_redcap:
+		@missing_participants, @uncaptured_visits = MyoParticipant.update_db_from_redcap
 		@participants = MyoParticipant.all
 	end
 

@@ -73,8 +73,19 @@
 			<%= link_to "Download Redcap Data and Upload Database", '/myo/download_computed_data.csv', :method=> :post, class: 'button radius small-12 columns' %>
 		</div>
 		<div class='small-12 columns'>
-		<p>Note: the following participants will not be added to the report: <%= @missing_participants.join(" , ") %>. Please ensure all subjects are added to this databse before downloading data.</p>
+		<p>Note: the following participants will not be added to the report.
+      <br>Please ensure all subjects are added to the database before downloading data!<br>
+      <%= @missing_participants.join(" , ") %>.
+      </p>
 		</div>
+    <div class='small-12 columns'>
+      <p>Note: the following participants are in the database and report, but these specific visits will not be added to the report.
+        <br>Please add the appropriate visit dates to these participants and reload this page!
+        <% @uncaptured_visits.sort.each do |elem| %>
+              <br> <%= elem %>
+        <% end %>
+    </div>
+
 	</div>
 	
 </div>

@@ -44,6 +44,7 @@ group :development do
 	gem 'better_errors'
   #gem 'spring'
 	gem 'pry'
+  gem 'byebug'
 end
 
 gem 'builder'
