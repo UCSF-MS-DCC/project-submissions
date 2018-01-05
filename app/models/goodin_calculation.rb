@@ -69,7 +69,6 @@ class GoodinCalculation
 		return tf1u
 	end
 
-
 	def calc_tf1l(f1l, a1)
 		tf1l=0
 		if f1l==1 || f1l==2 

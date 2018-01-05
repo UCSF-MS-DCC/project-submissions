@@ -12,6 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require dataTables/jquery.dataTables
+//= require dataTables/jquery.dataTables.foundation
+//= require dataTables/jquery.dataTables
 //= require jquery-ui
 //= require jquery-tablesorter
 //= require gritter

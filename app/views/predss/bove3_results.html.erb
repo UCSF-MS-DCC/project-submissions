@@ -1,0 +1,176 @@
+<%= render 'layouts/navbar' %>
+
+<div id='predss-theme'>
+	<div class'row margin-top'>
+		<div class='panel small-12 columns text-center'>
+			<h1>
+				PREDSS Data Bove v3: Results
+			</h1>
+		</div>
+	</div>
+<hr>
+<i>REDCap variables are listed in the same order as the questionnaire.</i>
+<br>
+<i>Mouse over the REDCap column headers to see full question and response options.</i>
+<script>
+  $("#edss th[title]").tooltip();
+
+</script>
+
+<table id="edss" class="striped">
+  <thead>
+  <tr>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="Scoring notes<hr>| overall amb | amb distriution (wh=wheelchar,ul=unilateral,bl=bilateral,wo=without aid)  |  functional_overall | FS scores ">Scoring Notes</span></th>
+  <th>REDCap record_id</th>
+  <th>Survey Complete</th>
+  <th>EDSS</th>
+  <th>A.I.</th>
+  <th>D<br>v3 Depression</th>
+  <th>F1 <br>Pyramidal</th>
+  <th>F2 <br>Cerebellar</th>
+  <th>F3 <br>Brainstem</th>
+  <th>F4 <br>Sensory</th>
+  <th>F5 <br>Bowel/Bladder</th>
+  <th>F6 <br>Vision</th>
+  <th>F7 <br>Cerebral</th>
+  <th>F8 <br>Other (spasticity+)</th>
+
+  <th>REDCap inputs<br>--></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="2000" class="has-tip" title="1. Which of the following best describes your ability to walk (circle one)<hr><br>    1.  I can walk without any problem. <br>    2.  I have some difficulties with walking but I can walk without aid for 500 meters or more. (i.e.,  approximately the length of 5 football fields or one third of a mile). <br>    3.  I have some difficulties with walking but I can walk without aid for about 300 meters (i.e.,  approximately the length of 3 football fields or one fifth of a mile). <br>    4.  I have some difficulties with walking but I can walk without aid for about 200 meters (i.e.,  approximately the length of 2 football fields or one tenth of a mile). <br>    5.  I have some difficulties with walking but I can walk without aid for about 100 meters (i.e.,  approximately the length of 1 football fields or 300 feet). <br>    6.  I require an aid (e.g. cane, crutch, walker or another person) to walk 100 meters (300 feet). <br>    7.  I require an aid (e.g. cane, crutch, walker or another person) to walk 20 meters (60 feet). <br>    8.  I require an aid (e.g. cane, crutch, walker or another person) to walk 8 meters (25 feet). <br>    9.  I use a wheelchair for almost all activities. <br>    10.  I am confined to bed most of the time.<br>">amb_ability_to_walk</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="2. When you move about, what percentage of the time do you:<br>walk without aid? ">amb_walk_wo_aid</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="2. When you move about, what percentage of the time do you:<br>use a cane, a single crutch, or hold onto another person? ">amb_unilateral</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="2. When you move about, what percentage of the time do you:<br>use a walker or other bilateral support? ">amb_bilateral</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="2. When you move about, what percentage of the time do you:<br>use a wheel chair? ">amb_wheelchair</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="3. In my right arm, my strength is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">pyram_strength_rightarm</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="3. In my left arm, my strength is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">pyram_strength_leftarm</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="3. In my right leg, my strength is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">pyram_strength_rightleg</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="3. In my left leg, my strength is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">pyram_strength_leftleg</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="4. In my right arm, my spasticity is: <hr> 0, 1. None <br> 1, 2. Mild <br> 2, 3. Moderate <br> 3, 4. Severe">pyram_spastic_rightarm</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="4. In my left arm, my spasticity is: <hr> 0, 1. None <br> 1, 2. Mild <br> 2, 3. Moderate <br> 3, 4. Severe">pyram_spastic_leftarm</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="4. In my right leg, my spasticity is: <hr> 0, 1. None <br> 1, 2. Mild <br> 2, 3. Moderate <br> 3, 4. Severe">pyram_spastic_rightleg</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="4. In my left leg, my spasticity is: <hr> 0, 1. None <br> 1, 2. Mild <br> 2, 3. Moderate <br> 3, 4. Severe">pyram_spastic_leftleg</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="5. My corrected vision for my right eye is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">vision_va_right</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="5. My corrected vision for my left eye is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">vision_va_left</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="6. When you are laughing or furrowing your eyebrows, does the left side of your face move normally and does your left eye close completely? <hr> 0, 1. Yes. <br> 1, 2. No, my left face is slightly weak when laughing or furrowing eyebrows. <br> 2, 3. No, my left face is definitely asymmetric face at rest and the closure of my left eye is impaired. <br> 3, 4. No, lid closure of my left eye is impossible">brainstem_laughfurrow_right</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="6. When you are laughing or furrowing your eyebrows, does the right side of your face move normally and does your right eye close completely? <hr> 0, 1. Yes. <br> 1, 2. No, my right face is slightly weak when laughing or furrowing eyebrows. <br> 2, 3. No, my right face is definitely asymmetric face at rest and the closure of my right eye is impaired. <br> 3, 4. No, lid closure of my right eye is impossible">brainstem_laughfurrow_left</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="7. Do you have double vision when looking at something? <hr> 0, 1. No, I don't see double <br> 1, 2. Yes, I have double vision when looking in some directions but it does not affect my quality of life <br> 2, 3. Yes, I almost always have double vision, one eye needs to be covered, it does affect my quality of life, <br> 3, 4. Yes, I have complete loss of movement in one or more directions of gaze, in one or both of my eyes">brainstem_doublevision</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="8. Can you speak clearly? <hr> 0, 1. Yes <br> 1, 2. No, I have some difficulties in speaking (dysarthria), noticed by others when I am talking <br> 2, 3. No, my difficulty speaking (dysarthria) is such that it impairs my conversation <br> 3, 4. No, my speech is incomprehensible or absent">brainstem_speakclear</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="9. Do you have difficulties with your swallowing? <hr> 0, 1. No <br> 1, 2. Yes, I have mild difficulty with swallowing thin liquids and/or solid foods <br> 2, 3. Yes, I have moderate difficulty with swallowing thin liquids and/or solid foods <br> 3, 4. Yes, I require a pureed diet to eat or I can't swallow">brainstem_swallow</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="10. Do you have any problems with your hearing? <hr> 0, 1. No <br> 1, 2. Yes, my hearing is slightly or mildly decreased on one side <br> 2, 3. Yes, my hearing is moderately or severely decreased on one side <br> 3, 4. Yes, I can't hear in either ear ; I am effectively deaf">brainstem_hearing</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="11. In my right arm, my coordination is: <hr> 0, 1. Normal <br> 1, 2. uncoordinated <br> 2, 3. Moderately uncoordinated <br> 3, 4. Severely uncoordinated">cerebellar_coord_rightarm<br> coord_right_arm</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="11. In my left arm, my coordination is: <hr> 0, 1. Normal <br> 1, 2. uncoordinated <br> 2, 3. Moderately uncoordinated <br> 3, 4. Severely uncoordinated">cerebellar_coord_leftarm<br> coord_left_arm</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="11. In my right leg, my coordination is: <hr> 0, 1. Normal <br> 1, 2. uncoordinated <br> 2, 3. Moderately uncoordinated <br> 3, 4. Severely uncoordinated">cerebellar_coord_rightleg<br> coord_right_leg</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="11. In my left leg, my coordination is: <hr> 0, 1. Normal <br> 1, 2. uncoordinated <br> 2, 3. Moderately uncoordinated <br> 3, 4. Severely uncoordinated">cerebellar_coord_leftleg<br> coord_left_leg</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="12. Which of the following best describes your balance? <hr>         <br>0, 1. I have no difficulty with my balance <br> 1, 2. I have mild difficulty with my balance <br> 2, 3. I have moderate difficulty with my balance <br> 3, 4. I have severe difficulty with my balance">cerebellar_balance</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="13. Do you experience dizziness or vertigo (i.e. a sense or a feeling of motion)? <hr>  If so, how severe is the vertigo or dizziness (i.e. a sense or a feeling of motion)? <hr>   <br>0, 1. I do not experience vertigo or dizziness. <br> 1, 2. Mild dizziness <br> 2, 3. Moderate dizziness <br> 3, 4. Severed dizziness">cerebellar_vertigo</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="14. In my right arm, my sensation is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">sensory_rightarm</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="14. In my left arm, my sensation is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">sensory_leftarm</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="14. In my right leg, my sensation is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">sensory_rightleg</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="14. In my left leg, my sensation is: <hr> 0, 1. Normal <br> 1, 2. Mildly impaired <br> 2, 3. Moderately impaired <br> 3, 4. Severely impaired">sensory_leftleg</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="15. When touching the left side of your face, has your sensation changed recently? <hr> 0, 1. No, I have normal sensation in my left face <br> 1, 2. Yes, I have slight or mild numbness when touching some parts of my left face <br> 2, 3. Yes, I have moderately or markedly decreased sensation in parts of my left face, or pain attacks in the right face <br> 3, 4. Yes, I can't feel touch at all, in the entire left face">brainstem_changesense_right</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="15. When touching the right side of your face, has your sensation changed recently? <hr> 0, 1. No, I have normal sensation in my right face <br> 1, 2. Yes, I have slight or mild numbness when touching some parts of my right face <br> 2, 3. Yes, I have moderately or markedly decreased sensation in parts of my right face, or pain attacks in the right face <br> 3, 4. Yes, I can't feel touch at all, in the entire right face">brainstem_changesense_left</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="16. With regards to my bowel function: <hr> 1 I have normal function. <br> 2 I have mild urgency. <br> 3 I have rare incontinence (not more than once a week) and must wear pads. <br> 4 I have severe incontinence, at least several times a week, and must wear pads or a urinal. <br> 5 I have a complete loss of bladder function. ">bowel</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="17. With regards to my bladder urgency (urge to urinate) and incontinence (lack of control): <hr> 1 I have normal function. <br> 2 I have mild urgency. <br> 3 I have rare incontinence (not more than once a week) and must wear pads. <br> 4 I have severe incontinence, at least several times a week, and must wear pads or a urinal. <br> 5 I have a complete loss of bladder function.  ">bladder_urgency</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="18.  With regards to my bladder hesitancy (difficulty initiating urination) and retention (inability to empty bladder): <hr> 1 I have normal function. <br> 2 I have mild urgency. <br> 3 I have rare incontinence (not more than once a week) and must wear pads. <br> 4 I have severe incontinence, at least several times a week, and must wear pads or a urinal. <br> 5 I have a complete loss of bladder function.  ">bladder_hesitancy</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="19. Which of the following best describes your cognitive (thinking) ability since being diagnosed with MS? <hr>   <br> 1 I have no problems with concentration or memory<br>  2 I have mild concentration and memory problems, or problems with coping with stress, but I am able to handle my daily routines including completing this survey<br>  3 I have moderate problems with concentration and memory that my friends and family notice; this is beginning to affect my daily routine. It makes completing this survey difficult<br>  4 I have severe impairment in my cognitive (thinking) abilities, and I need help<br>  5 I have no meaningful conversation and am unable to handle my affairs because of my severe cognitive problems; I need someone else to complete this survey<br> ">cerebral_concentration_memory</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="20. Which of the following describes your daily fatigue levels? <hr>   <br> 0 I experience no fatigue.<br> 1 I experience mild fatigue. I do feel the need to rest more often, but I can still complete all my daily tasks.<br> 2 I experience moderate fatigue. I have to rest unusually often, this affects less than half of my daily activities; I often cannot complete my daily routine without naps or significant rest.<br> 3 I experience severe fatigue levels that have overtaken my life; I am able to complete less than 50% of my daily tasks ">cerebral_fatigue</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="21. Over the past 2 weeks, how often have you been bothered by any of the following problems? <hr> Little interest or pleasure in doing things: <hr>   <br>1 Not at all<br> 2 Several days<br> 3 More than half of the days<br> 4 Nearly every day<br> ">cerebral_interest_pleasure</span></th>
+  <th><span data-tooltip aria-haspopup="true" data-width="1000" class="has-tip" title="21. Over the past 2 weeks, how often have you been bothered by any of the following problems? <hr> Feeling down, depressed or hopeless: <hr>  <br>1 Not at all<br> 2 Several days<br> 3 More than half of the days<br> 4 Nearly every day<br> ">cerebral_hopeless_depressed</span></th>
+
+  </tr>
+  </thead>
+  <tbody>
+<%
+  @all_results.each do |r|
+%>
+  <tr>
+  <td><%
+    r.scoring_notes.each do |k,v| %>
+        <%=k%>: <%=v%><br>
+        <% end %>
+  </td>
+  <td><%= r.record_id %> </td>
+  <td width="200px"><%= r.patient_reported_edss_v3_complete %></td>
+  <td><%= r.calc_edss %></td>
+  <td><%= r.calc_ai %></td>
+  <td><%= r.calc_depression %></td>
+  <td><%= r.calc_pyramidal %></td>
+  <td><%= r.calc_cerebellar %></td>
+  <td><%= r.calc_brainstem %></td>
+  <td><%= r.calc_sensory %></td>
+  <td><%= r.calc_bowelbladder %></td>
+  <td><%= r.calc_vision %></td>
+  <td><%= r.calc_cerebral %></td>
+  <td><%= r.calc_fother %></td>
+  <td><--</td>
+  <td><%= r.amb_ability_to_walk %></td>
+  <td><%= r.amb_walk_wo_aid %></td>
+  <td><%= r.amb_unilateral %></td>
+  <td><%= r.amb_bilateral %></td>
+  <td><%= r.amb_wheelchair %></td>
+  <td><%= r.pyram_strength_rightarm %></td>
+  <td><%= r.pyram_strength_leftarm %></td>
+  <td><%= r.pyram_strength_rightleg %></td>
+  <td><%= r.pyram_strength_leftleg %></td>
+  <td><%= r.pyram_spastic_rightarm %></td>
+  <td><%= r.pyram_spastic_leftarm %></td>
+  <td><%= r.pyram_spastic_rightleg %></td>
+  <td><%= r.pyram_spastic_rightleg %></td>
+  <td><%= r.vision_va_right %></td>
+  <td><%= r.vision_va_left %></td>
+  <td><%= r.brainstem_laughfurrow_left %></td>
+  <td><%= r.brainstem_laughfurrow_right %></td>
+  <td><%= r.brainstem_doublevision %></td>
+  <td><%= r.brainstem_speakclear %></td>
+  <td><%= r.brainstem_swallow %></td>
+  <td><%= r.brainstem_hearing %></td>
+  <td><%= r.cerebellar_coord_rightarm %></td>
+  <td><%= r.cerebellar_coord_leftarm %></td>
+  <td><%= r.cerebellar_coord_rightleg %></td>
+  <td><%= r.cerebellar_coord_leftleg %></td>
+  <td><%= r.cerebellar_balance %></td>
+  <td><%= r.cerebellar_vertigo %></td>
+  <td><%= r.sensory_rightarm %></td>
+  <td><%= r.sensory_leftarm %></td>
+  <td><%= r.sensory_rightleg %></td>
+  <td><%= r.sensory_leftleg %></td>
+  <td><%= r.brainstem_changesense_left %></td>
+  <td><%= r.brainstem_changesense_right %></td>
+  <td><%= r.bowel %></td>
+  <td><%= r.bladder_urgency %></td>
+  <td><%= r.bladder_hesitancy %></td>
+  <td><%= r.cerebral_concentration_memory %></td>
+  <td><%= r.cerebral_fatigue %></td>
+  <td><%= r.cerebral_interest_pleasure %></td>
+  <td><%= r.cerebral_hopeless_depressed %></td>
+  </tr>
+<%
+end
+%>
+  </tbody>
+</table>
+
+<button id="exportcsv">Export CSV</button>
+<script>
+ $("#exportcsv").click(function() {
+     $("#edss").table2csv({
+         filename: 'PREDSS_v3.csv'
+     });
+ })
+
+
+ $(document).ready(function() {
+     $('#edss').DataTable({
+             "pageLength": 50
+         }
+     );
+ } );
+
+</script>
+
+
+
+
+</div>
+
+<%= render 'layouts/footer' %>

@@ -14,6 +14,8 @@
  *= require foundation_and_overrides
  *= require video-js
  *= require_tree
+ *= require dataTables/jquery.dataTables
+ *= require dataTables/jquery.dataTables.foundation
  *= require_self
  *= require jquery-tablesorter/theme.blue
  *= require jquery-ui

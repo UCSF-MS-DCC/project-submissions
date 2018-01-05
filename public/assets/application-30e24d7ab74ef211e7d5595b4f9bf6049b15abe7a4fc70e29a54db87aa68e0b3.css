@@ -6538,7 +6538,7 @@ table tr td {
 }
 /* line 115, /Users/asantaniello/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/foundation-rails-5.5.2.1/vendor/assets/stylesheets/foundation/components/_tables.scss */
 table tr.even, table tr.alt, table tr:nth-of-type(even) {
-  background: #F9F9F9;
+  background: #b9b9b9;
 }
 /* line 120, /Users/asantaniello/.rbenv/versions/2.2.3/lib/ruby/gems/2.2.0/gems/foundation-rails-5.5.2.1/vendor/assets/stylesheets/foundation/components/_tables.scss */
 table thead tr th,

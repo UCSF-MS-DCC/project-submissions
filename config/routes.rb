@@ -44,9 +44,14 @@ Rails.application.routes.draw do
   get 'edss/bove2', to: 'edss#bove2'
   post 'edss/bove2a', to: 'edss#bove2a_results'
 
+  get 'edss/bove3', to: 'edss#bove3'
+  post 'edss/bove3', to: 'edss#bove3_results'
+
   #get 'edss/bove2b', to: 'edss#bove2b'
   post 'edss/bove2b', to: 'edss#bove2b_results'
 
+  get 'predss', to: 'predss#index'
+  post 'predss/bove3/results', to: 'predss#bove3_results'
 
   # root, not found/authorized paths
   root 'welcome#index'
