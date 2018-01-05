@@ -16,13 +16,13 @@ class ApplicationController < ActionController::Base
   def not_authorized
   end
 
-  # When a user visits a page that they don't have the proper authorization to visit, this is called. To check out who has what privleges, see
+  # When a user visits a page that they don't have the proper authorization to visit, this is called. To check out who has what privileges, see
   # app/models/ability.rb
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to '/notauthorized'
   end  
 
-  # Enable sthe use of SSL
+  # Enable the use of SSL
   def ssl_required?
 
     true

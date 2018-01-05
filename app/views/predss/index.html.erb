@@ -1,0 +1,109 @@
+<%= render 'layouts/navbar' %>
+
+<div id='msdr-theme'>
+  <div class="row margin-top">
+    <div class="large-12 columns">
+      <div class="panel radius text-center">
+        <h1>Patient Reported EDSS</h1>
+      </div>
+    </div>
+  </div>
+
+  <div class='row'>
+    <div data-alert class="alert-box warning radius" >
+      <h5 class="text-justify">
+      By filling in a valid REDCap API key and clicking "Download Data" you acknowledge that you are authorized to use
+        the associated questionnaire data. The dataset may contain PHI/RHI and you are responsible for handling it with discretion.
+      </h5>
+       <a href="#" class="close">&times;</a>
+    </div>
+
+    <h5>Reference materials:</h5>
+    <div class="large-7 columns">
+      <a target='_blank' href="https://www.ncbi.nlm.nih.gov/pubmed/9839306">A questionnaire to assess neurological impairment in multiple sclerosis</a>
+    </div>
+    <div class="large-5 columns">
+      <i>Goodin, Multiple Sclerosis 1998</i>
+    </div>
+    <div class="large-7 columns">
+      <a target='_blank' href="https://www.ncbi.nlm.nih.gov/pubmed/26564998">A comparative analysis of Patient-Reported Expanded Disability Status Scale tools</a>
+    </div>
+    <div class="large-5 columns">
+      <i>Colins et al, Multiple Sclerosis 2016</i>
+    </div>
+    <div class="large-7 columns">
+      <a target='_blank' href="https://www.ncbi.nlm.nih.gov/pubmed/25787185">On the Origin of EDSS</a>
+    </div>
+    <div class="large-5 columns">
+      <i>Kurtzke, MS and Related Disorders, 2015</i>
+    </div>
+    <div class="large-7 columns">
+      <a target='_blank' href="https://www.ncbi.nlm.nih.gov/pubmed/6685237">Rating neurologic impairment in multiple sclerosis: an expanded disability status scale (EDSS).</a>
+    </div>
+    <div class="large-5 columns">
+      <i>Kurtzke, Neurology, 1983</i>
+    </div>
+
+<hr>
+    <h4>PREDSS 1</h4>
+    Replication of the original Goodin PREDSS logic.
+    <br>Used by EPIC and Genetics
+    <div class="row">
+        <%= form_tag '/predss/goodin/results' do %>
+          <div class="large-7 columns">
+            <%= text_field_tag('APIKey', nil, placeholder: 'Enter project API key', :required => true) %>
+          </div>
+          <div class="large-5 columns">
+            <%= submit_tag 'Download Data', class: "button small radius" %>
+          </div>
+        <% end %>
+    </div>
+
+    <h4>PREDSS 1.1</h4>
+    Modified: same as PREDSS 1
+    <div class="row">
+      <%= form_tag '/predss/bove/calculate' do %>
+          <div class="large-7 columns">
+            <%= text_field_tag('APIKey', nil, placeholder: 'Enter project API key', :required => true) %>
+          </div>
+          <div class="large-5 columns">
+            <%= submit_tag 'Download Data', class: "button small radius" %>
+          </div>
+      <% end %>
+    </div>
+
+
+    <h4>PREDSS 2</h4>
+    Same questionnaire as PREDSS 1, but modifies scoring per Bove
+    <div class="row">
+      <%= form_tag '/predss/bove2/calculate' do %>
+          <div class="large-7 columns">
+            <%= text_field_tag('APIKey', nil, placeholder: 'Enter project API key', :required => true) %>
+          </div>
+          <div class="large-5 columns">
+            <%= submit_tag 'Download Data', class: "button small radius" %>
+          </div>
+      <% end %>
+    </div>
+
+
+    <h4>PREDSS 3</h4>
+    All new Bove questionnaire. New scoring approach for bowel, bladder, and cerebral FS scores.
+    <br>Adds depression score.
+    <div class="row">
+      <%= form_tag '/predss/bove3/results' do %>
+          <div class="large-7 columns">
+            <%= text_field_tag('APIKey', nil, placeholder: 'Enter project API key', :required => true) %>
+          </div>
+          <div class="large-5 columns">
+            <%= submit_tag 'Download Data', class: "button small radius" %>
+          </div>
+      <% end %>
+    </div>
+
+
+</div>
+
+
+
+<%= render 'layouts/footer' %>

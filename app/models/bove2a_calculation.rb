@@ -1,7 +1,3 @@
-# Adam's PR EDSS v2 API Key:
-# 2D39E39D8D930178C0874F3E91E28601
-
-
 class Bove2aCalculation
 	#attr_reader :data_set
 	attr_accessor :record_id,:walk_overall,:walk_pct_unaided,:walk_pct_unilateral,:walk_pct_bilateral,:walk_pct_wheelchair,

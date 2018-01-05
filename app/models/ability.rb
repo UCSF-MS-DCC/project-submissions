@@ -20,7 +20,7 @@ class Ability
     else
       cannot :manage, :sysadmin
       cannot :access, :rails_admin    	
-      cannot :manage, :edss
+      #cannot :manage, :edss
       cannot :manage, :admin
       cannot :manage, :myo
     end

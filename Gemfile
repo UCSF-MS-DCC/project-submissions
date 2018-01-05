@@ -24,6 +24,7 @@ gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 
+gem 'jquery-datatables-rails', '~> 3.4.0'
 gem 'jquery-tablesorter'
 gem 'jquery-ui-rails'
 gem "gritter"
