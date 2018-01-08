@@ -7,20 +7,27 @@ class GoodinCalculation
 		# Everything is pretty self-explainatory. You're essentially creating the 'data' hash to prepare for a data download of all individuals
 		@data_set = []
 		redcap_data.each do |participant|
+			if participant['goodin_edss_complete'] == '0'
+				next
+			end
+
+#			puts "\n\n\n"
+#			puts participant
+
 			sfs = calculate_sfs(participant)
 			edss = calculate_edss(participant, sfs)
 			aI = calculate_AI(participant)
 			nrs = calculate_nrs(participant, sfs)	
 			mds = calculate_mds(edss, nrs, aI, participant["fs"].to_i, sfs)
-			data = {record_id: participant["record_id"].to_i, first_name: participant["first_name"], last_name: participant["last_name"], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
+			data = {record_id: participant['participant_id_intake'].to_i, first_name: participant['first_name'], last_name: participant['last_name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
 			@data_set<< data
 		end
 	end
 
 	def record_ids(data)
 		participant_ids = []
-		data.each do |participant|
-			participant_ids << participant["record_id"]
+		data.each do |d|
+			participant_ids << d['participant_id_intake']
 		end
 	end
 

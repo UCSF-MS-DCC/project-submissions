@@ -83,7 +83,7 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 		end
 	end
 
-	def goodin_calculate
+	def goodin_results
 		# This method uses the goodin_calculation model to parse the incoming redcap data, and generate the required scores.
 		# The variable calc is just holding all the redcap scores in a single variable to more easily parse when determining individual scores.
 
@@ -99,6 +99,8 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 		sfs = calc.sfs_histogram(calc.data_set)
 		ai = calc.ai_histogram(calc.data_set)
 		ids = calc.record_ids(calc.data_set)
+
+		@all_results = ids
 
 		# Creating a csv to store user's scores.
 		csv_string = CSV.generate do |csv|

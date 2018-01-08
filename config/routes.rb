@@ -52,6 +52,7 @@ Rails.application.routes.draw do
 
   get 'predss', to: 'predss#index'
   post 'predss/bove3/results', to: 'predss#bove3_results'
+  post 'predss/goodin/results', to: 'predss#goodin_results'
 
   # root, not found/authorized paths
   root 'welcome#index'
