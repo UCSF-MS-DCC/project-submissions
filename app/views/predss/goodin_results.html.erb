@@ -1,17 +1,25 @@
 <%= render 'layouts/navbar' %>
 
 <div id='predss-theme'>
-  <div class'row margin-top'>
+  <div class='row margin-top'>
   <div class='panel small-12 columns text-center'>
     <h1>
-      PREDSS Data Goodin: Results
+      PREDSS Data Goodin v1: Results
     </h1>
   </div>
 </div>
 
 <div class="row">
   <div class="col col-lg-2"></div>
-    <div class="col col-lg-8"></div>
+      <div class="col col-lg-8"></div>
+
+  <% if !@msg.nil? %>
+      <div class="alert-box warning"><%=@msg%></div>
+  <%
+    else
+  %>
+
+
       <button id="exportcsv">Export CSV</button>
       <script>
           $("#exportcsv").click(function() {
@@ -28,17 +36,14 @@
               } );*/
 
       </script>
+
+      <h4>Project: <%= @project.upcase %></h4>
       <table id="edss" class="striped">
         <thead>
         <tr>
-          <th>Record ID</th>
-          <th>First</th>
-          <th>Last</th>
-          <th>SFS</th>
-          <th>EDSS</th>
-          <th>AI</th>
-          <th>NRS</th>
-          <th>MDS</th>
+          <% @headers.each do |h| %>
+          <th><%=h%></th>
+          <% end %>
         </tr>
         </thead>
         <tbody>
@@ -60,6 +65,7 @@
       %>
         </tbody>
       </table>
+<% end %>
     </div>
   <div class="col col-lg-2"></div>
 </div>

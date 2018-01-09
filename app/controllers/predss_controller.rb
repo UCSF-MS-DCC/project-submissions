@@ -92,9 +92,38 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 		if params[:APIKey].empty? || params[:APIKey].nil?
 			redirect_to session.delete(:return_to)
 		end
-		redcap_data = retrieve_redcap_data(params[:APIKey])
 
-		calc = GoodinCalculation.new(JSON.parse(redcap_data))
+		# fetch metadata to determine project. default to genetics.
+		redcap_metadata = retrieve_redcap_metadata(params[:APIKey])
+		meta = JSON.parse(redcap_metadata)
+		meta.each do |m|
+
+		if m['form_name']=='tracms_myo_patient_intake_q'
+				@project = 'tracms'
+				break
+			elsif m['form_name']=='family_information_form'
+				@project = 'genetics'
+				break
+			elsif m['form_name']=='motor_patient_intake_q'
+				@project = 'motor study'
+				break
+			end
+		end
+
+		if @project.nil?
+			@msg = 'Could not identify REDCap project -- aborting PREDSS scoring attempt.'
+			return
+		end
+
+		case @project
+			when 'tracms','motor study'
+				@headers = ["PT ID", "Record ID", "Name", "SFS", "EDSS", "AI", "NRS", "MDS"]
+			else # 'genetics','epic'
+				@headers = ["Record ID", "First", "Last", "SFS", "EDSS", "AI", "NRS", "MDS"]
+		end
+
+		redcap_data = retrieve_redcap_data(params[:APIKey])
+		calc = GoodinCalculation.new(JSON.parse(redcap_data), @project)
 		edss = calc.edss_histogram(calc.data_set)
 		sfs = calc.sfs_histogram(calc.data_set)
 		ai = calc.ai_histogram(calc.data_set)
@@ -104,7 +133,7 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 
 		# Creating a csv to store user's scores.
 		csv_string = CSV.generate do |csv|
-			csv << ["record_id", "first_name", "last_name", "sfs", "edss", "aI", "nrs", "mds"]
+			csv << @headers
 			ids.each do |participant|
 				csv << participant.values
 			end
@@ -323,4 +352,15 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 		request.body
 	end
 
+	def retrieve_redcap_metadata(key)
+		# Function that calls to the redcap db for data.
+		url = URI.parse("https://redcap.ucsf.edu/api/")
+		post_args = {
+				'token' => key,
+				'content' => 'metadata',
+				'format' => 'json'
+		}
+		request = Net::HTTP.post_form(url, post_args)
+		request.body
+	end
 end
