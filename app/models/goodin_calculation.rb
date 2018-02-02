@@ -7,31 +7,55 @@ class GoodinCalculation
 		# Everything is pretty self-explainatory. You're essentially creating the 'data' hash to prepare for a data download of all individuals
 		@data_set = []
 		redcap_data.each do |participant|
-			if participant['goodin_edss_complete'] == '0'
+#puts participant
+			if participant['goodin_edss_complete'] == '0' || participant['ucsf_epic_update_questionnaire_complete'] =='0' || participant['multiple_sclerosis_information_patient_scoring_complete'] =='0'
 				next
 			end
 
-=begin
-			puts "\n\n\n"
-			puts participant
-=end
 			sfs = calculate_sfs(participant)
 			edss = calculate_edss(participant, sfs)
 			aI = calculate_AI(participant)
 			nrs = calculate_nrs(participant, sfs)	
 			mds = calculate_mds(edss, nrs, aI, participant["fs"].to_i, sfs)
 
+=begin
+	Genetics
+		redcap_survey_identifier
+		goodin_edss_timestamp
+		goodin_edss_complete
+
+	TracMS
+		record_id # also patient study id?
+		participant_id2  # tracms patient study ID
+		multiple_sclerosis_information_patient_scoring_timestamp
+		multiple_sclerosis_information_patient_scoring_complete
+
+	Motor Study
+		pt_id
+		participant_id2 ?
+		multiple_sclerosis_information_patient_scoring_timestamp
+		multiple_sclerosis_information_patient_scoring_complete
+
+	EPIC
+		'record_id'
+		'redcap_survey_identifier' = epicid
+		'ucsf_epic_update_questionnaire_timestamp'
+		'ucsf_epic_update_questionnaire_complete'
+=end
+
+
 			case project
 				when 'genetics'
-					data = {record_id: participant['participant_id_intake'].to_i, first_name: participant['first_name'], last_name: participant['last_name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
-				when 'tracms','motor study'
-					data = {record_id: participant['pt_id'].to_i, first_name: participant['record_id'], last_name: participant['name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
+					data = {timestamp: participant['goodin_edss_timestamp'], record_id: participant['participant_id_intake'].to_i, name: participant['first_name'] + ' ' +  participant['last_name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
+				when 'tracms'
+					data = {timestamp: participant['multiple_sclerosis_information_patient_scoring_timestamp'], record_id: participant['participant_id2'].to_i, name: participant['name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
+				when 'motor study'
+					data = {timestamp: participant['multiple_sclerosis_information_patient_scoring_timestamp'], record_id: participant['participant_id2'].to_i, name: participant['name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
 				when 'epic'
-					data = {record_id: participant['pt_id'].to_i, first_name: participant['record_id'], last_name: participant['name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
+					data = {timestamp: participant['ucsf_epic_update_questionnaire_timestamp'], record_id: participant['redcap_survey_identifier'], name: participant['first_name'] + ' ' +  participant['last_name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
 				else
 					data = nil
 			end
-
 			@data_set<< data
 		end
 	end

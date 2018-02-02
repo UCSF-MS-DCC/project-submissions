@@ -98,7 +98,7 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 		meta = JSON.parse(redcap_metadata)
 		meta.each do |m|
 
-		if m['form_name']=='tracms_myo_patient_intake_q'
+		if m['form_name']=='multiple_sclerosis_information_patient_scoring'
 				@project = 'tracms'
 				break
 			elsif m['form_name']=='family_information_form'
@@ -106,6 +106,9 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 				break
 			elsif m['form_name']=='motor_patient_intake_q'
 				@project = 'motor study'
+				break
+			elsif m['form_name']=='ucsf_epic_update_questionnaire'
+				@project = 'epic'
 				break
 			end
 		end
@@ -115,12 +118,7 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 			return
 		end
 
-		case @project
-			when 'tracms','motor study'
-				@headers = ["PT ID", "Record ID", "Name", "SFS", "EDSS", "AI", "NRS", "MDS"]
-			else # 'genetics','epic'
-				@headers = ["Record ID", "First", "Last", "SFS", "EDSS", "AI", "NRS", "MDS"]
-		end
+		@headers = ["Timestamp","Record ID", "Name", "SFS", "EDSS", "AI", "NRS", "MDS"]
 
 		redcap_data = retrieve_redcap_data(params[:APIKey])
 		calc = GoodinCalculation.new(JSON.parse(redcap_data), @project)
@@ -346,7 +344,8 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 			'token' => key,
 			'content' => 'record',
 			'format' => 'json',
-			'type' => 'flat'
+			'type' => 'flat',
+			'exportSurveyFields' =>'true'
 		}
 		request = Net::HTTP.post_form(url, post_args)
 		request.body

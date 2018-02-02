@@ -51,18 +51,18 @@
         @all_results.each do |r|
       %>
       <tr>
+        <td><%= r[:timestamp] %></td>
         <td><%= r[:record_id] %></td>
-        <td><%= r[:first_name] %></td>
-        <td><%= r[:last_name] %></td>
+        <td><%= r[:name] %></td>
         <td><%= r[:sfs] %></td>
         <td><%= r[:edss] %></td>
         <td><%= r[:aI] %></td>
         <td><%= r[:nrs] %></td>
         <td><%= r[:mds] %></td>
       </tr>
-      <%
-        end
-      %>
+    <%
+      end
+    %>
         </tbody>
       </table>
 <% end %>

@@ -77,8 +77,29 @@ class EdssController < ApplicationController
 		# This method uses the goodin_calculation model to parse the incoming redcap data, and generate the required scores. 
 		# The variable calc is just holding all the redcap scores in a single variable to more easily parse when determining individual scores.
 		# Redirect to the not authorized page if the redcap token is invalid.
-		redirect_to notauthorized_path and return if redcap_data(params[:goodinAPI]).nil?
-		calc = GoodinCalculation.new(JSON.parse(redcap_data(params[:goodinAPI])))
+		redirect_to notauthorized_path and return if retrieve_redcap_metadata(params[:goodinAPI]).nil?
+
+		# fetch metadata to determine project. default to genetics.
+		redcap_metadata = retrieve_redcap_metadata(params[:goodinAPI])
+		meta = JSON.parse(redcap_metadata)
+#puts meta
+		meta.each do |m|
+			if m['form_name']=='tracms_myo_patient_intake_q'
+				@project = 'tracms'
+				break
+			elsif m['form_name']=='family_information_form'
+				@project = 'genetics'
+				break
+			elsif m['form_name']=='motor_patient_intake_q'
+				@project = 'motor study'
+				break
+			elsif m['form_name']=='ucsf_epic_update_questionnaire'
+				@project = 'epic'
+				break
+			end
+		end
+
+		calc = GoodinCalculation.new(JSON.parse(redcap_data(params[:goodinAPI])),@project)
 		edss = calc.edss_histogram(calc.data_set)
 		sfs = calc.sfs_histogram(calc.data_set)
 		ai = calc.ai_histogram(calc.data_set)
@@ -86,7 +107,7 @@ class EdssController < ApplicationController
 
 		# Creating a csv to store user's scores.
 		csv_string = CSV.generate do |csv|
-			csv << ["record_id", "first_name", "last_name", "sfs", "edss", "aI", "nrs", "mds"]
+			csv << ["timestamp", "record_id", "name", "sfs", "edss", "aI", "nrs", "mds"]
 			ids.each do |participant|
 				csv << participant.values
 			end
@@ -373,7 +394,6 @@ class EdssController < ApplicationController
 		end
 	end
 
-
 	private
 
 	def redcap_data(key)
@@ -383,9 +403,23 @@ class EdssController < ApplicationController
 			'token' => key,
 			'content' => 'record',
 			'format' => 'json',
-			'type' => 'flat'
+			'type' => 'flat',
+			'exportSurveyFields' =>'true'
+
 		}
 		request= Net::HTTP.post_form(url, post_args)
+		request.body
+	end
+
+	def retrieve_redcap_metadata(key)
+		# Function that calls to the redcap db for data.
+		url = URI.parse("https://redcap.ucsf.edu/api/")
+		post_args = {
+				'token' => key,
+				'content' => 'metadata',
+				'format' => 'json'
+		}
+		request = Net::HTTP.post_form(url, post_args)
 		request.body
 	end
 
