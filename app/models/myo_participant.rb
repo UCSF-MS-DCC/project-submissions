@@ -1,4 +1,4 @@
-class MyoParticipant < ActiveRecord::Base
+class MyoParticipant < ApplicationRecord
 	has_many :trac_visits
 
 	validates :tracms_myo_id,  uniqueness: true
@@ -39,7 +39,7 @@ class MyoParticipant < ActiveRecord::Base
 
 		request= Net::HTTP.post_form(url, post_args)
 		data = JSON.parse(request.body)
-		goodin_scores = GoodinCalculation.new(data)
+		goodin_scores = GoodinCalculation.new(data,'tracms')
 
 		# You're zipping together the goodin scores along with the redcap information per individual. That way when we loop through each individual it's a lot easier to
 		# update the db.

@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   rolify
   after_create :assign_default_role
   # Include default devise modules. Others available are:

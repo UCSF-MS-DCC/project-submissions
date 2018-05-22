@@ -96,35 +96,44 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 		# fetch metadata to determine project. default to genetics.
 		redcap_metadata = retrieve_redcap_metadata(params[:APIKey])
 		meta = JSON.parse(redcap_metadata)
-		meta.each do |m|
 
-		if m['form_name']=='multiple_sclerosis_information_patient_scoring'
-				@project = 'tracms'
-				break
-			elsif m['form_name']=='family_information_form'
-				@project = 'genetics'
-				break
-			elsif m['form_name']=='motor_patient_intake_q'
-				@project = 'motor study'
-				break
-			elsif m['form_name']=='ucsf_epic_update_questionnaire'
-				@project = 'epic'
-				break
+
+		# look for field called b3 and f5tb to verify it's a goodin.
+		# b4 implies bove v1
+
+#debugger
+
+		meta.each do |m|
+			if m['form_name']=='multiple_sclerosis_information_patient_scoring'
+					@project = 'tracms'
+					break
+				elsif m['form_name']=='family_information_form'
+					@project = 'genetics'
+					break
+				elsif m['form_name']=='motor_patient_intake_q'
+					@project = 'motor study'
+					break
+				elsif m['form_name']=='ucsf_epic_update_questionnaire'
+					@project = 'epic'
+					break
+			else
+				@project = m['form_name']
 			end
 		end
+		#	 participant['ucsf_bovegoodin_update_questionnaire_timestamp']
 
 		if @project.nil?
 			@msg = 'Could not identify REDCap project -- aborting PREDSS scoring attempt.'
 			return
 		end
 
-		@headers = ["Timestamp","Record ID", "Name", "SFS", "EDSS", "AI", "NRS", "MDS"]
+		@headers = ["Timestamp","Record ID", "Name", "EDSS", "AI", "SFS","NRS", "MDS"]
 
 		redcap_data = retrieve_redcap_data(params[:APIKey])
 		calc = GoodinCalculation.new(JSON.parse(redcap_data), @project)
-		edss = calc.edss_histogram(calc.data_set)
-		sfs = calc.sfs_histogram(calc.data_set)
-		ai = calc.ai_histogram(calc.data_set)
+#		edss = calc.edss_histogram(calc.data_set)
+#		sfs = calc.sfs_histogram(calc.data_set)
+#		ai = calc.ai_histogram(calc.data_set)
 		ids = calc.record_ids(calc.data_set)
 
 		@all_results = ids
@@ -140,7 +149,7 @@ CONTROLLER?					view can call new controller method to export results to CSV(?)
 		respond_to do |format|
 			format.html
 			format.csv do
-				response.headers['Content-Disposition'] = 'attachment; filename="GoodinRemoteEDSS.csv"'
+				response.headers['Content-Disposition'] = 'attachment; filename="Goodin_PREDSS_Results.csv"'
 				render :csv => csv_string
 			end
 		end

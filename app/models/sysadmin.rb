@@ -1,3 +1,3 @@
-class Sysadmin < ActiveRecord::Base
+class Sysadmin < ApplicationRecord
 	has_paper_trail
 end

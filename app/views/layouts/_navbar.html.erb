@@ -21,7 +21,7 @@
         <li><%= link_to("Funding", fundings_path, class: 'styled-link')%></li>
         <li><%= link_to("Data Dictionary", dictionary_index_path, class: 'styled-link')%></li>
         <li><%= link_to("PREDSS", predss_path, class: 'styled-link')%></li>
-        <li><a href="myo">TRACMS</a></li>
+        <li><%= link_to("TRACMS", myo_path, class: 'styled-link') %></li>
         <% if current_user %>
           <li><%= link_to("Logout", destroy_user_session_path, class: 'styled-link', method: :delete)%></li>
         <% end %>

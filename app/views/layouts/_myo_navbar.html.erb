@@ -11,6 +11,7 @@
         <li class='navbar-link styled-link'><%= link_to "Participants", myo_participants_path %></li>
         <li class='navbar-link styled-link'><%= link_to "Redcap Data", myo_redcap_path%></li>
         <li class='navbar-link styled-link'><%= link_to("Logout", destroy_user_session_path, method: :delete)%></li>
+        <li class='navbar-link styled-link'><%= link_to("Back to MSDR", controller: "welcome", action: "index") %></li>
       </ul>
 
     </section>

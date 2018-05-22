@@ -10,9 +10,9 @@ Rails.application.routes.draw do
   resources :fundings, only: [:index]
   resources :dictionary, only: [:index]
   resources :sysadmin
-  
-  # These are the individualized routes for the myo controller. To view where each of the actions goes to, 
-  # check in the myo_controller followed by the action after the "#" ex: 'myo#download_redcap_data' is called 
+
+  # These are the individualized routes for the myo controller. To view where each of the actions goes to,
+  # check in the myo_controller followed by the action after the "#" ex: 'myo#download_redcap_data' is called
   # at the myo controller, 'download_redcap_data' method.
   post 'myo/download_redcap_data', to: 'myo#download_redcap_data'
   post 'myo/download_computed_data', to: 'myo#download_computed_data'
@@ -27,8 +27,9 @@ Rails.application.routes.draw do
   post 'myo/visit', to: 'myo#create_visit'
   get 'myo/delete_file/:id', to: 'myo#delete_file'
   get 'myo/download_file/:id', to: 'myo#download_file', as: :myo_download_file
+  get 'myo', to: 'myo#index'
 
-  resources :myo, except: [:new]  do 
+  resources :myo, except: [:new]  do
     patch :update, :on => :collection
     post :create, :on => :collection
     patch :update_visit, :on => :collection
@@ -59,5 +60,5 @@ Rails.application.routes.draw do
   get 'notfound', to: 'application#not_found'
   get 'notauthorized', to: 'application#not_authorized'
   get "*path", to: 'application#raise_not_found'
-  
+
 end

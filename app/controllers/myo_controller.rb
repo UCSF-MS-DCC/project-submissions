@@ -9,7 +9,7 @@ class MyoController < ApplicationController
 
 	def index
 		# The missing participants instance variable serves to show the coordinator which individuals have filled out a redcap form
-		# but HAVE NOT been added manually to the DB via the participants page. The update_db_from_redcap method is a very lage method called on the 
+		# but HAVE NOT been added manually to the DB via the participants page. The update_db_from_redcap method is a very large method called on the
 		# myo participant model (via MyoParticipant.rb) and is worth checking out.
 
 		# Destructure array that is returned from update_db_from_redcap:
@@ -39,7 +39,7 @@ class MyoController < ApplicationController
 	end
 
 	def redcap
-		# This method is what is called for vieiwing the redcap data at /myo/redcap. The following function is what is called when after clicking: 
+		# This method is what is called for viewing the redcap data at /myo/redcap. The following function is what is called when after clicking:
 		# "download redcap data" at redcap.html.erb
 		# The method 'redcap_data' is a simple call to the redcap server to obtain information.
 		# Note, because the way data is stored via the redcap surveys it's always best to download the data straight from redcap. 
@@ -50,7 +50,7 @@ class MyoController < ApplicationController
 
 	def download_redcap_data
 		# Allows for the actual downloading of redcap data.
-		@data = redcap_data
+		@data = self.redcap #redcap_data
 		respond_to do |format|
 	    format.csv do
 				render :csv => @data, filename: "redcap_data.csv"				
@@ -65,10 +65,9 @@ class MyoController < ApplicationController
 		respond_to do |format|
 			@data = MyoParticipant.prepare_completed_csv
 			format.csv do
-	     	render :csv => @data, filename: "computed_data.csv"				
+	     	render :csv => @data, filename: "computed_data.csv"
 			end
-	  end				
-
+	  end
 	end	
 
 	def participants

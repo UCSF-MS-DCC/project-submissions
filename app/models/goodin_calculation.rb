@@ -7,7 +7,6 @@ class GoodinCalculation
 		# Everything is pretty self-explainatory. You're essentially creating the 'data' hash to prepare for a data download of all individuals
 		@data_set = []
 		redcap_data.each do |participant|
-#puts participant
 			if participant['goodin_edss_complete'] == '0' || participant['ucsf_epic_update_questionnaire_complete'] =='0' || participant['multiple_sclerosis_information_patient_scoring_complete'] =='0'
 				next
 			end
@@ -43,7 +42,6 @@ class GoodinCalculation
 		'ucsf_epic_update_questionnaire_complete'
 =end
 
-
 			case project
 				when 'genetics'
 					data = {timestamp: participant['goodin_edss_timestamp'], record_id: participant['participant_id_intake'].to_i, name: participant['first_name'] + ' ' +  participant['last_name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
@@ -53,8 +51,9 @@ class GoodinCalculation
 					data = {timestamp: participant['multiple_sclerosis_information_patient_scoring_timestamp'], record_id: participant['participant_id2'].to_i, name: participant['name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
 				when 'epic'
 					data = {timestamp: participant['ucsf_epic_update_questionnaire_timestamp'], record_id: participant['redcap_survey_identifier'], name: participant['first_name'] + ' ' +  participant['last_name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
-				else
-					data = nil
+			else
+				# Tommy Original defaults
+					data = {timestamp: participant['ucsf_bovegoodin_update_questionnaire_timestamp'], record_id: participant['redcap_survey_identifier'], name: participant['first_name'] + ' ' +  participant['last_name'], sfs: sfs[:sfs], edss: edss, aI: aI, nrs: nrs, mds: mds}
 			end
 			@data_set<< data
 		end
