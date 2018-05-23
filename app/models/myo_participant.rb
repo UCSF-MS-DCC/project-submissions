@@ -70,7 +70,10 @@ class MyoParticipant < ApplicationRecord
 						end
 						myo_participant.update_attributes(onset: physician["dateonset"], case_or_control: physician["ms_or_hc"], disease_type: convert_to_disease(@disease_number))
 					else
-						myo_participant.trac_visits.where(visit_date: DateTime.parse(physician["date_enrolled"])-60.days..DateTime.parse(physician["date_enrolled"])+60.days).first.update_attributes(physician_edss: "", goodin_edss: "", goodin_sfs: "", goodin_ai: "", goodin_nrs: "", goodin_mds: "")
+						@first_visit = myo_participant.trac_visits.where(visit_date: DateTime.parse(physician["date_enrolled"])-60.days..DateTime.parse(physician["date_enrolled"])+60.days).first
+						if @first_visit
+							@first_visit.update_attributes(physician_edss: "", goodin_edss: "", goodin_sfs: "", goodin_ai: "", goodin_nrs: "", goodin_mds: "")
+						end
 						myo_participant.update_attributes(onset: "", case_or_control: physician["ms_or_hc"], disease_type: "")
 					end
 				else

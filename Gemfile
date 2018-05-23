@@ -47,6 +47,7 @@ group :development do
 	gem 'better_errors'
   #gem 'spring'
 	gem 'pry'
+	gem 'rb-readline'
   gem 'byebug'
   #gem 'ruby-debug-ide'
 end
