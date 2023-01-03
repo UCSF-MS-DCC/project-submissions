@@ -1,9 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '~>2.3.1'
+#ruby '~>2.3.1'
+ruby '~>3.0.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails' #, '>= 5.0.0.rc2'
+#gem 'rails' #, '>= 5.0.0.rc2'
+gem 'rails', '7.0.4'
+
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
@@ -42,6 +45,8 @@ gem 'carrierwave'
 gem 'thin'
 gem 'bootsnap'
 gem 'listen'
+gem 'mimemagic', '0.3.7'
+gem 'nokogiri', '~>1.10'
 
 group :development do 
 	gem 'better_errors'
@@ -49,7 +54,10 @@ group :development do
 	gem 'pry'
 	gem 'rb-readline'
   gem 'byebug'
-  #gem 'ruby-debug-ide'
+  #gem 'ruby-debug-ide
+  gem "capistrano", "~>3.10", require: false
+  gem "capistrano-rails", "~>1.3", require: false
+  gem "capistrano-rvm"
 end
 
 gem 'builder'
