@@ -65,3 +65,4 @@ end
 gem 'builder'
 
 #gem 'rspec-rails'
+gem "sassc-rails"
