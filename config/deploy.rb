@@ -93,7 +93,7 @@ namespace :deploy do
   # after  :finishing,    :restart
 end
 
-append :linked_files, "config/master.key"
+#append :linked_files, "config/master.key"
 
 #BOILERPLATE CODE TEMPLATE BELOW
 

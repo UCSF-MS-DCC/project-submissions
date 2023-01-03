@@ -8,7 +8,7 @@ ruby '~>3.0.4'
 gem 'rails', '7.0.4'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'sqlite3', '1.4.2'
 
 # Use SCSS for stylesheets
 #gem 'sass-rails', '~> 4.0.3'
@@ -47,7 +47,7 @@ gem 'bootsnap'
 gem 'listen'
 gem 'mimemagic', '0.3.7'
 gem 'nokogiri', '~>1.10'
-gem 'puma'
+gem 'puma', '~>4.0'
 
 group :development do 
 	gem 'better_errors'
@@ -59,6 +59,7 @@ group :development do
   gem "capistrano", "~>3.10", require: false
   gem "capistrano-rails", "~>1.3", require: false
   gem "capistrano-rvm"
+  gem "capistrano3-puma", "4.0.0"
 end
 
 gem 'builder'
