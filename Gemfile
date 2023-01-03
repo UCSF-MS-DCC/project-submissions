@@ -47,6 +47,7 @@ gem 'bootsnap'
 gem 'listen'
 gem 'mimemagic', '0.3.7'
 gem 'nokogiri', '~>1.10'
+gem 'puma'
 
 group :development do 
 	gem 'better_errors'

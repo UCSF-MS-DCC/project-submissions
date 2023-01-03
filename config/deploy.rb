@@ -3,11 +3,11 @@ lock "~> 3.17.1"
 
 set :scm, :git
 set :application, "msdr.ucsf.edu"
-set :repo_url, "https://github.com/UCSF-MS-DCC/msdr"
+set :repo_url, "https://github.com/UCSF-MS-DCC/project-submissions"
 set :git_http_username, 'urrik98'
 ask(:github_token, "github_token", echo: false )
 set :git_http_password, fetch((:github_token))
-set :branch, "main"
+set :branch, "master"
 set :deploy_to, "/var/www/msdr"
 server '169.230.177.100', port: 22, roles: [:web, :app, :db], primary: true
 
