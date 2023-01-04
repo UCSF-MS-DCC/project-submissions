@@ -1,6 +1,8 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.1"
 
+require File.expand_path("./environment", __dir__)
+
 set :scm, :git
 set :application, "msdr.ucsf.edu"
 set :repo_url, "https://github.com/UCSF-MS-DCC/project-submissions"
@@ -35,7 +37,7 @@ set :console_user, :deployment
 set :format,        :pretty
 set :log_level,     :debug
 set :keep_releases, 5
-# set :linked_files, %w(config/master.key)
+set :linked_files, %w(config/master.key)
 ## Linked Files & Directories (Default None):
 #set :linked_files, %w{config/database.yml}   
 set :linked_dirs,  %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
