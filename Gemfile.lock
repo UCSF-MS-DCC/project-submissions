@@ -364,6 +364,7 @@ DEPENDENCIES
   rb-readline
   rolify
   sass-rails
+  sassc-rails
   spreadsheet
   sqlite3 (= 1.4.2)
   thin
