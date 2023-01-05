@@ -4,7 +4,6 @@ source 'https://rubygems.org'
 ruby '~>3.0.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-#gem 'rails' #, '>= 5.0.0.rc2'
 gem 'rails', '7.0.4'
 
 # Use sqlite3 as the database for Active Record
@@ -59,8 +58,6 @@ group :development do
   gem "capistrano", "~>3.10", require: false
   gem "capistrano-rails", "~>1.3", require: false
   gem "capistrano-rvm"
-#  gem "capistrano3-puma", "4.0.0"
-#  gem "capistrano3-puma", "~>5.2"
   gem "capistrano3-puma"
 end
 

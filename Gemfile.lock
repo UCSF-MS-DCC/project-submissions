@@ -213,6 +213,8 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.11.7-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.11.7-x86_64-linux)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     paper_trail (14.0.0)
       activerecord (>= 6.0)
@@ -323,7 +325,7 @@ GEM
     zeitwerk (2.6.6)
 
 PLATFORMS
-  arm64-darwin-21
+  x86_64-linux
 
 DEPENDENCIES
   better_errors
