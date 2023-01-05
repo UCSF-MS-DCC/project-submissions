@@ -59,7 +59,8 @@ group :development do
   gem "capistrano", "~>3.10", require: false
   gem "capistrano-rails", "~>1.3", require: false
   gem "capistrano-rvm"
-  gem "capistrano3-puma", "4.0.0"
+#  gem "capistrano3-puma", "4.0.0"
+  gem "capistrano3-puma", "~>5.2"
 end
 
 gem 'builder'
