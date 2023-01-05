@@ -1,4 +1,4 @@
-class CreateMyoParticipants < ActiveRecord::Migration
+class CreateMyoParticipants < ActiveRecord::Migration[7.0]
   def change
     create_table :myo_participants do |t|
     	t.integer :participant_id

@@ -1,4 +1,4 @@
-class AddsDiseaseToMyoParticipant < ActiveRecord::Migration
+class AddsDiseaseToMyoParticipant < ActiveRecord::Migration[7.0]
   def change
   	add_column :myo_participants, :case_or_control, :string
   	add_column :myo_participants, :onset, :string
