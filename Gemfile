@@ -47,7 +47,7 @@ gem 'bootsnap'
 gem 'listen'
 gem 'mimemagic', '0.3.7'
 gem 'nokogiri', '~>1.10'
-gem 'puma', '~>4.0'
+gem 'puma', '~>5.6.5'
 
 group :development do 
 	gem 'better_errors'
@@ -60,7 +60,8 @@ group :development do
   gem "capistrano-rails", "~>1.3", require: false
   gem "capistrano-rvm"
 #  gem "capistrano3-puma", "4.0.0"
-  gem "capistrano3-puma", "~>5.2"
+#  gem "capistrano3-puma", "~>5.2"
+  gem "capistrano3-puma"
 end
 
 gem 'builder'
